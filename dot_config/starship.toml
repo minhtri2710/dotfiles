@@ -1,0 +1,20 @@
+command_timeout = 5000
+
+[git_status]
+untracked = '[ $count](bold yellow) '
+staged = '[ $count](bold green) '
+stashed = "[ ](cyan) "
+deleted = '[ $count](bold red) '
+modified = '[ $count](bold blue) '
+behind = '[ ](bold purple) '
+ahead = '[ ](bold purple) '
+format = '([$all_status$ahead_behind]($style))'
+
+[[battery.display]]
+threshold = 50
+
+[git_metrics]
+disabled = false
+
+[line_break]
+disabled = true
