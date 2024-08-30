@@ -1,0 +1,376 @@
+cls
+clểa
+clẻa
+clear
+$nu.env-path
+cls
+clear
+lsjfakdfjasclear
+clear
+cd /Users/beowulf/Applications/
+ls
+cd ..
+ls
+$nu.env-path
+cls
+ll
+ls
+cls
+cd Library/
+cd `Application Support/`
+ls
+cd nushell/
+vim env.nu
+cls
+vim config.nu
+nvim config.nu
+cls
+exit
+cd nvim
+cd `/Users/beowulf/Library/Application Support/nushell/`
+nvim config.nu
+nvim env.nu
+cd nvim
+exit
+cd nvim
+cd nushell
+nvim config.nu
+cls
+exit
+cls
+clear
+cd ~/.cache/starship/
+cd nushell
+nvim env.nu
+nvim config.nu
+cls
+exit
+clear
+cd nvim
+cd fish
+vim config.fish
+cls
+nvim config.fish
+cd .config
+ls
+cd dotfile
+cd powershell/
+ls
+vim Microsoft.Powershell_profile.ps1
+cls
+clear
+cls
+lg
+clear
+lg
+clear
+$env.PATH
+$env.PATH = ($env.PATH | split row (char esep) | prepend '/opt/homebrew/bin')
+lg
+cls
+$env.PATH
+ls
+ll
+ls
+exit
+$env.PATH
+cls
+clear
+open
+cls
+clear
+cd nushell
+nvim env.nu
+exit
+ls
+cd nvim
+lg
+lazygit
+cls
+ls
+cls
+clear
+fzf
+cls
+clear
+config nu
+cls
+config nu
+cls
+exigt
+exit
+cls
+ls
+ll
+clear
+cls
+ls
+ll
+cd nvim
+vim
+cls
+cd fish
+cd nvim
+cls
+clear
+config nu
+exit
+cls
+config nu
+exit
+config nu
+cls
+exit
+cls
+ls
+ll
+cls
+config nu
+cls
+exit
+nu
+exit
+cls
+config nu
+grep
+config nu
+cls
+exit
+config nu
+ls
+ll
+config nu
+cls
+config nu
+cls
+exit
+nu
+cls
+ls
+lla
+cls
+ls
+ll
+clea
+clear
+cls
+config nu
+exit
+cls
+config nu
+cd nushell
+exit
+cls
+exit
+thefuck
+thefuck -v
+clear
+fuck
+config nu
+fuck
+exit
+cler
+fuck
+thefuck
+thefuck -a
+whoami
+cls
+ls
+thefuck
+exit
+nu
+exit
+config nu
+cler
+fuck
+exit
+cler
+fuck
+clear
+config
+config nu
+cls
+exit
+lazyg
+fk
+clear
+vim env.nu
+cls
+config nu
+cd nushell
+vim env.nu
+exit
+lla
+cd nushell
+vim env.nu
+cls
+exit
+cls
+clear
+lls
+lla
+clera
+ls
+cls
+config nu
+cd nushell
+vim env.nu
+cls
+exit
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+cd nushell
+vim env.nu
+exit
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+config nu
+cd nushell
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+vim env.nu
+cls
+exit
+cls
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+cls
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+ls
+cls
+export FZF_DEFAULT_COMMAND
+cls
+export FZF_DEFAULT_COMMAND
+export
+export 
+export -v
+cls
+fk
+cler
+fuck
+kf
+fk
+clesr
+fk
+clear
+cd nushell
+vim env.nu
+cls
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+cd test
+ls
+cd app
+ls
+vim
+cls
+cd ..
+vim
+cd public
+bat index.php
+BAT_THEME
+cls
+cd nushell
+vim
+cls
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+cls
+vim env.nu
+bart
+bat
+cls
+bat env.nu
+vim env.nu
+exit
+cd nushell
+bat env.nu
+vim env.nu
+cls
+exit
+cd nushell
+vim env.nu
+bat env.nu
+cls
+exit
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+cls
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+cd nushell
+vim env.nu
+cls
+cd desk
+yazi
+exit
+yazi
+exit
+plugin list
+plugin use gstat
+version
+cargo install gstat
+cls
+carge list
+cargo list
+cargo --list
+carge uninstall gstat
+cargo uninstall gstat
+cargo --list
+cls
+cd nushell
+ls
+exit
+cd nushell
+ls
+ll
+lla
+cls
+fzf
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+fzf
+cls
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+cls
+cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)
+vim
+exit
+config nu
+cls
+config nu
+cls
+exit
+cls
+nu_plugin_gstat = "0.97.1"
+cls
+config nu
+exit
+cd nushell
+config nu
+cls
+exit
+cls
+config nu
+cls
+config nu
+exit
+config nu
+exit
+cls
+config nu
+cls
+exit
+cls
+config nu
+cls
+exit
+cls
+exit
+cd nushell
+cls
+vim env.nu
+cls
+exit
+nu
+cd nushell
+fzf
+cls
+config nu
+cls
+exit
+bat --list-themes
+cls
+config env
+exit
