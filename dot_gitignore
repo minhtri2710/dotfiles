@@ -1,0 +1,4 @@
+nvim/lazy-lock.json
+.git
+*dprint*
+*php-cs-fixer*
