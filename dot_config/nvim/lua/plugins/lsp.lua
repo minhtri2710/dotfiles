@@ -24,9 +24,10 @@ return {
       ---@type lspconfig.options
       servers = {
         phpactor = {
-          language_server_psalm = {
-            enable = true,
-          },
+          enabled = true,
+        },
+        intelephense = {
+          enabled = true,
         },
         cssls = {},
         tailwindcss = {

@@ -58,6 +58,7 @@ return {
       "ThePrimeagen/git-worktree.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
+      "debugloop/telescope-undo.nvim",
     },
     keys = {
       {
@@ -186,6 +187,13 @@ return {
         end,
         desc = "Manage pomodori timers",
       },
+      {
+        ";u",
+        function()
+          require("telescope").extensions.undo.undo()
+        end,
+        desc = "Telescope undo",
+      },
     },
     config = function(_, opts)
       local telescope = require("telescope")
@@ -247,6 +255,13 @@ return {
             },
           },
         },
+        undo = {
+          side_by_side = true,
+          layout_strategy = "vertical",
+          layout_config = {
+            preview_height = 0.8,
+          },
+        },
       }
       telescope.setup(opts)
       telescope.load_extension("fzf")
@@ -255,6 +270,7 @@ return {
       telescope.load_extension("ui-select")
       telescope.load_extension("live_grep_args")
       telescope.load_extension("pomodori")
+      telescope.load_extension("undo")
     end,
   },
   {
