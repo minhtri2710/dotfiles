@@ -1,8 +1,8 @@
 return {
-	{
-		"MeanderingProgrammer/markdown.nvim",
-		opts = {
-			acknowledge_conflicts = true,
-		},
-	},
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      acknowledge_conflicts = true,
+    },
+  },
 }
