@@ -36,8 +36,7 @@ if (vim.fn.has("win32")) == 1 then
   vim.opt.shell = "pwsh"
   if vim.opt.shell._value == "nu" then
     vim.opt.shellcmdflag = "-c"
-	  vim.opt.shellxquote = ""
-	  vim.opt.shellslash = true
+    vim.opt.shellxquote = ""
   else
     vim.opt.shellcmdflag =
     "-NoProfile -NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
