@@ -1,4 +1,4 @@
-vim.g.mapleader = " "
+eeeevim.g.mapleader = " "
 
 vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
@@ -34,12 +34,19 @@ vim.opt.listchars:append({ space = "•" })
 vim.opt.shell = "fish"
 if (vim.fn.has("win32")) == 1 then
   vim.opt.shell = "pwsh"
-  vim.opt.shellcmdflag =
+  if vim.opt.shell._value == "nu" then
+    vim.opt.shellcmdflag = "-c"
+	  vim.opt.shellxquote = ""
+	  vim.opt.shellslash = true
+  else
+    vim.opt.shellcmdflag =
     "-NoProfile -NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-  vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
-  vim.opt.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
-  vim.opt.shellquote = ""
-  vim.opt.shellxquote = ""
+    vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+    vim.opt.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+    vim.opt.shellquote = ""
+    vim.opt.shellxquote = ""
+  end
+  
   vim.g.lazyvim_php_lsp = "intelephense"
 end
 
