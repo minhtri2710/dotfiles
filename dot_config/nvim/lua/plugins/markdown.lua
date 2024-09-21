@@ -5,4 +5,10 @@ return {
       acknowledge_conflicts = true,
     },
   },
+  {
+    "tadmccorkle/markdown.nvim",
+    event = "VeryLazy",
+    ft = "markdown",
+    opts = {},
+  },
 }

@@ -1,18 +1,5 @@
 return {
   {
-    enabled = false,
-    "folke/flash.nvim",
-    ---@type Flash.Config
-    opts = {
-      search = {
-        forward = true,
-        multi_window = false,
-        wrap = false,
-        incremental = true,
-      },
-    },
-  },
-  {
     "echasnovski/mini.hipatterns",
     event = "BufReadPre",
     opts = {
@@ -47,6 +34,7 @@ return {
       "nvim-telescope/telescope-ui-select.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
       "debugloop/telescope-undo.nvim",
+      "nvim-telescope/telescope-frecency.nvim",
     },
     keys = {
       {
@@ -182,6 +170,13 @@ return {
         end,
         desc = "Telescope undo",
       },
+      {
+        "<leader>sf",
+        function()
+          require("telescope").extensions.frecency.frecency()
+        end,
+        desc = "Frecency",
+      },
     },
     config = function(_, opts)
       local telescope = require("telescope")
@@ -259,6 +254,7 @@ return {
       telescope.load_extension("live_grep_args")
       telescope.load_extension("pomodori")
       telescope.load_extension("undo")
+      telescope.load_extension("frecency")
     end,
   },
   {
