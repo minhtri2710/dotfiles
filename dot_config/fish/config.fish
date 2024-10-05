@@ -10,6 +10,8 @@ alias g git
 alias mux tmuxinator
 alias :q exit
 alias lg lazygit
+alias v nvim
+alias vi nvim
 alias vim nvim
 alias ls "eza --color=always -l --icons=always"
 alias la "ls -a"
@@ -84,3 +86,6 @@ end
 set -x BAT_THEME tokyonight_night
 
 thefuck --alias | source
+
+#Set Env
+set XDG_CONFIG_HOME ~/.config
