@@ -21,6 +21,11 @@ return {
   },
 
   {
+    "iguanacucumber/magazine.nvim",
+    name = "nvim-cmp", -- Otherwise highlighting gets messed up
+  },
+
+  {
     "tris203/precognition.nvim",
   },
 

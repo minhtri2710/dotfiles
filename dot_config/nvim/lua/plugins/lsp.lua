@@ -152,7 +152,7 @@ return {
           "gd",
           function()
             -- DO NOT RESUSE WINDOW
-            require("telescope.builtin").lsp_definitions({ reuse_win = false })
+            require("telescope.builtin").lsp_definitions({ reuse_win = true })
           end,
           desc = "Goto Definition",
           has = "definition",

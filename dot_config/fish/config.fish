@@ -88,4 +88,4 @@ set -x BAT_THEME tokyonight_night
 thefuck --alias | source
 
 #Set Env
-set XDG_CONFIG_HOME ~/.config
+set -x XDG_CONFIG_HOME ~/.config
