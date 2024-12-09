@@ -21,6 +21,9 @@ return {
           end,
         },
       },
+      ui = {
+        enable = false,
+      },
     },
   },
 }
