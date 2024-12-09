@@ -188,13 +188,6 @@ config.window_padding = {
 	bottom = 0,
 }
 
-local mux = wezterm.mux
-
-wezterm.on("gui-startup", function()
-	local tab, pane, window = mux.spawn_window({})
-	window:gui_window():maximize()
-end)
-
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.default_prog = { "pwsh" }
 	config.font_size = 11

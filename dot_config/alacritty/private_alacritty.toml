@@ -1,6 +1,6 @@
-live_config_reload = true
+general.live_config_reload = true
 
-[shell]
+[terminal.shell]
 program = "fish"
 
 [env]
@@ -57,3 +57,5 @@ blue = '#00ff00'
 magenta = '#711c91'
 cyan = '#0abdc6'
 white = '#d7d7d5'
+
+[terminal]

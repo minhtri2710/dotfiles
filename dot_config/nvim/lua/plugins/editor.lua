@@ -52,7 +52,6 @@ return {
           require("telescope.builtin").find_files({
             no_ignore = false,
             hidden = true,
-            previewer = true,
           })
         end,
         desc = "Lists files in your current working directory, respects .gitignore",

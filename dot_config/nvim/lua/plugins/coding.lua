@@ -1,17 +1,4 @@
 return {
-  -- Go forward/backward with square brackets
-  {
-    "echasnovski/mini.bracketed",
-    event = "BufReadPost",
-    opts = {
-      file = { suffix = "" },
-      window = { suffix = "" },
-      quickfix = { suffix = "" },
-      yank = { suffix = "" },
-      treesitter = { suffix = "n" },
-    },
-  },
-
   {
     "nvim-cmp",
     dependencies = { "hrsh7th/cmp-emoji" },
@@ -19,16 +6,6 @@ return {
       table.insert(opts.sources, { name = "emoji" })
     end,
   },
-
-  {
-    "iguanacucumber/magazine.nvim",
-    name = "nvim-cmp", -- Otherwise highlighting gets messed up
-  },
-
-  {
-    "tris203/precognition.nvim",
-  },
-
   {
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },

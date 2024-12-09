@@ -3,28 +3,14 @@ local opts = { noremap = true, silent = true }
 
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
-keymap.set("n", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>P", '"0P')
-keymap.set("v", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>c", '"_c')
-keymap.set("n", "<Leader>C", '"_C')
-keymap.set("v", "<Leader>c", '"_c')
-keymap.set("v", "<Leader>C", '"_C')
-keymap.set("n", "<Leader>d", '"_d')
-keymap.set("n", "<Leader>D", '"_D')
-keymap.set("v", "<Leader>d", '"_d')
-keymap.set("v", "<Leader>D", '"_D')
-keymap.set("n", "x", '"_x')
 
--- Delete a word backwards
-keymap.set("n", "dw", 'vb"_d')
+-- next greatest remap ever : asbjornHaland
+keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+keymap.set("n", "<leader>Y", [["+Y]])
 
 -- Disable continuations
-keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
-keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
-
--- Jumplist
-keymap.set("n", "<C-m>", "<C-i>", opts)
+keymap.set("n", "<leader>o", "o<Esc>^Da", opts)
+keymap.set("n", "<leader>O", "O<Esc>^Da", opts)
 
 -- New tab
 keymap.set("n", "te", ":tabedit<Return>")
@@ -58,12 +44,5 @@ keymap.set("n", "N", "Nzzzv")
 keymap.set("n", "J", "mzJ`z")
 
 keymap.set("n", "<leader>r", function()
-	require("beowulf.hsl").replaceHexWithHSL()
+  require("beowulf.hsl").replaceHexWithHSL()
 end)
-
--- greatest remap ever
-keymap.set("x", "<leader>p", [["_dP]])
-
--- next greatest remap ever : asbjornHaland
-keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-keymap.set("n", "<leader>Y", [["+Y]])
