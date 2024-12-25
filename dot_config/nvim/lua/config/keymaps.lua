@@ -31,16 +31,6 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
--- Keep center when up-down
-keymap.set("n", "j", "jzz")
-keymap.set("n", "k", "kzz")
-keymap.set("n", "<C-d>", "<C-d>zz")
-keymap.set("n", "<C-u>", "<C-u>zz")
-keymap.set("n", "<C-b>", "<C-b>zz")
-keymap.set("n", "<C-f>", "<C-f>zz")
-keymap.set("n", "n", "nzzzv")
-keymap.set("n", "N", "Nzzzv")
-
 keymap.set("n", "J", "mzJ`z")
 
 keymap.set("n", "<leader>r", function()
