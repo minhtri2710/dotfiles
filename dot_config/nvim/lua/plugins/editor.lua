@@ -23,6 +23,10 @@ return {
 	},
 	{
 		"ibhagwan/fzf-lua",
+		opts = {
+			{ "telescope" },
+			fzf_opts = { ["--layout"] = "reverse", ["--marker"] = "+" },
+		},
 		keys = {
 			{
 				"<leader>fP",
@@ -37,8 +41,6 @@ return {
 				";f",
 				function()
 					require("fzf-lua").files({
-						no_ignore = false,
-						hidden = true,
 						previewer = false,
 					})
 				end,
@@ -47,7 +49,7 @@ return {
 			{
 				";s",
 				function()
-					require("fzf-lua").grep({ search = vim.fn.input("Grep > ") })
+					require("fzf-lua").grep({ input_prompt = "Grep > " })
 				end,
 				desc = "Grep string",
 			},
@@ -121,7 +123,6 @@ return {
 			},
 			"nvim-telescope/telescope-file-browser.nvim",
 			"ThePrimeagen/git-worktree.nvim",
-			"nvim-telescope/telescope-live-grep-args.nvim",
 			"debugloop/telescope-undo.nvim",
 			"nvim-telescope/telescope-frecency.nvim",
 		},
@@ -151,13 +152,6 @@ return {
 					require("telescope").extensions.git_worktree.git_worktrees()
 				end,
 				desc = "List git worktree",
-			},
-			{
-				"<leader>fg",
-				function()
-					require("telescope").extensions.live_grep_args.live_grep_args()
-				end,
-				desc = "Live grep with args",
 			},
 			{
 				";p",
@@ -250,7 +244,6 @@ return {
 			telescope.load_extension("fzf")
 			telescope.load_extension("file_browser")
 			telescope.load_extension("git_worktree")
-			telescope.load_extension("live_grep_args")
 			telescope.load_extension("pomodori")
 			telescope.load_extension("undo")
 			telescope.load_extension("frecency")
