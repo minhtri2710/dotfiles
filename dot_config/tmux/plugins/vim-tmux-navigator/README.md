@@ -66,6 +66,7 @@ If you are using [lazy.nvim](https://github.com/folke/lazy.nvim). Add the follow
     "TmuxNavigateUp",
     "TmuxNavigateRight",
     "TmuxNavigatePrevious",
+    "TmuxNavigatorProcessList",
   },
   keys = {
     { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
@@ -111,12 +112,36 @@ bind-key -T copy-mode-vi 'C-\' select-pane -l
 
 #### TPM
 
-If you'd prefer, you can use the Tmux Plugin Manager ([TPM][]) instead of
+If you prefer, you can use the Tmux Plugin Manager ([TPM][]) instead of
 copying the snippet.
 When using TPM, add the following lines to your ~/.tmux.conf:
 
 ``` tmux
 set -g @plugin 'christoomey/vim-tmux-navigator'
+```
+
+To set a different key-binding, use the plugin configuration settings
+(remember to update your vim config accordingly).
+Multiple key bindings are possible, use a space to separate.
+
+``` tmux
+set -g @vim_navigator_mapping_left "C-Left C-h"  # use C-h and C-Left
+set -g @vim_navigator_mapping_right "C-Right C-l"
+set -g @vim_navigator_mapping_up "C-k"
+set -g @vim_navigator_mapping_down "C-j"
+set -g @vim_navigator_mapping_prev ""  # removes the C-\ binding
+```
+
+To disable the automatic mapping of `<prefix> C-l` to `send C-l` (which is
+intended to restore the "clear screen" functionality):
+
+```tmux
+set -g @vim_navigator_prefix_mapping_clear_screen ""
+```
+
+Don't forget to run tpm:
+
+``` tmux
 run '~/.tmux/plugins/tpm/tpm'
 ```
 
@@ -140,16 +165,16 @@ Add the following to your `~/.vimrc` to define your custom maps:
 ``` vim
 let g:tmux_navigator_no_mappings = 1
 
-noremap <silent> {Left-Mapping} :<C-U>TmuxNavigateLeft<cr>
-noremap <silent> {Down-Mapping} :<C-U>TmuxNavigateDown<cr>
-noremap <silent> {Up-Mapping} :<C-U>TmuxNavigateUp<cr>
-noremap <silent> {Right-Mapping} :<C-U>TmuxNavigateRight<cr>
-noremap <silent> {Previous-Mapping} :<C-U>TmuxNavigatePrevious<cr>
+nnoremap <silent> {Left-Mapping} :<C-U>TmuxNavigateLeft<cr>
+nnoremap <silent> {Down-Mapping} :<C-U>TmuxNavigateDown<cr>
+nnoremap <silent> {Up-Mapping} :<C-U>TmuxNavigateUp<cr>
+nnoremap <silent> {Right-Mapping} :<C-U>TmuxNavigateRight<cr>
+nnoremap <silent> {Previous-Mapping} :<C-U>TmuxNavigatePrevious<cr>
 ```
 
 *Note* Each instance of `{Left-Mapping}` or `{Down-Mapping}` must be replaced
 in the above code with the desired mapping. Ie, the mapping for `<ctrl-h>` =>
-Left would be created with `noremap <silent> <c-h> :<C-U>TmuxNavigateLeft<cr>`.
+Left would be created with `nnoremap <silent> <c-h> :<C-U>TmuxNavigateLeft<cr>`.
 
 ##### Autosave on leave
 
@@ -356,6 +381,27 @@ instead of having to use a different prefix (ctrl-a by default) which you may
 find convenient. If not, simply remove the lines that set/unset the prefix key
 from the code example above.
 
+#### netrw
+
+Vim's builtin file explorer, named the netrw plugin, has a default keymapping
+for `<C-l>`. When using `vim-tmux-navigator` with default settings,
+`vim-tmux-navigator` will try to override the netrw mapping so that `<C-l>` will
+still be mapped to `:TmuxNavigateRight` as it is for other buffers. If you
+prefer to keep the netrw mapping, set this variable in your vimrc:
+
+``` vim
+let g:tmux_navigator_disable_netrw_workaround = 1
+```
+
+Alternatively, if you prefer to work around the issue yourself, you can add the
+following to your vimrc:
+
+``` vim
+let g:tmux_navigator_disable_netrw_workaround = 1
+" g:Netrw_UserMaps is a list of lists. If you'd like to add other key mappings,
+" just add them like so: [['a', 'command1'], ['b', 'command2'], ...]
+let g:Netrw_UserMaps = [['<C-l>', '<C-U>TmuxNavigateRight<cr>']]
+```
 
 Troubleshooting
 ---------------

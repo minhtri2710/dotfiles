@@ -37,6 +37,22 @@ zoxide init --cmd cd fish | source
 #Thefuck
 thefuck --alias fk | source
 
+# Bat (Better Cat)
+set -x BAT_THEME tokyonight_night
+
+#Set Env
+set -x XDG_CONFIG_HOME ~/.config
+
+#Set Yazi
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file="$tmp"
+    if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
+end
+
 #Fzf
 fzf --fish | source
 
@@ -81,11 +97,3 @@ function _fzf_comprun
             fzf --preview "$show_file_or_dir_preview" $argv[2..-1]
     end
 end
-
-# Bat (Better Cat)
-set -x BAT_THEME tokyonight_night
-
-thefuck --alias | source
-
-#Set Env
-set -x XDG_CONFIG_HOME ~/.config

@@ -22,99 +22,6 @@ return {
     },
   },
   {
-    "ibhagwan/fzf-lua",
-    opts = {
-      { "max-perf" },
-    },
-    keys = {
-      {
-        "<leader>fP",
-        function()
-          require("fzf-lua").files({
-            cwd = require("lazy.core.config").options.root,
-          })
-        end,
-        desc = "Find Plugin File",
-      },
-      {
-        ";f",
-        function()
-          require("fzf-lua").files({
-            no_ignore = false,
-            hidden = true,
-            previewer = false,
-          })
-        end,
-        desc = "Lists files in your current working directory, respects .gitignore",
-      },
-      {
-        ";s",
-        function()
-          require("fzf-lua").grep({ search = vim.fn.input("Grep > ") })
-        end,
-        desc = "Grep string",
-      },
-      {
-        ";r",
-        function()
-          require("fzf-lua").live_grep({
-            additional_args = { "--hidden" },
-          })
-        end,
-        desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
-      },
-      {
-        "\\\\",
-        function()
-          require("fzf-lua").buffers()
-        end,
-        desc = "Lists open buffers",
-      },
-      {
-        ";h",
-        function()
-          require("fzf-lua").helptags()
-        end,
-        desc = "Lists available help tags and opens a new window with the relevant help info on <cr>",
-      },
-      {
-        ";;",
-        function()
-          require("fzf-lua").resume()
-        end,
-        desc = "Resume the previous telescope picker",
-      },
-      {
-        ";e",
-        function()
-          require("fzf-lua").diagnostics_workspace()
-        end,
-        desc = "Lists Diagnostics for all open buffers or a specific buffer",
-      },
-      {
-        ";t",
-        function()
-          require("fzf-lua").treesitter()
-        end,
-        desc = "Lists Function names, variables, from Treesitter",
-      },
-      {
-        ";g",
-        function()
-          require("fzf-lua").git_files()
-        end,
-        desc = "Lists git files",
-      },
-      {
-        ";b",
-        function()
-          require("fzf-lua").git_branches()
-        end,
-        desc = "List git branches",
-      },
-    },
-  },
-  {
     "telescope.nvim",
     event = "VeryLazy",
     dependencies = {
@@ -180,6 +87,7 @@ return {
       local telescope = require("telescope")
       local actions = require("telescope.actions")
       local fb_actions = require("telescope").extensions.file_browser.actions
+      local fb_config = require("telescope").extensions.file_browser.config
 
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
         wrap_results = true,
