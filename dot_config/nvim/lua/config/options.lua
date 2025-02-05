@@ -33,20 +33,20 @@ vim.opt.listchars:append({ space = "•" })
 
 vim.opt.shell = "fish"
 if (vim.fn.has("win32")) == 1 then
-  vim.opt.shell = "pwsh"
-  if vim.opt.shell._value == "nu" then
-    vim.opt.shellcmdflag = "-c"
-    vim.opt.shellxquote = ""
-  else
-    vim.opt.shellcmdflag =
-      "-NoProfile -NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-    vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
-    vim.opt.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
-    vim.opt.shellquote = ""
-    vim.opt.shellxquote = ""
-  end
+	vim.opt.shell = "nu"
+	if vim.opt.shell._value == "nu" then
+		vim.opt.shellcmdflag = "-c"
+		vim.opt.shellxquote = ""
+	else
+		vim.opt.shellcmdflag =
+			"-NoProfile -NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+		vim.opt.shellredir = ""
+		vim.opt.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+		vim.opt.shellquote = ""
+		vim.opt.shellxquote = ""
+	end
 
-  vim.g.lazyvim_php_lsp = "intelephense"
+	vim.g.lazyvim_php_lsp = "intelephense"
 end
 
 -- Undercurl
@@ -60,5 +60,5 @@ vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 
 vim.g.markdown_fenced_languages = {
-  "ts=typescript",
+	"ts=typescript",
 }

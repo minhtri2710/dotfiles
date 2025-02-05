@@ -3,6 +3,7 @@
   editor = nvim
   ignorecase = false
   pager = delta
+  autocrlf = true
 [push]
   default = simple
 [color]

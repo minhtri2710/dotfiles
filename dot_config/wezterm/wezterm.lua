@@ -8,8 +8,8 @@ if wezterm.config_builder then
 end
 
 config.color_scheme = "Tokyo Night"
-config.font = wezterm.font_with_fallback({
-	{ family = "JetBrainsMono Nerd Font", weight = "Bold" },
+config.font = wezterm.font("JetBrainsMono Nerd Font", {
+	weight = "Bold",
 })
 config.font_size = 15.5
 config.window_background_opacity = 0.8
@@ -189,23 +189,23 @@ config.window_padding = {
 }
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.default_prog = { "pwsh" }
+	config.default_prog = { "nu" }
 	config.font_size = 11
 	table.insert(config.keys, { key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") })
 	table.insert(config.keys, { key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") })
+else
+	wezterm.on("window-resized", function(window, pane)
+		local window_dims = window:get_dimensions()
+		local overrides = window:get_config_overrides() or {}
+
+		if window_dims.is_full_screen then
+			overrides.font_size = 15.7
+		else
+			overrides.font_size = 15.5
+		end
+
+		window:set_config_overrides(overrides)
+	end)
 end
-
-wezterm.on("window-resized", function(window, pane)
-	local window_dims = window:get_dimensions()
-	local overrides = window:get_config_overrides() or {}
-
-	if window_dims.is_full_screen then
-		overrides.font_size = 15.7
-	else
-		overrides.font_size = 15.5
-	end
-
-	window:set_config_overrides(overrides)
-end)
 
 return config
