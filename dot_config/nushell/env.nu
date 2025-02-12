@@ -110,4 +110,3 @@ zoxide init --cmd cd nushell | save -f ~/.zoxide.nu
 starship init nu | save -f ~/.cache/starship/init.nu
 
 $env.EDITOR = "nvim"
-$env.XDG_CONFIG_HOME = "C:/Users/tri.tran/.config"

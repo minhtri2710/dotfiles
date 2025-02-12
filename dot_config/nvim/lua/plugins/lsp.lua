@@ -64,6 +64,16 @@ return {
 						"stylelint",
 					},
 				},
+				formatters = {
+					php_cs_fixer = {
+						env = {
+							PHP_CS_FIXER_IGNORE_ENV = 1,
+						},
+						prepend_args = function()
+							return { "--config=" .. os.getenv("XDG_CONFIG_HOME") .. "/nvim/.php-cs-fixer.php" }
+						end,
+					},
+				},
 			},
 		},
 	},

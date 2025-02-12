@@ -18,6 +18,7 @@ return {
 				},
 			},
 			statuscolumn = { enabled = true },
+			image = { enabled = true },
 			dashboard = {
 				preset = {
 					header = [[

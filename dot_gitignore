@@ -1,4 +1,8 @@
 nvim/lazy-lock.json
 .git
 *dprint*
-*php-cs-fixer*
+.php-cs-fixer.cache
+
+package-lock.json
+prettier.config.js
+stylelint.config.js
