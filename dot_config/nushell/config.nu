@@ -208,8 +208,8 @@ $env.config = {
     }
 
     filesize: {
-        metric: false # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
-        format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, auto
+        unit: metric
+        precision: 1
     }
 
     cursor_shape: {
@@ -904,7 +904,7 @@ $env.config = {
 }
 
 $env.config.hooks.pre_prompt = ($env.config.hooks.pre_prompt | append {||
-  let overlays = overlay list | range 1..
+  let overlays = overlay list | slice 1..
   if not ($overlays | is-empty) {
     $env.NU_OVERLAYS = $overlays | str join ", "
   } else {

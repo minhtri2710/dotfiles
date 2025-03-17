@@ -18,7 +18,12 @@ return {
 				},
 			},
 			statuscolumn = { enabled = true },
-			image = { enabled = true },
+			image = {
+				enabled = true,
+				doc = {
+					inline = true,
+				},
+			},
 			dashboard = {
 				preset = {
 					header = [[

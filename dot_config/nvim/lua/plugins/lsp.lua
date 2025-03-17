@@ -2,34 +2,19 @@ return {
 	-- lsp servers
 	{
 		"neovim/nvim-lspconfig",
-		opts = function(_, opts)
-			local keys = require("lazyvim.plugins.lsp.keymaps").get()
-			vim.list_extend(keys, {
-				{
-					"gd",
-					function()
-						require("telescope.builtin").lsp_definitions({ reuse_win = false })
-					end,
-					desc = "Goto Definition",
-					has = "definition",
-				},
-			})
-
-			return vim.tbl_deep_extend("force", opts, {
-				inlay_hints = { enabled = false },
-				---@type lspconfig.options
-				servers = {
-					emmet_language_server = {
-						filetypes = {
-							"phtml",
-						},
-					},
-					html = {
-						filetypes = { "phtml" },
+		opts = {
+			inlay_hints = { enabled = false },
+			servers = {
+				emmet_language_server = {
+					filetypes = {
+						"phtml",
 					},
 				},
-			})
-		end,
+				html = {
+					filetypes = { "phtml" },
+				},
+			},
+		},
 	},
 
 	{
