@@ -1,7 +1,7 @@
 # /Users/beowulf/.config/tmuxinator/jay-portfolio.yml
 
 name: jay-portfolio
-root: ~/Documents/Projects/jay-portfolio/
+root: ~/Documents/Projects/portfolio/
 
 # Optional tmux socket
 # socket_name: foo
@@ -47,6 +47,3 @@ tmux_command: sleep 1 && tmux
 windows:
   - editor: vim
   - server: bun run dev
-  - obsidian:
-      - cd ~/Documents/Obsidian\ Vault/
-      - vim
