@@ -42,6 +42,14 @@ return {
 					winblend = vim.o.pumblend,
 				},
 			},
+			fuzzy = {
+				implementation = "prefer_rust",
+			},
+			sources = {
+				per_filetype = {
+					codecompanion = { "codecompanion" },
+				},
+			},
 		},
 	},
 }
