@@ -1,65 +1,66 @@
 return {
-	-- lsp servers
-	{
-		"neovim/nvim-lspconfig",
-		opts = {
-			inlay_hints = { enabled = false },
-			servers = {
-				emmet_language_server = {
-					filetypes = {
-						"phtml",
-					},
-				},
-				html = {
-					filetypes = { "phtml" },
-				},
-			},
-		},
-	},
+  -- lsp servers
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      inlay_hints = { enabled = false },
+      servers = {
+        emmet_language_server = {
+          filetypes = {
+            "phtml",
+            "tsx",
+          },
+        },
+        html = {
+          filetypes = { "phtml" },
+        },
+      },
+    },
+  },
 
-	{
-		"mfussenegger/nvim-lint",
-		optional = true,
-		opts = {
-			linters = {
-				phpcs = {
-					args = {
-						"-q",
-						"--standard=PSR12",
-						"--exclude=Generic.WhiteSpace.DisallowTabIndent,Squiz.Functions.MultiLineFunctionDeclaration,PSR2.Classes.ClassDeclaration",
-						"--report=json",
-						"-",
-					},
-				},
-			},
-		},
-	},
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters = {
+        phpcs = {
+          args = {
+            "-q",
+            "--standard=PSR12",
+            "--exclude=Generic.WhiteSpace.DisallowTabIndent,Squiz.Functions.MultiLineFunctionDeclaration,PSR2.Classes.ClassDeclaration",
+            "--report=json",
+            "-",
+          },
+        },
+      },
+    },
+  },
 
-	{
-		{
-			"stevearc/conform.nvim",
-			optional = true,
-			opts = {
-				default_format_opts = {
-					timeout_ms = 10000,
-				},
-				formatters_by_ft = {
-					css = {
-						"prettier",
-						"stylelint",
-					},
-				},
-				formatters = {
-					php_cs_fixer = {
-						env = {
-							PHP_CS_FIXER_IGNORE_ENV = 1,
-						},
-						prepend_args = function()
-							return { "--config=" .. os.getenv("XDG_CONFIG_HOME") .. "/nvim/.php-cs-fixer.php" }
-						end,
-					},
-				},
-			},
-		},
-	},
+  {
+    {
+      "stevearc/conform.nvim",
+      optional = true,
+      opts = {
+        default_format_opts = {
+          timeout_ms = 10000,
+        },
+        formatters_by_ft = {
+          css = {
+            "prettier",
+            "stylelint",
+          },
+        },
+        formatters = {
+          php_cs_fixer = {
+            env = {
+              PHP_CS_FIXER_IGNORE_ENV = 1,
+            },
+            prepend_args = function()
+              return { "--config=" .. os.getenv("XDG_CONFIG_HOME") .. "/nvim/.php-cs-fixer.php" }
+            end,
+          },
+        },
+      },
+    },
+  },
 }

@@ -18,8 +18,17 @@ return {
         },
       },
       statuscolumn = { enabled = true },
+      styles = {
+        snacks_image = {
+          relative = "editor",
+          col = -1,
+        },
+      },
       image = {
         enabled = true,
+        wo = {
+          winhighlight = "FloatBorder:WhichKeyBorder",
+        },
         doc = {
           inline = false,
           float = true,
