@@ -34,6 +34,7 @@ return {
           readonly_icon = " 󰌾 ",
         }),
       }
+      opts.sections.lualine_x = vim.list_extend(opts.sections.lualine_x, { require("mcphub.extensions.lualine") })
       opts.sections.lualine_y = {
         "progress",
       }

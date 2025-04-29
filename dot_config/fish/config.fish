@@ -56,3 +56,5 @@ set show_file_or_dir_preview "if test -d {}; eza --tree --color=always {} | head
 
 set -x FZF_CTRL_T_OPTS "--preview '$show_file_or_dir_preview'"
 set -x FZF_ALT_C_OPTS "--preview 'eza --tree --color=always {} | head -199'"
+
+set -x SNACKS_GHOSTTY true

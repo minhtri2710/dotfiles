@@ -26,9 +26,6 @@ return {
       },
       image = {
         enabled = true,
-        wo = {
-          winhighlight = "FloatBorder:WhichKeyBorder",
-        },
         doc = {
           inline = false,
           float = true,
