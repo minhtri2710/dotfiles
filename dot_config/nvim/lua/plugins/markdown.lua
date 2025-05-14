@@ -10,7 +10,11 @@ return {
           enabled = true,
         },
       },
+      block = {
+        sign = true,
+      },
       heading = {
+        sign = true,
         icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
       },
       checkbox = {

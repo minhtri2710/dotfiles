@@ -37,28 +37,26 @@ return {
   },
 
   {
-    {
-      "stevearc/conform.nvim",
-      optional = true,
-      opts = {
-        default_format_opts = {
-          timeout_ms = 10000,
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      default_format_opts = {
+        timeout_ms = 10000,
+      },
+      formatters_by_ft = {
+        css = {
+          "prettier",
+          "stylelint",
         },
-        formatters_by_ft = {
-          css = {
-            "prettier",
-            "stylelint",
+      },
+      formatters = {
+        php_cs_fixer = {
+          env = {
+            PHP_CS_FIXER_IGNORE_ENV = 1,
           },
-        },
-        formatters = {
-          php_cs_fixer = {
-            env = {
-              PHP_CS_FIXER_IGNORE_ENV = 1,
-            },
-            prepend_args = function()
-              return { "--config=" .. os.getenv("XDG_CONFIG_HOME") .. "/nvim/.php-cs-fixer.php" }
-            end,
-          },
+          prepend_args = function()
+            return { "--config=" .. os.getenv("XDG_CONFIG_HOME") .. "/nvim/.php-cs-fixer.php" }
+          end,
         },
       },
     },

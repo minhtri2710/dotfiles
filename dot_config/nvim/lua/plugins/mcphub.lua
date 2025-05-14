@@ -1,11 +1,17 @@
 return {
-	{
-		"ravitemer/mcphub.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		cmd = "MCPHub",
-		build = "npm install -g mcp-hub@latest",
-		opts = {},
-	},
+  {
+    "ravitemer/mcphub.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    cmd = "MCPHub",
+    build = "npm install -g mcp-hub@latest",
+    opts = {
+      extensions = {
+        avante = {
+          make_slash_commands = true,
+        },
+      },
+    },
+  },
 }
