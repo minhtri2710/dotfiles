@@ -35,7 +35,6 @@ git:
   autoFetch: true
   autoRefresh: true
   branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --
-  allBranchesLogCmd: git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
   overrideGpg: false
   disableForcePushing: false
   commitPrefixes: {}
@@ -201,7 +200,6 @@ customCommands:
   - key: "C"
     context: "files"
     command: "git cz"
-    subprocess: true
 services: {}
 notARepository: skip
 promptToReturnFromSubprocess: true

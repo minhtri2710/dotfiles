@@ -1,7 +1,7 @@
 # /Users/beowulf/.config/tmuxinator/jay-portfolio.yml
 
 name: jay-portfolio
-root: ~/Documents/Projects/portfolio/
+root: ~/Documents/jay-portfolio/
 
 # Optional tmux socket
 # socket_name: foo
