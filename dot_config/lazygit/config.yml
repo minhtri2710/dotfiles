@@ -1,4 +1,7 @@
 gui:
+  theme:
+    selectedLineBgColor:
+      - "#013e4a"
   authorColors: {}
   branchColors: {}
   scrollHeight: 2
@@ -25,7 +28,7 @@ gui:
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
+    pager: delta --dark --paging=never --syntax-theme base16-256 -s --wrap-max-lines=10
   commit:
     signOff: false
   merging:
