@@ -23,6 +23,11 @@ return {
         sidebars = "transparent",
         floats = "transparent",
       },
+      on_highlights = function(hl)
+        hl.LineNr = { fg = "#ba34d1" }
+        hl.LineNrAbove = { fg = "#ba34d1" }
+        hl.LineNrBelow = { fg = "#a434eb" }
+      end,
     },
   },
 }

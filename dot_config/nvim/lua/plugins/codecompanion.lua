@@ -50,6 +50,24 @@ return {
             },
           },
         },
+        adapters = {
+          gemma3 = function()
+            return require("codecompanion.adapters").extend("ollama", {
+              name = "gemma3", -- Give this adapter a different name to differentiate it from the default ollama adapter
+              schema = {
+                model = {
+                  default = "gemma3:1b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
+              },
+            })
+          end,
+        },
       })
     end,
     keys = {

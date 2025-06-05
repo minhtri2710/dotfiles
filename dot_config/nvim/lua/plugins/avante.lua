@@ -8,8 +8,17 @@ return {
 
       provider = "copilot",
       auto_suggest_provider = "copilot",
-      copilot = {
-        model = "claude-3.5-sonnet",
+
+      providers = {
+        copilot = {
+          model = "gpt4.1",
+        },
+
+        ollama = {
+          model = "gemma3:1b",
+          num_ctx = 16384,
+          num_predict = -1,
+        },
       },
 
       -- File selector configuration
