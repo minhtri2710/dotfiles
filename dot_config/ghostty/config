@@ -1,0 +1,25 @@
+theme = tokyonight-storm
+font-size = 15
+font-family = JetBrainsMono NFM Bold
+background-opacity = 0.8
+background-blur-radius = 10
+mouse-hide-while-typing = true
+quick-terminal-screen = macos-menu-bar
+macos-titlebar-style = hidden
+window-padding-balance = true
+shell-integration-features = no-cursor, sudo, no-title
+cursor-style = block
+window-padding-x = 0
+quit-after-last-window-closed = true
+quick-terminal-position = bottom
+copy-on-select = clipboard
+macos-option-as-alt = true
+window-save-state = always
+auto-update = off
+
+# Keybindings
+keybind = cmd+s>t=toggle_quick_terminal
+keybind = cmd+s>r=reload_config
+
+#colors
+background = #1b0729
