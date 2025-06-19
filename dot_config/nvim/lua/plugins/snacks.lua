@@ -25,7 +25,7 @@ return {
         },
       },
       image = {
-        enabled = os.getenv("TMUX") == nil and true or false,
+        enabled = true,
         doc = {
           inline = false,
           float = true,
