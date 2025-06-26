@@ -1,6 +1,12 @@
 -- Helper function to merge options
 local function merge_opts(defaults, opts)
-  return vim.tbl_deep_extend("force", defaults, opts or {})
+  opts = opts or {}
+  if vim.tbl_deep_extend then
+    return vim.tbl_deep_extend("force", defaults, opts)
+  else
+    -- Fallback for older Neovim versions
+    return vim.tbl_extend("force", defaults, opts)
+  end
 end
 
 -- Reusable keymaps for CodeCompanion
@@ -11,13 +17,10 @@ local codecompanion_keymaps = {
 }
 
 -- Reusable roles for CodeCompanion
-local function get_codecompanion_roles()
-  local user = vim.env.USER or "Beowulf"
-  return {
-    llm = "  CodeCompanion",
-    user = "  " .. user,
-  }
-end
+local codecompanion_roles = {
+  llm = " CodeCompanion",
+  user = " " .. (vim.env.USER or "Beowulf"),
+}
 
 return {
   -- CodeCompanion plugin configuration
@@ -36,8 +39,12 @@ return {
       return merge_opts(opts, {
         strategies = {
           chat = {
-            roles = get_codecompanion_roles(),
+            roles = codecompanion_roles,
             keymaps = codecompanion_keymaps,
+            adapter = {
+              name = "copilot",
+              model = "claude-sonnet-4",
+            },
           },
         },
         extensions = {
@@ -94,9 +101,9 @@ return {
         function()
           local input = vim.fn.input("Enter your prompt: ")
           if input and input ~= "" then
-            vim.cmd(string.format("CodeCompanion %s", input))
+            vim.cmd("CodeCompanion " .. input)
           else
-            print("No input provided.")
+            vim.notify("No input provided.", vim.log.levels.WARN)
           end
         end,
         desc = "Inline prompt (CodeCompanion)",

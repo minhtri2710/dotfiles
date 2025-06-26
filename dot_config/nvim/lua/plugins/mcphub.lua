@@ -7,11 +7,7 @@ return {
     cmd = "MCPHub",
     build = "npm install -g mcp-hub@latest",
     opts = {
-      extensions = {
-        avante = {
-          make_slash_commands = true,
-        },
-      },
+      auto_approve = true,
     },
   },
 }

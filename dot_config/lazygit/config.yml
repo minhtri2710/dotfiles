@@ -6,7 +6,7 @@ gui:
   branchColors: {}
   scrollHeight: 2
   scrollPastBottom: true
-  mouseEvents: true
+  mouseEvents: false
   nerdFontsVersion: "3"
   skipDiscardChangeWarning: false
   skipStashWarning: false
@@ -200,9 +200,12 @@ customCommands:
   - key: "b"
     command: 'gh browse "{{.SelectedLocalCommit.Sha}}"'
     context: "commits"
-  - key: "C"
-    context: "files"
+  - key: "z"
     command: "git cz"
+    description: "commit with commitizen"
+    context: "files"
+    loadingText: "opening commitizen commit tool"
+    output: terminal
 services: {}
 notARepository: skip
 promptToReturnFromSubprocess: true
