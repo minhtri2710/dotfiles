@@ -23,6 +23,9 @@ return {
           relative = "editor",
           col = -1,
         },
+        terminal = {
+          position = "right",
+        },
       },
       image = {
         enabled = true,

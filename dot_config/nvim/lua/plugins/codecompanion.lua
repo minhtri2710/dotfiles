@@ -43,7 +43,7 @@ return {
             keymaps = codecompanion_keymaps,
             adapter = {
               name = "copilot",
-              model = "claude-sonnet-4",
+              model = "gpt-4.1",
             },
           },
         },
@@ -111,21 +111,6 @@ return {
       },
     },
   },
-
-  -- Edgy.nvim plugin configuration
-  {
-    "folke/edgy.nvim",
-    optional = true,
-    opts = function(_, opts)
-      opts.right = opts.right or {}
-      table.insert(opts.right, {
-        ft = "codecompanion",
-        title = "CodeCompanion Chat",
-        size = { width = 60 },
-      })
-    end,
-  },
-
   -- Blink.cmp plugin configuration
   {
     "saghen/blink.cmp",

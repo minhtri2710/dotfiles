@@ -5,7 +5,7 @@
 local config = {
   providers = {
     default = "copilot",
-    copilot_model = "claude-sonnet-4",
+    copilot_model = "gpt-4.1",
     ollama_model = "gemma3:1b",
     ollama_context = 16384,
   },
