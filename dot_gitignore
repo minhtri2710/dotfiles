@@ -7,3 +7,5 @@ nvim/lazy-lock.json
 package-lock.json
 prettier.config.js
 stylelint.config.js
+
+OpenCode.md

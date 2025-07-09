@@ -5,13 +5,13 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Map ctrl + esc to escape",
+                        "description": "Map right ctrl + esc to escape",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "escape",
                                     "modifiers": {
-                                        "mandatory": ["control"],
+                                        "mandatory": ["right_control"],
                                         "optional": ["any"]
                                     }
                                 },
@@ -21,13 +21,13 @@
                         ]
                     },
                     {
-                        "description": "Change control + h/j/k/l to arrows",
+                        "description": "Change right control + h/j/k/l to arrows",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
-                                        "mandatory": ["control"],
+                                        "mandatory": ["right_control"],
                                         "optional": ["caps_lock"]
                                     }
                                 },
@@ -38,7 +38,7 @@
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": {
-                                        "mandatory": ["control"],
+                                        "mandatory": ["right_control"],
                                         "optional": ["caps_lock"]
                                     }
                                 },
@@ -49,7 +49,7 @@
                                 "from": {
                                     "key_code": "k",
                                     "modifiers": {
-                                        "mandatory": ["control"],
+                                        "mandatory": ["right_control"],
                                         "optional": ["caps_lock"]
                                     }
                                 },
@@ -60,7 +60,7 @@
                                 "from": {
                                     "key_code": "l",
                                     "modifiers": {
-                                        "mandatory": ["control"],
+                                        "mandatory": ["right_control"],
                                         "optional": ["caps_lock"]
                                     }
                                 },
@@ -70,13 +70,13 @@
                         ]
                     },
                     {
-                        "description": "Map ctrl + [ to escape",
+                        "description": "Map right ctrl + [ to escape",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "open_bracket",
                                     "modifiers": {
-                                        "mandatory": ["control"],
+                                        "mandatory": ["right_control"],
                                         "optional": ["any"]
                                     }
                                 },
