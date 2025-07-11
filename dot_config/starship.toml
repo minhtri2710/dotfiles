@@ -17,4 +17,4 @@ threshold = 50
 disabled = false
 
 [line_break]
-disabled = true
+disabled = false
