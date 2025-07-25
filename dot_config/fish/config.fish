@@ -9,6 +9,7 @@ alias g git
 alias mux tmuxinator
 alias :q exit
 alias lg lazygit
+alias ld lazydocker
 alias v nvim
 alias vi nvim
 alias vim nvim
@@ -143,3 +144,5 @@ end
 
 #Rust
 set -gx RUSTUP_TOOLCHAIN nightly
+
+source ~/.config/fish/private.fish

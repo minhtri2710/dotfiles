@@ -21,6 +21,7 @@ quit-after-last-window-closed = true
 quick-terminal-position = bottom
 copy-on-select = clipboard
 macos-option-as-alt = true
+maximize = true
 window-save-state = always
 auto-update = off
 

@@ -1,6 +1,7 @@
 [tools]
 bun = "latest"
 ghq = "latest"
+go = "latest"
 rust = "latest"
 
 [settings]
