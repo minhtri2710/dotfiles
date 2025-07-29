@@ -14,25 +14,11 @@ return {
     lazy = true,
     dependencies = { "fang2hou/blink-copilot" },
     opts = {
-      completion = {
-        menu = {
-          winblend = vim.o.pumblend,
-        },
-        documentation = {
-          window = {
-            winblend = vim.o.pumblend,
-          },
-        },
-      },
-      signature = {
-        window = {
-          winblend = vim.o.pumblend,
-        },
-      },
       fuzzy = {
         implementation = "prefer_rust_with_warning",
       },
       sources = {
+        default = { "lsp", "path", "snippets", "buffer", "lazydev" },
         providers = {
           copilot = {
             module = "blink-copilot",

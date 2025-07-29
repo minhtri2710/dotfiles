@@ -1,0 +1,68 @@
+{
+  "mcpServers": {
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "command": "npx",
+      "env": {}
+    },
+    "github": {
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "command": "docker",
+      "disabled": false,
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "github.com/smithery-ai/mcp-obsidian": {
+      "args": [
+        "-y",
+        "mcp-obsidian",
+        "/Users/beowulf/Documents/obsidian"
+      ],
+      "command": "npx",
+      "env": {}
+    },
+    "github.com/zcaceres/markdownify-mcp": {
+      "args": [
+        "/Users/beowulf/.mcphub/servers/markdownify-mcp/dist/index.js"
+      ],
+      "command": "node",
+      "env": {}
+    },
+    "memory": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "command": "npx"
+    },
+    "sequentialthinking": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "command": "npx"
+    },
+    "serena": {
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena-mcp-server",
+        "--context",
+        "ide-assistant"
+      ],
+      "command": "uvx",
+      "disabled": false
+    }
+  }
+}

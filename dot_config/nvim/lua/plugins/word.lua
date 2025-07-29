@@ -4,7 +4,6 @@ return {
     dependencies = { "archie-judd/blink-cmp-words" },
     opts = {
       sources = {
-        default = { "lsp", "path", "lazydev" },
         providers = {
           thesaurus = {
             name = "blink-cmp-words",
@@ -25,8 +24,8 @@ return {
           },
         },
         per_filetype = {
-          text = { "dictionary" },
-          markdown = { "thesaurus" },
+          text = { inherit_defaults = true, "dictionary" },
+          markdown = { inherit_defaults = true, "thesaurus" },
         },
       },
     },

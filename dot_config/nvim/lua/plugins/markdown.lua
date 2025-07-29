@@ -20,6 +20,9 @@ return {
       },
       checkbox = {
         enabled = true,
+        unchecked = { icon = "✘ " },
+        checked = { icon = "✔ ", scope_highlight = "@markup.strikethrough" },
+        custom = { todo = { rendered = "◯ " } },
       },
     },
   },
