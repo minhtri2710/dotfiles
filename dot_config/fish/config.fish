@@ -1,5 +1,14 @@
 set fish_greeting
-set -gx TERM xterm-256color
+
+if test -n "$TMUX"
+    set -gx TERM tmux-256color
+else if test "$TERM_PROGRAM" = ghostty
+    set -gx TERM xterm-ghostty
+else
+    set -gx TERM xterm-256color
+end
+
+set -gx COLORTERM truecolor
 
 # aliases
 alias grep "grep -n --color "

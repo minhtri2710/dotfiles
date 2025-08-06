@@ -32,6 +32,12 @@ return {
             "-",
           },
         },
+        ["markdownlint-cli2"] = {
+          args = {
+            "--config",
+            os.getenv("XDG_CONFIG_HOME") .. "/nvim/.markdownlint.json",
+          },
+        },
       },
     },
   },

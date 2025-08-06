@@ -10,3 +10,12 @@ stylelint.config.js
 
 OpenCode.md
 .opencode
+
+.bmad-core
+.crush
+AGENTS.md
+.github
+.claude
+.vscode
+.serena
+.gemini
