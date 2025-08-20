@@ -27,6 +27,7 @@ alias la "ls -a"
 alias ll "ls -g"
 alias l1 "ls -g -1 "
 alias lla "ll -a"
+alias rm trash
 
 set -gx EDITOR nvim
 

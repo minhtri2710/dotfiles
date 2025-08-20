@@ -12,6 +12,34 @@ return {
             truncate = 80,
           },
         },
+        sources = {
+          explorer = {
+            actions = {
+              explorer_del = function(picker)
+                local paths = vim.tbl_map(Snacks.picker.util.path, picker:selected({ fallback = true }))
+                if #paths == 0 then
+                  return
+                end
+                local what = #paths == 1 and vim.fn.fnamemodify(paths[1], ":p:~:.") or #paths .. " files"
+                local Actions = require("snacks.explorer.actions")
+                Actions.confirm("Delete " .. what .. "?", function()
+                  for _, path in ipairs(paths) do
+                    local ok, err = pcall(vim.fn.system, "trash " .. path)
+                    if ok then
+                      Snacks.bufdelete({ file = path, force = true })
+                    else
+                      Snacks.notify.error("Failed to delete `" .. path .. "`:\n- " .. err)
+                    end
+                    local Tree = require("snacks.explorer.tree")
+                    Tree:refresh(vim.fs.dirname(path))
+                  end
+                  picker.list:set_selected()
+                  Actions.update(picker)
+                end)
+              end,
+            },
+          },
+        },
       },
       statuscolumn = { enabled = true },
       styles = {
@@ -33,6 +61,7 @@ return {
         },
       },
       dashboard = {
+        enabled = false,
         preset = {
           header = [[
 ████████╗██████╗ ██╗    ████████╗██████╗  █████╗ ███╗   ██╗

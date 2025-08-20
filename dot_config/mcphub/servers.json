@@ -1,31 +1,42 @@
 {
   "mcpServers": {
     "context7": {
-      "args": ["-y", "@upstash/context7-mcp"],
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
       "command": "npx"
     },
     "markitdown": {
-      "command": "markitdown-mcp",
-      "disabled": false
+      "command": "markitdown-mcp"
     },
     "mcp-obsidian": {
-      "args": ["-y", "mcp-obsidian", "/Users/beowulf/Documents/obsidian"],
-      "command": "npx"
-    },
-    "memory": {
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "args": [
+        "-y",
+        "mcp-obsidian",
+        "/Users/beowulf/Documents/obsidian"
+      ],
       "command": "npx"
     },
     "playwright": {
-      "args": ["@playwright/mcp@latest"],
+      "args": [
+        "@playwright/mcp@latest"
+      ],
       "command": "npx"
     },
     "prisma": {
-      "args": ["-y", "prisma", "mcp"],
+      "args": [
+        "-y",
+        "prisma",
+        "mcp"
+      ],
       "command": "npx"
     },
     "sequentialthinking": {
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
       "command": "npx"
     },
     "serena": {
@@ -41,7 +52,10 @@
       "disabled": false
     },
     "taskwarrior": {
-      "args": ["-y", "mcp-server-taskwarrior"],
+      "args": [
+        "-y",
+        "mcp-server-taskwarrior"
+      ],
       "command": "npx"
     }
   }

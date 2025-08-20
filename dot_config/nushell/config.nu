@@ -929,14 +929,17 @@ alias g = git
 alias v = nvim
 alias vi = nvim 
 alias vim = nvim
-alias tig = ^"C:/Program Files/Git/usr/bin/tig.exe"
+alias ab = C:/xampp-8.1/apache/bin/ab.exe
+alias abs = C:/xampp-8.1/apache/bin/abs.exe
+alias tig = C:/Program Files/Git/usr/bin/tig.exe
 alias lg = lazygit
 alias ':q' = exit
 alias cls = clear
 alias mux = tmuxinator
-alias la = eza --color=always -l --icons=always -a
-alias ll = eza --color=always -l --icons=always -g
-alias l1 = eza --color=always -l --icons=always -g -1 
+alias ls = eza --color=always -l --icons=always
+alias la = ls -a
+alias ll = ls -g
+alias l1 = ls -g -1 
 alias lla = ll -a
 
 #Source
@@ -949,5 +952,3 @@ source menus/zoxide-menu.nu
 source ~/.zoxide.nu
 
 use ~/.cache/starship/init.nu
-
-use ($nu.default-config-dir | path join mise.nu)
