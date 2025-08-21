@@ -1,9 +1,12 @@
 -- ============================================================================
--- DNS Manager for Work Network Automation
--- Automatically manages DNS servers based on Wi-Fi network connection
+-- DNS Manager for Work Network Automation (Refactored)
+-- - Improved logging, command handling, and debounce logic
+-- - Preserves original behavior: remove Google DNS on work SSID, restore on leave
 -- ============================================================================
 
 local DNSManager = {}
+
+local logger = hs.logger.new("DNSManager")
 
 -- Configuration
 local CONFIG = {
@@ -27,65 +30,65 @@ local state = {
 	debounceTimer = nil,
 }
 
--- ============================================================================
--- Utility Functions
--- ============================================================================
-
-local function executeCommand(cmd)
-	local success, output, exitType = hs.execute(cmd)
+-- -----------------------------------------------------------------------------
+-- Utilities
+-- -----------------------------------------------------------------------------
+local function runCommand(cmd)
+	-- Execute a shell command and return output or nil on failure
+	local output, success = hs.execute(cmd)
 	if not success then
-		hs.logger.new("DNSManager"):e("Command failed: " .. cmd)
+		logger:e("Command failed: " .. cmd)
 		return nil
 	end
 	return output
 end
 
 local function isEmptyDNSResponse(response)
-	return response:match("There aren't any DNS Servers") or response:match("There are no DNS Servers")
+	if type(response) ~= "string" then
+		return false
+	end
+	return response:find("There aren't any DNS Servers") or response:find("There are no DNS Servers")
 end
 
 local function parseLines(text)
-	local lines = {}
+	local out = {}
 	for line in text:gmatch("[^\r\n]+") do
 		local trimmed = line:match("^%s*(.-)%s*$")
-		if trimmed and trimmed ~= "" then
-			lines[#lines + 1] = trimmed
+		if trimmed ~= "" then
+			out[#out + 1] = trimmed
 		end
 	end
-	return lines
+	return out
 end
 
-local function arrayEquals(arr1, arr2)
-	if #arr1 ~= #arr2 then
+local function tablesEqual(a, b)
+	if #a ~= #b then
 		return false
 	end
-	for i = 1, #arr1 do
-		if arr1[i] ~= arr2[i] then
+	for i = 1, #a do
+		if a[i] ~= b[i] then
 			return false
 		end
 	end
 	return true
 end
 
--- ============================================================================
--- DNS Management Functions
--- ============================================================================
-
+-- -----------------------------------------------------------------------------
+-- DNS helpers
+-- -----------------------------------------------------------------------------
 function DNSManager.getDNSServers(service)
 	if not service or service == "" then
 		return {}
 	end
 
-	local response = executeCommand('networksetup -getdnsservers "' .. service .. '"')
-	if not response or type(response) ~= "string" then
+	local resp = runCommand('networksetup -getdnsservers "' .. service .. '"')
+	if not resp or type(resp) ~= "string" then
 		return {}
 	end
-
-	if isEmptyDNSResponse(response) then
+	if isEmptyDNSResponse(resp) then
 		return {}
 	end
-
-	return parseLines(response)
+	return parseLines(resp)
 end
 
 function DNSManager.setDNSServers(service, servers)
@@ -97,100 +100,98 @@ function DNSManager.setDNSServers(service, servers)
 	if #servers == 0 then
 		cmd = cmd .. " Empty"
 	else
-		for i, server in ipairs(servers) do
-			cmd = cmd .. " " .. server
-		end
+		cmd = cmd .. " " .. table.concat(servers, " ")
 	end
 
-	return executeCommand(cmd) ~= nil
+	local ok = runCommand(cmd) ~= nil
+	if not ok then
+		logger:w("Failed to set DNS servers for " .. tostring(service))
+	end
+	return ok
 end
 
-function DNSManager.removeDNSServers(currentServers, serversToRemove)
-	-- Create lookup table for O(1) removal check
+function DNSManager.removeDNSServers(current, toRemove)
 	local removeSet = {}
-	for _, server in ipairs(serversToRemove) do
-		removeSet[server] = true
+	for _, s in ipairs(toRemove) do
+		removeSet[s] = true
 	end
 
 	local filtered = {}
-	for _, server in ipairs(currentServers) do
-		if not removeSet[server] then
-			filtered[#filtered + 1] = server
+	for _, s in ipairs(current) do
+		if not removeSet[s] then
+			filtered[#filtered + 1] = s
 		end
 	end
 	return filtered
 end
 
-function DNSManager.mergeDNSServers(priorityServers, existingServers)
+function DNSManager.mergeDNSServers(priority, existing)
 	local seen = {}
 	local merged = {}
-
-	-- Add priority servers first
-	for _, server in ipairs(priorityServers) do
-		if not seen[server] then
-			merged[#merged + 1] = server
-			seen[server] = true
+	for _, s in ipairs(priority) do
+		if not seen[s] then
+			merged[#merged + 1] = s
+			seen[s] = true
 		end
 	end
-
-	-- Add existing servers that aren't duplicates
-	for _, server in ipairs(existingServers) do
-		if not seen[server] then
-			merged[#merged + 1] = server
-			seen[server] = true
+	for _, s in ipairs(existing) do
+		if not seen[s] then
+			merged[#merged + 1] = s
+			seen[s] = true
 		end
 	end
-
 	return merged
 end
 
--- ============================================================================
--- Network Event Handlers
--- ============================================================================
-
+-- -----------------------------------------------------------------------------
+-- Handlers
+-- -----------------------------------------------------------------------------
 function DNSManager.handleWorkNetworkJoined()
-	local currentServers = DNSManager.getDNSServers(CONFIG.wifiService)
-	local filteredServers = DNSManager.removeDNSServers(currentServers, CONFIG.googleDNS)
+	local current = DNSManager.getDNSServers(CONFIG.wifiService)
+	local filtered = DNSManager.removeDNSServers(current, CONFIG.googleDNS)
 
-	if not arrayEquals(currentServers, filteredServers) then
-		if DNSManager.setDNSServers(CONFIG.wifiService, filteredServers) then
+	if not tablesEqual(current, filtered) then
+		if DNSManager.setDNSServers(CONFIG.wifiService, filtered) then
 			hs.alert.show(CONFIG.alerts.workDetected)
+			logger:i("Removed prioritized DNS servers on work SSID")
 		else
 			hs.alert.show(CONFIG.alerts.error)
+			logger:e("Failed to remove prioritized DNS servers on work SSID")
 		end
 	end
 end
 
 function DNSManager.handleWorkNetworkLeft()
-	local currentServers = DNSManager.getDNSServers(CONFIG.wifiService)
-	local mergedServers = DNSManager.mergeDNSServers(CONFIG.googleDNS, currentServers)
+	local current = DNSManager.getDNSServers(CONFIG.wifiService)
+	local merged = DNSManager.mergeDNSServers(CONFIG.googleDNS, current)
 
-	if not arrayEquals(currentServers, mergedServers) then
-		if DNSManager.setDNSServers(CONFIG.wifiService, mergedServers) then
+	if not tablesEqual(current, merged) then
+		if DNSManager.setDNSServers(CONFIG.wifiService, merged) then
 			hs.alert.show(CONFIG.alerts.leftWork)
+			logger:i("Restored prioritized DNS servers after leaving work SSID")
 		else
 			hs.alert.show(CONFIG.alerts.error)
+			logger:e("Failed to restore prioritized DNS servers after leaving work SSID")
 		end
 	end
 end
 
 function DNSManager.handleNetworkChange()
 	local newSSID = hs.wifi.currentNetwork()
-
-	-- Avoid processing the same network change multiple times
-	if state.currentSSID == newSSID then
+	-- Short-circuit if nothing changed
+	if newSSID == state.currentSSID then
 		return
 	end
 
-	-- Cancel any pending debounce timer
+	-- update current and debounce processing
+	state.currentSSID = newSSID
 	if state.debounceTimer then
 		state.debounceTimer:stop()
 		state.debounceTimer = nil
 	end
 
-	-- Debounce network changes to avoid rapid switching
 	state.debounceTimer = hs.timer.doAfter(CONFIG.debounceTime, function()
-		-- Only process if the network actually changed from last processed state
+		-- If the processed SSID matches last processed, nothing to do
 		if state.currentSSID == state.lastSSID then
 			state.debounceTimer = nil
 			return
@@ -202,30 +203,26 @@ function DNSManager.handleNetworkChange()
 			DNSManager.handleWorkNetworkLeft()
 		end
 
-		-- Update state tracking
 		state.lastSSID = state.currentSSID
 		state.debounceTimer = nil
 	end)
-
-	-- Update current SSID immediately for duplicate detection and debounced processing
-	state.currentSSID = newSSID
 end
 
--- ============================================================================
--- Module Initialization
--- ============================================================================
-
+-- -----------------------------------------------------------------------------
+-- Lifecycle
+-- -----------------------------------------------------------------------------
 function DNSManager.start()
 	if state.wifiWatcher then
 		state.wifiWatcher:stop()
 	end
-
-	state.wifiWatcher = hs.wifi.watcher.new(DNSManager.handleNetworkChange)
+	state.wifiWatcher = hs.wifi.watcher.new(function()
+		DNSManager.handleNetworkChange()
+	end)
 	state.wifiWatcher:start()
-
-	-- Initial network check
 	state.currentSSID = hs.wifi.currentNetwork()
-	hs.logger.new("DNSManager"):i("DNS Manager started")
+	logger:i("DNS Manager started")
+	-- Trigger a check immediately (debounced)
+	DNSManager.handleNetworkChange()
 end
 
 function DNSManager.stop()
@@ -233,17 +230,14 @@ function DNSManager.stop()
 		state.wifiWatcher:stop()
 		state.wifiWatcher = nil
 	end
-
 	if state.debounceTimer then
 		state.debounceTimer:stop()
 		state.debounceTimer = nil
 	end
-
-	hs.logger.new("DNSManager"):i("DNS Manager stopped")
+	logger:i("DNS Manager stopped")
 end
 
--- Start the DNS manager
+-- Auto-start
 DNSManager.start()
 
--- Export for testing or manual control
 return DNSManager
