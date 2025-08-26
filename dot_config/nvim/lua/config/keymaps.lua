@@ -8,10 +8,6 @@ keymap.set("n", "x", '"_x')
 keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 keymap.set("n", "<leader>Y", [["+Y]])
 
--- Disable continuations
-keymap.set("n", "<leader>o", "o<Esc>^Da", opts)
-keymap.set("n", "<leader>O", "O<Esc>^Da", opts)
-
 -- New tab
 keymap.set("n", "te", ":tabedit<Return>")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
