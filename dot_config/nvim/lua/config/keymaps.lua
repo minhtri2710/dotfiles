@@ -28,7 +28,3 @@ keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
 keymap.set("n", "J", "mzJ`z")
-
-keymap.set("n", "<leader>r", function()
-  require("beowulf.hsl").replaceHexWithHSL()
-end)

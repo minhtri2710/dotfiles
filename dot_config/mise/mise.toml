@@ -2,6 +2,7 @@
 bun = "latest"
 ghq = "latest"
 go = "latest"
+python = "latest"
 rust = "latest"
 
 [settings]

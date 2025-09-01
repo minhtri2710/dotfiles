@@ -8,7 +8,6 @@ return {
         emmet_language_server = {
           filetypes = {
             "phtml",
-            "tsx",
           },
         },
         html = {

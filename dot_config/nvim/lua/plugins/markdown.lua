@@ -1,5 +1,15 @@
 return {
   {
+    "iamcco/markdown-preview.nvim",
+    enabled = false,
+  },
+  {
+    "brianhuster/live-preview.nvim",
+    dependencies = {
+      "folke/snacks.nvim",
+    },
+  },
+  {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
       completions = {
@@ -43,15 +53,20 @@ return {
       ui = {
         enable = false,
       },
+      open_notes_in = "vsplit",
+      note_path_func = function(spec)
+        local absolute_dir = "/Users/beowulf/Documents/notes"
+        local path = require("obsidian.path")
+        local new_path = path.new(absolute_dir) / tostring(spec.id)
+
+        return new_path:with_suffix(".md")
+      end,
+
       workspaces = {
         {
-          name = "Obsidian",
+          name = "no-vault",
           path = function()
-            if (vim.fn.has("win32")) == 1 then
-              return "C:/Users/tri.tran/Downloads/Obsidian/Beowulf"
-            end
-
-            return "~/Documents/obsidian/Second Brain/"
+            return assert(vim.fs.dirname(vim.api.nvim_buf_get_name(0)))
           end,
         },
       },

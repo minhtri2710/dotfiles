@@ -23,15 +23,6 @@
         "ide-assistant"
       ]
     },
-    "mcp-obsidian": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "mcp-obsidian",
-        "/Users/beowulf/Documents/obsidian"
-      ]
-    },
     "sequentialthinking": {
       "type": "local",
       "command": [
@@ -47,11 +38,6 @@
     "prisma": {
       "type": "local",
       "command": ["npx", "-y", "prisma", "mcp"]
-    },
-    "markitdown": {
-      "type": "local",
-      "command": ["markitdown-mcp"],
-      "enabled": true
     }
   }
 }
