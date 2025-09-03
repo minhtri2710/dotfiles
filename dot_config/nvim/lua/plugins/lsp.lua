@@ -6,12 +6,10 @@ return {
       inlay_hints = { enabled = false },
       servers = {
         emmet_language_server = {
-          filetypes = {
-            "phtml",
-          },
+          filetypes_include = { "phtml" },
         },
         html = {
-          filetypes = { "phtml" },
+          filetypes_include = { "phtml" },
         },
       },
     },

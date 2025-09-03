@@ -14,8 +14,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*.phtml",
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "phtml",
   callback = function()
     vim.b.autoformat = false
   end,
