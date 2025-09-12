@@ -28,3 +28,5 @@ keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
 keymap.set("n", "J", "mzJ`z")
+
+keymap.set("n", "<leader>mp", ":MarkdownPreview<Return>")
