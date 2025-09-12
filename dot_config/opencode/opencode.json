@@ -2,11 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   "theme": "tokyonight",
   "autoupdate": true,
-  "agent": {
-    "review": {
-      "description": "Reviews code for best practices and potential issues"
-    }
-  },
   "mcp": {
     "context7": {
       "type": "local",
