@@ -1,7 +1,7 @@
 return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "notes" },
+    ft = "markdown",
     opts = {
       completions = {
         lsp = {
@@ -88,6 +88,10 @@ return {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
     opts = {
+      completion = {
+        nvim_cmp = false,
+        blink = true,
+      },
       workspaces = {
         {
           name = "SecondBrain",
@@ -100,9 +104,17 @@ return {
       daily_notes = {
         folder = "notes/dailies",
       },
+
       open_notes_in = "vsplit",
       checkbox = {
         order = { " ", "x" },
+      },
+      attachments = {
+        -- img_text_func = function(client, path)
+        --   path = client:vault_relative_path(path) or path
+        --   local path_string = vim.uri_encode(vim.fs.basename(tostring(path)))
+        --   return string.format("![%s](%s)", path.name, path_string)
+        -- end,
       },
       ui = {
         enable = false,

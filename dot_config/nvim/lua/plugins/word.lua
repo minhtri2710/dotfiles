@@ -24,8 +24,18 @@ return {
           },
         },
         per_filetype = {
-          text = { inherit_defaults = true, "dictionary" },
-          markdown = { inherit_defaults = true, "thesaurus" },
+          text = function()
+            return {
+              inherit_defaults = true,
+              "dictionary",
+            }
+          end,
+          markdown = function()
+            return {
+              inherit_defaults = true,
+              "thesaurus",
+            }
+          end,
         },
       },
     },
