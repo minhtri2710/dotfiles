@@ -15,4 +15,17 @@ return {
       end,
     },
   },
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    opts = {},
+  },
+  {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+  },
+  {
+    "diegoulloao/neofusion.nvim",
+    lazy = false,
+  },
 }

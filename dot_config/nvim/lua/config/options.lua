@@ -45,9 +45,10 @@ if (vim.fn.has("win32")) == 1 then
     vim.opt.shellquote = ""
     vim.opt.shellxquote = ""
   end
-
-  vim.g.lazyvim_php_lsp = "intelephense"
 end
+
+-- Change lsp php in lazyvim
+vim.g.lazyvim_php_lsp = "intelephense"
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])

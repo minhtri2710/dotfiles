@@ -123,7 +123,8 @@
                         "product_id": 43554,
                         "vendor_id": 4661
                     },
-                    "ignore": false
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": true,
@@ -132,6 +133,34 @@
                         "product_id": 1,
                         "vendor_id": 18003
                     }
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 16403,
+                        "vendor_id": 12625
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 16402,
+                        "vendor_id": 12625
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 16405,
+                        "vendor_id": 12625
+                    },
+                    "ignore": false
                 }
             ],
             "name": "Default profile",
