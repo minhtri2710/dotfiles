@@ -5,6 +5,9 @@ return {
     opts = {
       inlay_hints = { enabled = false },
       servers = {
+        phpactor = {
+          enabled = true,
+        },
         emmet_language_server = {
           filetypes_include = { "phtml" },
         },
