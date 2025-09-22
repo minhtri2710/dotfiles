@@ -7,7 +7,7 @@ return {
   },
   {
     "giuxtaposition/blink-cmp-copilot",
-j   enabled = false,
+    enabled = false,
   },
   {
     "saghen/blink.cmp",

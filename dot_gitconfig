@@ -62,8 +62,8 @@
 	name = Tri.Tran
 [interactive]
   diffFilter = delta --color-only
-[delta]
-  navigate = true
-  side-by-side = true
 [merge]
   conflictstyle = diff3
+[include]
+  path = ~/.config/delta/delta.gitconfig
+  path = ~/.config/delta/tokyonight_storm.gitconfig
