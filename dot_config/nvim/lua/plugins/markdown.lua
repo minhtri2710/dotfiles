@@ -29,6 +29,7 @@ return {
   },
   {
     "tadmccorkle/markdown.nvim",
+    enabled = false,
     ft = "markdown",
     keys = {
       {
@@ -86,7 +87,6 @@ return {
   },
   {
     "obsidian-nvim/obsidian.nvim",
-    version = "*",
     opts = {
       completion = {
         nvim_cmp = false,
@@ -104,8 +104,6 @@ return {
       daily_notes = {
         folder = "notes/dailies",
       },
-
-      open_notes_in = "vsplit",
       checkbox = {
         order = { " ", "x" },
       },

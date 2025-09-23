@@ -30,3 +30,5 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 keymap.set("n", "J", "mzJ`z")
 
 keymap.set("n", "<leader>mp", ":MarkdownPreview<Return>")
+
+keymap.set("n", "<leader>N", ":vsplit | ObsidianToday<Return>", opts)
