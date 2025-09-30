@@ -10,8 +10,6 @@ keymap.set("n", "<leader>Y", [["+Y]])
 
 -- New tab
 keymap.set("n", "te", ":tabedit<Return>")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 -- Split window
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)

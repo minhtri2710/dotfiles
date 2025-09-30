@@ -28,4 +28,8 @@ return {
     "diegoulloao/neofusion.nvim",
     lazy = false,
   },
+  {
+    "olimorris/onedarkpro.nvim",
+    lazy = false,
+  },
 }

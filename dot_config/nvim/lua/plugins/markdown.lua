@@ -11,7 +11,7 @@ return {
           enabled = true,
         },
       },
-      block = {
+      code = {
         sign = true,
       },
       heading = {
@@ -26,6 +26,25 @@ return {
         custom = { todo = { rendered = "◯ " } },
       },
     },
+    config = function(_, opts)
+      -- call the plugin setup with the opts
+      local ok, rm = pcall(require, "render-markdown")
+      if ok and type(rm.setup) == "function" then
+        rm.setup(opts)
+      end
+
+      -- ensure tree-sitter highlighter is started for markdown buffers
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "markdown",
+        callback = function(args)
+          local bufnr = args.buf
+          local okp, parser = pcall(vim.treesitter.get_parser, bufnr, "markdown")
+          if okp and parser then
+            pcall(vim.treesitter.start, bufnr, "markdown")
+          end
+        end,
+      })
+    end,
   },
   {
     "tadmccorkle/markdown.nvim",
@@ -87,6 +106,7 @@ return {
   },
   {
     "obsidian-nvim/obsidian.nvim",
+    lazy = false,
     opts = {
       completion = {
         nvim_cmp = false,
