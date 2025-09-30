@@ -28,11 +28,12 @@
     },
     "playwright": {
       "type": "local",
-      "command": ["npx", "@playwright/mcp@latest"]
-    },
-    "prisma": {
-      "type": "local",
-      "command": ["npx", "-y", "prisma", "mcp"]
+      "command": [
+        "npx",
+        "@playwright/mcp@latest",
+        "--config",
+        "/Users/beowulf/.config/playwright/config.json"
+      ]
     }
   }
 }

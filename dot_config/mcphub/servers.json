@@ -5,11 +5,11 @@
       "command": "npx"
     },
     "playwright": {
-      "args": ["@playwright/mcp@latest"],
-      "command": "npx"
-    },
-    "prisma": {
-      "args": ["-y", "prisma", "mcp"],
+      "args": [
+        "@playwright/mcp@latest",
+        "--config",
+        "/Users/beowulf/.config/playwright/config.json"
+      ],
       "command": "npx"
     },
     "sequentialthinking": {
