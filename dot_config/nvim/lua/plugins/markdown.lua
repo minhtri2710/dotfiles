@@ -107,6 +107,14 @@ return {
   {
     "obsidian-nvim/obsidian.nvim",
     lazy = false,
+    keys = {
+      {
+        "<leader>N",
+        ":vsplit | ObsidianToday<Return>",
+        desc = "Open today's note in Obsidian",
+        mode = "n",
+      },
+    },
     opts = {
       completion = {
         nvim_cmp = false,

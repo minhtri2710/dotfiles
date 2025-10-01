@@ -4,12 +4,16 @@ return {
     opts = {},
     keys = {
       {
+        "<leader>aa",
+        false,
+      },
+      {
         "<leader>as",
         function()
           require("sidekick.cli").toggle({ focus = true })
         end,
-        desc = "Sidekick Toggle CLI",
-        mode = { "n", "v" },
+        desc = "Sidekick Toggle",
+        mode = { "n" },
       },
     },
   },
