@@ -38,6 +38,11 @@
     "shopify-mcp": {
       "type": "local",
       "command": ["npx", "-y", "@shopify/dev-mcp@latest"]
+    },
+    "knowledge-graph": {
+      "type": "remote",
+      "url": "http://127.0.0.1:27495/mcp/sse"
     }
   }
 }
+

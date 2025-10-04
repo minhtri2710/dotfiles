@@ -31,6 +31,10 @@
     "shopify-mcp": {
       "args": ["-y", "@shopify/dev-mcp@latest"],
       "command": "npx"
+    },
+    "knowledge-graph": {
+      "type": "remote",
+      "url": "http://127.0.0.1:27495/mcp/sse"
     }
   }
 }
