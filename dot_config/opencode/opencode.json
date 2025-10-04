@@ -34,6 +34,10 @@
         "--config",
         "/Users/beowulf/.config/playwright/config.json"
       ]
+    },
+    "shopify-mcp": {
+      "type": "local",
+      "command": ["npx", "-y", "@shopify/dev-mcp@latest"]
     }
   }
 }

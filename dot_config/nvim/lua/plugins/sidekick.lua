@@ -1,7 +1,14 @@
 return {
   {
     "folke/sidekick.nvim",
-    opts = {},
+    opts = {
+      cli = {
+        mux = {
+          backend = "tmux",
+          enabled = true,
+        },
+      },
+    },
     keys = {
       {
         "<leader>aa",

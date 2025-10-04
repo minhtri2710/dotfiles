@@ -69,6 +69,8 @@ set -x FZF_CTRL_T_OPTS "--preview '$show_file_or_dir_preview'"
 set -x FZF_ALT_C_OPTS "--preview 'eza --tree --color=always {} | head -199'"
 
 set -x SNACKS_GHOSTTY true
+
+#Atuin
 set -gx ATUIN_SESSION (atuin uuid)
 set --erase ATUIN_HISTORY_ID
 
@@ -147,7 +149,7 @@ bind \eOA _atuin_bind_up
 bind \e\[A _atuin_bind_up
 if bind -M insert >/dev/null 2>&1
     bind -M insert \cr _atuin_search
-    bind -M insert -k up _atuin_bind_up
+    bind -M insert up _atuin_bind_up
     bind -M insert \eOA _atuin_bind_up
     bind -M insert \e\[A _atuin_bind_up
 end

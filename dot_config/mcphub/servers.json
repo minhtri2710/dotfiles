@@ -27,6 +27,10 @@
       ],
       "command": "uvx",
       "disabled": false
+    },
+    "shopify-mcp": {
+      "args": ["-y", "@shopify/dev-mcp@latest"],
+      "command": "npx"
     }
   }
 }
