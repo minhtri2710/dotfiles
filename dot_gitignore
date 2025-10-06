@@ -1,22 +1,119 @@
+# System files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Development tools
 nvim/lazy-lock.json
-.git
 *dprint*
 .php-cs-fixer.cache
-
-package-lock.json
 prettier.config.js
 stylelint.config.js
 
-OpenCode.md
-.opencode
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+.next
+out
+build
+dist
 
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Vercel
+.vercel
+.vercel.json
+
+# Testing
+/coverage/
+/.nyc_output
+test-results/
+playwright-report/
+/playwright/.cache/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Cache directories
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# TypeScript
+*.tsbuildinfo
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# Temporary folders
+tmp/
+temp/
+
+# AI and automation tools
 .bmad-core
 .crush
 AGENTS.md
-.github
 .claude
-.vscode
 .serena
 .gemini
 .specify
+OpenCode.md
+.opencode
+
+# Git (if needed for nested repos)
+.git
+

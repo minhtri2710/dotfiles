@@ -18,7 +18,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.vscode" },
-    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.test.core" },
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     { import = "lazyvim.plugins.extras.coding.yanky" },
@@ -49,9 +48,9 @@ require("lazy").setup({
   install = { colorscheme = { "tokyonight" } },
   checker = { enabled = true, notify = false }, -- automatically check for plugin updates
   performance = {
-      cache = {
-        enabled = true,
-      },
+    cache = {
+      enabled = true,
+    },
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
