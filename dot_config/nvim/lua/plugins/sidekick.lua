@@ -67,6 +67,13 @@ return {
           desc = "Send Visual Selection",
         },
         {
+          "<leader>asf",
+          function()
+            require("sidekick.cli").send({ msg = "{file}" })
+          end,
+          desc = "Send File",
+        },
+        {
           "<leader>asp",
           function()
             require("sidekick.cli").prompt()
@@ -75,12 +82,12 @@ return {
           desc = "Sidekick Select Prompt",
         },
         {
-          "<c-.>",
+          "<C-.>",
           function()
-            require("sidekick.cli").focus()
+            require("sidekick.cli").toggle()
           end,
-          mode = { "n", "x", "i", "t" },
-          desc = "Sidekick Switch Focus",
+          desc = "Sidekick Toggle",
+          mode = { "n", "t", "i", "x" },
         },
         {
           "<leader>aso",

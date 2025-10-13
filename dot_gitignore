@@ -95,6 +95,8 @@ pids
 *.tsbuildinfo
 
 # Storybook build outputs
+/.react-router/
+/build/
 .out
 .storybook-out
 storybook-static
@@ -113,7 +115,11 @@ AGENTS.md
 .specify
 OpenCode.md
 .opencode
+openspec
 
 # Git (if needed for nested repos)
 .git
 
+# React Router
+/.react-router/
+/build/

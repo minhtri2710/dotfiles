@@ -3,37 +3,13 @@
   "theme": "tokyonight",
   "autoupdate": true,
   "mcp": {
-    "context7": {
+    "exa": {
       "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"]
+      "command": ["npx", "-y", "mcp-remote", "https://mcp.exa.ai/mcp"]
     },
-    "serena": {
+    "chrome-devtools": {
       "type": "local",
-      "command": [
-        "uvx",
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena-mcp-server",
-        "--context",
-        "ide-assistant"
-      ]
-    },
-    "sequentialthinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    },
-    "playwright": {
-      "type": "local",
-      "command": [
-        "npx",
-        "@playwright/mcp@latest",
-        "--config",
-        "/Users/beowulf/.config/playwright/config.json"
-      ]
+      "command": ["npx", "chrome-devtools-mcp@latest"]
     },
     "shopify-mcp": {
       "type": "local",
@@ -42,7 +18,19 @@
     "knowledge-graph": {
       "type": "remote",
       "url": "http://127.0.0.1:27495/mcp/sse"
+    },
+    "prisma": {
+      "type": "local",
+      "command": ["npx", "-y", "prisma", "mcp"]
+    }
+  },
+  "lsp": {
+    "php": {
+      "command": [
+        "/Users/beowulf/.local/share/nvim/mason/packages/intelephense/node_modules/.bin/intelephense",
+        "--stdio"
+      ],
+      "extensions": [".php"]
     }
   }
 }
-
