@@ -9,6 +9,16 @@ return {
         },
       },
     },
+    keys = {
+      { "<leader>ac", false },
+      {
+        "<leader>ao",
+        function()
+          require("sidekick.cli").toggle({ name = "opencode", focus = true })
+        end,
+        desc = "Sidekick Toggle OpenCode",
+      },
+    },
   },
   {
     "saghen/blink.cmp",

@@ -48,7 +48,6 @@ return {
   },
   {
     "tadmccorkle/markdown.nvim",
-    enabled = false,
     ft = "markdown",
     keys = {
       {

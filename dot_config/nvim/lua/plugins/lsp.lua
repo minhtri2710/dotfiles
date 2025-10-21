@@ -54,6 +54,9 @@ return {
           "prettier",
           "stylelint",
         },
+        http = {
+          "kulala",
+        },
       },
       formatters = {
         php_cs_fixer = {
@@ -63,6 +66,9 @@ return {
           prepend_args = function()
             return { "--config=" .. os.getenv("XDG_CONFIG_HOME") .. "/nvim/.php-cs-fixer.php" }
           end,
+        },
+        kulala = {
+          command = { "kulala" },
         },
       },
     },

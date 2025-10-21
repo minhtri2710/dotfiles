@@ -32,4 +32,8 @@ return {
     "olimorris/onedarkpro.nvim",
     lazy = false,
   },
+  {
+    "tahayvr/matteblack.nvim",
+    lazy = false,
+  },
 }
