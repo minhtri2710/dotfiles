@@ -21,7 +21,7 @@ nvim/lazy-lock.json
 prettier.config.js
 stylelint.config.js
 
-# Next.js
+#Output
 /.next/
 /out/
 next-env.d.ts

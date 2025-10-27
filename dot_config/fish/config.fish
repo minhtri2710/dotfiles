@@ -157,4 +157,8 @@ end
 #Rust
 set -gx RUSTUP_TOOLCHAIN nightly
 
+#OpenCode
+set -gx OPENCODE_DISABLE_AUTOCOMPACT 1 # Disable broken compaction
+set -gx OPENCODE_DISABLE_PRUNE 1 # Disable potentially buggy pruning
+
 source ~/.config/fish/private.fish

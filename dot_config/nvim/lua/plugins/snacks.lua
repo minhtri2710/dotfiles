@@ -22,7 +22,8 @@ return {
                 end
                 local what = #paths == 1 and vim.fn.fnamemodify(paths[1], ":p:~:.") or #paths .. " files"
                 local Actions = require("snacks.explorer.actions")
-                Actions.confirm("Delete " .. what .. "?", function()
+                local util = require("snacks.picker.util")
+                util.confirm("Delete " .. what .. "?", function()
                   for _, path in ipairs(paths) do
                     local ok, err = pcall(vim.fn.system, "trash " .. path)
                     if ok then
