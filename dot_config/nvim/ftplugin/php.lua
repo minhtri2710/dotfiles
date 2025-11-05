@@ -1,4 +1,4 @@
-vim.o.shiftwidth = 4
-vim.o.tabstop = 4
-vim.o.wrap = true
-vim.o.expandtab = false
+vim.opt_local.shiftwidth = 4
+vim.opt_local.tabstop = 4
+vim.opt_local.wrap = true
+vim.opt_local.expandtab = false
