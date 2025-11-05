@@ -15,6 +15,7 @@
   interactive = auto
   grep = auto
   ui = auto
+  colorMoved = default
 [alias]
   a = "!git status --short | fzf | awk '{print $2}' | xargs git add"
   d = diff
@@ -67,5 +68,5 @@
 [merge]
   conflictstyle = diff3
 [include]
+  path = ~/.config/delta/themes.gitconfig
   path = ~/.config/delta/delta.gitconfig
-  path = ~/.config/delta/tokyonight_storm.gitconfig

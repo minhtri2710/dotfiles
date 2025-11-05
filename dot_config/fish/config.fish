@@ -28,6 +28,7 @@ alias ll "ls -g"
 alias l1 "ls -g -1 "
 alias lla "ll -a"
 alias rm trash
+alias oc opencode
 
 set -gx EDITOR nvim
 
@@ -43,9 +44,6 @@ starship init fish | source
 
 #Zoxide
 zoxide init --cmd cd fish | source
-
-# Bat (Better Cat)
-set -x BAT_THEME tokyonight_night
 
 #Set Env
 set -x XDG_CONFIG_HOME ~/.config

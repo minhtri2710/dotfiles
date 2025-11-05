@@ -3,6 +3,21 @@ return {
     "saghen/blink.cmp",
     dependencies = { "archie-judd/blink-cmp-words" },
     opts = {
+      completion = {
+        menu = {
+          border = "rounded",
+        },
+        documentation = {
+          window = {
+            border = "rounded",
+          },
+        },
+      },
+      signature = {
+        window = {
+          border = "rounded",
+        },
+      },
       sources = {
         providers = {
           thesaurus = {

@@ -1,29 +1,29 @@
 gui:
   theme:
     activeBorderColor:
-      - "#ff9e64"
+      - "#a277ff"
       - "bold"
     inactiveBorderColor:
-      - "#29a4bd"
+      - "#88bfd1"
     searchingActiveBorderColor:
-      - "#ff9e64"
+      - "#ffca85"
       - "bold"
     optionsTextColor:
-      - "#7aa2f7"
+      - "#82e2ff"
     selectedLineBgColor:
-      - "#2e3c64"
+      - "#1f262f"
     cherryPickedCommitFgColor:
-      - "#7aa2f7"
+      - "#82e2ff"
     cherryPickedCommitBgColor:
-      - "#bb9af7"
+      - "#f694ff"
     markedBaseCommitFgColor:
-      - "#7aa2f7"
+      - "#82e2ff"
     markedBaseCommitBgColor:
-      - "#e0af68"
+      - "#ffd49b"
     unstagedChangesColor:
-      - "#db4b4b"
+      - "#cc5252"
     defaultFgColor:
-      - "#c0caf5"
+      - "#edecee"
   authorColors: {}
   branchColors: {}
   scrollHeight: 2
@@ -48,9 +48,9 @@ gui:
   commandLogSize: 8
   splitDiff: auto
 git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never -s --wrap-max-lines=10
+  pagers:
+    - pager: delta --dark --paging=never -s --wrap-max-lines=10
+      colorArg: always
   commit:
     signOff: false
   merging:
@@ -161,7 +161,7 @@ keybinding:
     viewResetOptions: D
     fetch: f
     toggleTreeView: "`"
-    openMergeTool: M
+    openMergeOptions: M
     openStatusFilter: <c-b>
   branches:
     createPullRequest: o

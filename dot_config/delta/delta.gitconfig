@@ -1,4 +1,4 @@
 [delta]
-  features = tokyonight_storm
+  features = custom
   navigate = true
   side-by-side = true

@@ -29,6 +29,8 @@ return {
       opts.sections.lualine_z = {
         "location",
       }
+
+      return opts
     end,
   },
 
