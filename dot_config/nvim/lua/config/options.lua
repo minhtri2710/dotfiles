@@ -32,17 +32,26 @@ vim.opt.mouse = ""
 vim.opt.listchars:append({ space = "•" })
 
 vim.opt.shell = "fish"
-if (vim.fn.has("win32")) == 1 then
-  vim.opt.shell = "nu"
-  if vim.opt.shell._value == "nu" then
+if vim.fn.has("win32") == 1 then
+  -- Detect the configured shell name (tail of the path) and normalize to lowercase
+  local shell = vim.o.shell or ""
+  local shname = shell:lower():match("([^/\\]+)$") or shell:lower()
+
+  if shname:match("nu") then
+    -- nushell
     vim.opt.shellcmdflag = "-c"
     vim.opt.shellxquote = ""
-  else
+  elseif shname:match("pwsh") or shname:match("powershell") then
+    -- PowerShell / pwsh
     vim.opt.shellcmdflag =
       "-NoProfile -NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
     vim.opt.shellredir = ""
     vim.opt.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
     vim.opt.shellquote = ""
+    vim.opt.shellxquote = ""
+  else
+    -- Fallback for other shells (cmd, bash, etc.)
+    vim.opt.shellcmdflag = "-c"
     vim.opt.shellxquote = ""
   end
 end

@@ -1,3 +1,4 @@
+shell-integration = fish
 theme = Aura
 
 font-size = 15
