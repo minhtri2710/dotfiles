@@ -9,8 +9,8 @@
     "edit": "ask",
     "bash": "ask"
   },
-  "model": "github-copilot/gpt-5-mini",
-  "small_model": "github-copilot/gpt-5-mini",
+  "model": "github-copilot/oswe-vscode-prime",
+  "small_model": "github-copilot/oswe-vscode-prime",
   "theme": "aura",
   "keybinds": {
     "messages_page_up": "ctrl+alt+u",
@@ -24,6 +24,7 @@
       "command": ["npx", "-y", "mcp-remote", "https://mcp.exa.ai/mcp"]
     },
     "chrome-devtools": {
+      "enabled": false,
       "type": "local",
       "command": ["npx", "-y", "chrome-devtools-mcp@latest"]
     },
@@ -42,13 +43,5 @@
       "command": ["beads-mcp"]
     }
   },
-  "lsp": {
-    "php": {
-      "command": [
-        "/Users/beowulf/.local/share/nvim/mason/packages/intelephense/node_modules/.bin/intelephense",
-        "--stdio"
-      ],
-      "extensions": [".php"]
-    }
-  }
+  "plugin": ["opencode-skills"]
 }
