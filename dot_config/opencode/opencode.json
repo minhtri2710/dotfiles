@@ -13,10 +13,9 @@
   "small_model": "github-copilot/oswe-vscode-prime",
   "theme": "aura",
   "keybinds": {
-    "messages_page_up": "ctrl+alt+u",
-    "messages_page_down": "ctrl+alt+d",
-    "messages_half_page_up": "ctrl+u",
-    "messages_half_page_down": "ctrl+d"
+    "messages_half_page_up": "alt+b",
+    "messages_half_page_down": "alt+f",
+    "command_list": "ctrl+shift+p"
   },
   "mcp": {
     "exa": {
@@ -43,5 +42,17 @@
       "command": ["beads-mcp"]
     }
   },
-  "plugin": ["opencode-skills"]
+  "plugin": ["opencode-skills", "opencode-sessions", "opencode-gemini-auth"],
+  "provider": {
+    "github-copilot": {
+      "api": "https://api.individual.githubcopilot.com",
+      "models": {
+        "gpt-5.1-codex": {
+          "provider": {
+            "npm": "@ai-sdk/openai"
+          }
+        }
+      }
+    }
+  }
 }

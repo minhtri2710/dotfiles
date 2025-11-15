@@ -30,6 +30,7 @@ vim.opt.splitright = true -- Put new windows right of current
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
 vim.opt.listchars:append({ space = "•" })
+vim.opt.swapfile = false
 
 vim.opt.shell = "fish"
 if vim.fn.has("win32") == 1 then

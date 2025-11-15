@@ -54,9 +54,6 @@ return {
           "prettier",
           "stylelint",
         },
-        http = {
-          "kulala",
-        },
       },
       formatters = {
         php_cs_fixer = {

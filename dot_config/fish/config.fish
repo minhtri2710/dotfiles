@@ -38,7 +38,6 @@ set -gx PATH ~/.local/bin $PATH
 set -gx PATH node_modules/.bin $PATH
 set -gx PATH /nix/var/nix/profiles/default/bin $PATH
 set -gx PATH ~/.nix-profile/bin $PATH
-set -gx PATH ~/Library/Python/3.9/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
 
 set fzf_preview_dir_cmd lla
