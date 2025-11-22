@@ -11,7 +11,10 @@ end
 set -gx COLORTERM truecolor
 
 # aliases
-alias grep "grep -n --color "
+alias grep "rg --color=always "
+alias find "fd --color=always "
+alias sed sd
+alias man tldr
 alias fgrep "fgrep -n --color "
 alias cls clear
 alias g git

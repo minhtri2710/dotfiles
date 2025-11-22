@@ -1,7 +1,6 @@
 ---
 description: "Code review, security, and quality assurance agent"
 mode: subagent
-model: github-copilot/claude-4.5-sonnet
 temperature: 0.1
 tools:
   read: true
@@ -45,4 +44,3 @@ Then give a short summary of the review.
 - Load project patterns and security guidelines
 - Analyze code against established conventions
 - Flag deviations from team standards
-
