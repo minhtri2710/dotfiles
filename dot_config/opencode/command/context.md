@@ -85,4 +85,3 @@ etc.
 - **Focus on developer needs**: What would a new team member need to know?
 - **Identify gaps**: Missing documentation, setup issues, etc.
 - **Practical insights**: Actual workflow vs documented workflow
-

@@ -1,3 +1,65 @@
+-- Set default search directories for todo lists
+vim.g.markdown_todo_dirs = vim.g.markdown_todo_dirs or { "~/second-brain/notes/dailies" }
+
+-- Custom picker for markdown todo lists
+local function search_todos(status)
+  local dirs = vim.g.markdown_todo_dirs
+
+  if type(dirs) == "string" then
+    dirs = { dirs }
+  end
+
+  -- Expand paths
+  local expanded_dirs = {}
+  for _, dir in ipairs(dirs) do
+    local expanded = vim.fn.expand(dir)
+    table.insert(expanded_dirs, expanded)
+  end
+
+  -- Build ripgrep pattern for different todo formats
+  -- Supports: - [ ], - [x], TODO:, DONE:, etc.
+  local pattern
+  local title
+
+  if status == "done" then
+    -- Match: - [x], - [X], DONE:
+    pattern = "(^\\s*-\\s*\\[[xX]\\])|(^\\s*DONE:)"
+    title = "✓ Done Tasks"
+  elseif status == "todo" then
+    -- Match: - [ ], TODO:, - TODO
+    pattern = "(^\\s*-\\s*\\[\\s\\])|(^\\s*TODO:)|(^\\s*-\\s*TODO)"
+    title = "☐ Todo Tasks"
+  else
+    -- All todos: checkboxes + TODO/DONE keywords
+    pattern = "(^\\s*-\\s*\\[[\\sxX]\\])|(^\\s*(TODO|DONE):)|(^\\s*-\\s*TODO)"
+    title = "☑ All Todos"
+  end
+
+  Snacks.picker.grep({
+    title = title,
+    search = pattern,
+    regex = true,
+    live = false,
+    args = {
+      "--type=md",
+      "--trim",
+    },
+    dirs = expanded_dirs,
+    confirm = function(picker, item)
+      picker:close()
+      vim.cmd("vsplit " .. vim.fn.fnameescape(item.file))
+      if item.pos and item.pos[1] then
+        vim.api.nvim_win_set_cursor(0, { item.pos[1], 0 })
+      end
+    end,
+    formatters = {
+      file = {
+        filename_only = true,
+      },
+    },
+  })
+end
+
 return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
@@ -132,10 +194,37 @@ return {
         folder = "notes/dailies",
       },
       checkbox = {
+        create_new = true,
         order = { " ", "x" },
       },
       ui = {
         enable = false,
+      },
+    },
+  },
+  {
+    "folke/snacks.nvim",
+    keys = {
+      {
+        "<leader>mt",
+        function()
+          search_todos("todo")
+        end,
+        desc = "Markdown: Search Todo Items",
+      },
+      {
+        "<leader>md",
+        function()
+          search_todos("done")
+        end,
+        desc = "Markdown: Search Done Items",
+      },
+      {
+        "<leader>ma",
+        function()
+          search_todos("all")
+        end,
+        desc = "Markdown: Search All Todos",
       },
     },
   },

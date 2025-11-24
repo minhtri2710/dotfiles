@@ -1,5 +1,4 @@
 set fish_greeting
-
 if test -n "$TMUX"
     set -gx TERM tmux-256color
 else if test "$TERM_PROGRAM" = ghostty
@@ -11,11 +10,10 @@ end
 set -gx COLORTERM truecolor
 
 # aliases
-alias grep "rg --color=always "
-alias find "fd --color=always "
+alias grep rg
 alias sed sd
 alias man tldr
-alias fgrep "fgrep -n --color "
+alias fgrep "rg -F"
 alias cls clear
 alias g git
 alias mux tmuxinator
@@ -82,7 +80,8 @@ set -gx RUSTUP_TOOLCHAIN nightly
 
 #OpenCode
 set -gx OPENCODE_DISABLE_AUTOCOMPACT 1 # Disable broken compaction
-set -gx OPENCODE_DISABLE_PRUNE 1 # Disable potentially buggy pruning
+# set -gx OPENCODE_DISABLE_PRUNE 1 # Disable potentially buggy pruning
+set -gx OPENCODE_EXPERIMENTAL 1 # Enable experimental features
 
 #Private
 source ~/.config/fish/private.fish

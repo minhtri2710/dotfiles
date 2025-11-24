@@ -19,8 +19,12 @@
   },
   "mcp": {
     "exa": {
+      "enabled": false,
       "type": "local",
-      "command": ["npx", "-y", "mcp-remote", "https://mcp.exa.ai/mcp"]
+      "command": ["npx", "-y", "mcp-remote", "https://mcp.exa.ai/mcp"],
+      "environment": {
+        "EXA_API_KEY": "{env:EXA_API_KEY}"
+      }
     },
     "chrome-devtools": {
       "enabled": false,
@@ -42,17 +46,5 @@
       "command": ["beads-mcp"]
     }
   },
-  "plugin": ["opencode-skills", "opencode-sessions", "opencode-gemini-auth"],
-  "provider": {
-    "github-copilot": {
-      "api": "https://api.individual.githubcopilot.com",
-      "models": {
-        "gpt-5.1-codex": {
-          "provider": {
-            "npm": "@ai-sdk/openai"
-          }
-        }
-      }
-    }
-  }
+  "plugin": ["opencode-skills", "opencode-sessions", "opencode-gemini-auth"]
 }
