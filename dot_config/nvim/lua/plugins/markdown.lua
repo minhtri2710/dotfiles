@@ -79,7 +79,6 @@ return {
       heading = {
         sign = true,
         position = "inline",
-        icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
       },
       checkbox = {
         enabled = true,

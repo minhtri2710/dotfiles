@@ -44,7 +44,9 @@ return (new Config())
 		'cast_spaces' => [
 			'space' => 'none',
 		],
-		'import_symbols' => false,
+		'fully_qualified_strict_types' => [
+			'import_symbols' => false,
+		],
 	])
 	->setIndent("\t")
 	->setFinder($finder);

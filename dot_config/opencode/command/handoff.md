@@ -1,108 +1,97 @@
 ---
-description: Continue work in a new thread with relevant context (no compaction - fresh start)
+description: Continue work in fresh thread with focused context. Cleaner than compaction. Supports agent relay and parallel exploration.
+model: google/gemini-2.5-flash
 ---
 
 # Handoff Command
 
-Continue your work from one thread in a new thread with focused context. **Keep threads small and focused on a single task.**
+Transfer work between threads or agents. Fresh context beats accumulated noise.
 
-## Philosophy: No More Compaction
+## Philosophy
 
-**Why handoff instead of compaction?**
+**Small threads, big clarity.**
 
-Compaction tries to keep everything in one thread, leading to:
-- Accumulated noise from failed attempts
-- Mixed concerns in a single thread
-- Bloated context windows
-- Harder to share specific work
+Compaction keeps everything in one thread, leading to:
+- Noise from failed attempts
+- Mixed concerns
+- Bloated context
+- Hard to share
 
 **Handoff creates a clean slate** while preserving what matters.
 
-## How Handoff Works
+## Session Modes
 
-Using the `session` tool with `mode: "new"`:
+| Mode | Purpose | When to Use |
+|------|---------|-------------|
+| `new` | Fresh thread with relevant context | Phase transitions, clean starts |
+| `message` | Same thread, different agent | Need help within conversation |
+| `fork` | Parallel independent threads | Try multiple approaches |
+| `compact` | Compress current thread | Last resort, must stay in thread |
 
-1. **Extracts Relevant Context**
-   - Files that were modified or discussed
-   - Key decisions and insights
-   - Relevant code references
+## Handoff Patterns
 
-2. **Creates Fresh Thread**
-   - Clean context window
-   - Focused on the next step
-   - Easy to share independently
-
-3. **Provides Direction**
-   - Your guidance shapes the new thread's focus
-
-## Usage
-
-### Basic Handoff (New Thread)
-
-Use `mode: "new"` to start fresh with relevant context:
+### Phase Transitions
 
 ```javascript
+// Planning → Implementation
 session({
   mode: "new",
-  agent: "build", // optional: specify agent (plan, build, oracle, etc.)
-  text: "now implement this for teams as well, not just individual users"
+  agent: "build",
+  text: "Implement the plan we created for user authentication"
+});
+
+// Implementation → Testing
+session({
+  mode: "new",
+  agent: "tester",
+  text: "Write comprehensive tests for the auth feature"
+});
+
+// Testing → Review
+session({
+  mode: "new", 
+  agent: "review",
+  text: "Review the auth implementation and tests"
 });
 ```
 
-### Direction Examples
-
-Provide clear guidance for the new thread:
-
-- `"execute phase one of the created plan"`
-- `"check the rest of the codebase and find other places that need this fix"`
-- `"apply the same refactoring pattern to the backend API"`
-- `"write tests for the implementation we just created"`
-- `"based on the research, implement option 2"`
-
-## When to Use Handoff
-
-**Good times for handoff**:
-- ✅ Completed one phase, moving to the next
-- ✅ Fixed one issue, need to apply elsewhere
-- ✅ Finished planning, ready to implement
-- ✅ Thread has too many failed attempts
-- ✅ Want to share just one part of work
-
-**Common patterns**:
-- Planning → Implementation: `"now implement the plan we created"`
-- Fix → Propagate: `"apply this fix to all similar cases"`
-- Feature → Tests: `"write comprehensive tests for this feature"`
-- Research → Action: `"implement the researched solution"`
-
-## Other Session Modes
-
-### Collaboration (Same Context)
-
-Use `mode: "message"` when you need another agent's help within the same conversation:
+### Agent Collaboration
 
 ```javascript
+// Get architectural guidance
 session({
   mode: "message",
-  agent: "review",
-  text: "Please review the code I just generated above."
+  agent: "oracle",
+  text: "Should we use microservices here? Analyze the trade-offs."
+});
+
+// Quick code review
+session({
+  mode: "message",
+  agent: "review", 
+  text: "Review the code I just generated above."
 });
 ```
 
-### Parallel Exploration (Fork)
-
-Use `mode: "fork"` to try multiple approaches simultaneously:
+### Parallel Exploration
 
 ```javascript
+// Try two approaches simultaneously
 session({
   mode: "fork",
   agent: "build",
   text: "Implement using Redux"
 });
+
+session({
+  mode: "fork",
+  agent: "build",
+  text: "Implement using Context API"
+});
+// Compare results, pick the best
 ```
 
 ### Manual Compression (Last Resort)
-
-Use `mode: "compact"` only if you must stay in the same thread:
 
 ```javascript
 session({
@@ -111,18 +100,41 @@ session({
 });
 ```
 
-**Note**: Prefer handoff (`mode: "new"`) over compaction for cleaner threads.
+## Direction Examples
 
-## Thread Best Practices
+Provide clear guidance for new threads:
+
+| Direction | New Thread Focus |
+|-----------|------------------|
+| "Execute phase one of the plan" | Scoped implementation |
+| "Apply this fix to all similar cases" | Pattern propagation |
+| "Write tests for what we just built" | Test coverage |
+| "Research option 2 further" | Deeper investigation |
+| "Check the rest of the codebase for this pattern" | Codebase-wide search |
+
+## When to Handoff
+
+| Situation | Action |
+|-----------|--------|
+| Completed one phase | Handoff to next phase |
+| Fixed one issue | Handoff to propagate fix |
+| Too many failed attempts | Fresh start |
+| Need specific expertise | Hand to specialized agent |
+| Want to share part of work | Isolate in own thread |
+
+## Agent Relay Patterns
+
+```
+Research → Plan → Build → Review → Fix
+
+Librarian ──▶ Oracle ──▶ Smart ──▶ Review ──▶ Rush
+(research)   (design)   (impl)    (review)   (fixes)
+```
+
+## Best Practices
 
 1. **One task per thread**: Keep focus tight
-2. **Handoff between phases**: Plan → Implement → Test → Review
-3. **Fresh start when stuck**: Don't debug in messy threads
-4. **Share specific work**: Each thread is independently shareable
-
-## Agent Handoff Patterns
-
-- **Research → Plan**: Librarian research → Oracle architecture
-- **Plan → Build**: Oracle spec → Build implementation
-- **Build → Review**: Implementation → Review for bugs
-- **Review → Fix**: Bug findings → Build fixes them
+2. **Handoff between phases**: Don't mix planning with implementation
+3. **Fresh start when stuck**: Debug in clean threads
+4. **Use the right agent**: Match agent to task type
+5. **Explicit direction**: Tell new thread exactly what to do

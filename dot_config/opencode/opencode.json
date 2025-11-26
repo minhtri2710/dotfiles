@@ -5,13 +5,33 @@
     "docs/guidelines.md",
     ".cursor/rules/*.md"
   ],
+  "tools": {
+    "read": true,
+    "write": true,
+    "edit": true,
+    "bash": true,
+    "grep": true,
+    "glob": true,
+    "list": true,
+    "webfetch": true,
+    "websearch": true,
+    "codesearch": true,
+    "task": true
+  },
   "permission": {
     "edit": "ask",
-    "bash": "ask"
+    "bash": "ask",
+    "webfetch": "allow"
   },
   "model": "github-copilot/oswe-vscode-prime",
   "small_model": "github-copilot/oswe-vscode-prime",
   "theme": "aura",
+  "tui": {
+    "scroll_speed": 3,
+    "scroll_acceleration": {
+      "enabled": true
+    }
+  },
   "keybinds": {
     "messages_half_page_up": "alt+b",
     "messages_half_page_down": "alt+f",
@@ -31,6 +51,25 @@
       "enabled": true,
       "type": "local",
       "command": ["beads-mcp"]
+    },
+    "context7": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp",
+        "--api-key",
+        "{env:CONTEXT7_API_KEY}"
+      ]
+    },
+    "perplexity": {
+      "enabled": true,
+      "type": "local",
+      "command": ["npx", "-y", "perplexity-mcp"],
+      "environment": {
+        "PERPLEXITY_API_KEY": "{env:PERPLEXITY_API_KEY}"
+      }
     }
   },
   "plugin": [
