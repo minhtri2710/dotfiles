@@ -87,3 +87,11 @@ Stop and hand off to **Smart** or **Oracle** when you hit:
 - Don't rush security-sensitive code
 - Don't rush without understanding the change
 - Don't create tech debt to save 5 minutes
+
+<code_exploration>
+Read and understand relevant files before proposing code edits. Do not speculate about code you have not inspected. If the user references a specific file or path, open and inspect it before explaining or proposing fixes.
+</code_exploration>
+
+<over_engineering_prevention>
+Avoid over-engineering. Only make changes that are directly requested or clearly necessary. Keep solutions simple and focused. Don't add features, refactor code, or make "improvements" beyond what was asked. The right amount of complexity is the minimum needed for the current task.
+</over_engineering_prevention>

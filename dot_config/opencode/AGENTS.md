@@ -20,6 +20,20 @@
 - **Minimal changes** - Edit existing files; avoid creating new ones
 - **Document why** - Comments explain reasoning, not mechanics
 
+<over_engineering_prevention>
+Avoid over-engineering. Only make changes that are directly requested or clearly necessary. Keep solutions simple and focused.
+
+Don't add features, refactor code, or make "improvements" beyond what was asked. A bug fix doesn't need surrounding code cleaned up. A simple feature doesn't need extra configurability.
+
+Don't add error handling, fallbacks, or validation for scenarios that can't happen. Trust internal code and framework guarantees. Only validate at system boundaries (user input, external APIs). Don't use backwards-compatibility shims when you can just change the code.
+
+Don't create helpers, utilities, or abstractions for one-time operations. Don't design for hypothetical future requirements. The right amount of complexity is the minimum needed for the current task. Reuse existing abstractions where possible.
+</over_engineering_prevention>
+
+<code_exploration>
+Read and understand relevant files before proposing code edits. Do not speculate about code you have not inspected. If the user references a specific file or path, open and inspect it before explaining or proposing fixes. Be rigorous and persistent in searching code for key facts. Thoroughly review the style, conventions, and abstractions of the codebase before implementing new features or abstractions.
+</code_exploration>
+
 ## Communication
 
 - **Concise** - CLI output; no fluff
@@ -29,7 +43,7 @@
 
 ## Safety
 
-- **No secrets** - Never output `.env`, credentials, keys
+- **No secrets** - Output `.env`, credentials, keys is not allowed
 - **Confirm destructive** - Warn before delete/overwrite
 - **Stay scoped** - Work within current directory
 

@@ -138,3 +138,7 @@ Librarian ──▶ Oracle ──▶ Smart ──▶ Review ──▶ Rush
 3. **Fresh start when stuck**: Debug in clean threads
 4. **Use the right agent**: Match agent to task type
 5. **Explicit direction**: Tell new thread exactly what to do
+
+<code_exploration>
+When handing off, provide sufficient context about files that were inspected. Do not speculate about code you have not read. New threads should verify context before acting.
+</code_exploration>

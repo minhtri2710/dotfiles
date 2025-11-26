@@ -143,3 +143,7 @@ User provides:
   - Graceful fallback if provider unavailable
 
 **Output**: Complete setup ready for implementation.
+
+<code_exploration>
+Read and understand the existing codebase before proposing feature structure. Do not speculate about code you have not inspected. Thoroughly review existing patterns to ensure the new feature integrates well.
+</code_exploration>

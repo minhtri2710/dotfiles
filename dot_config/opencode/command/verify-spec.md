@@ -154,3 +154,7 @@ Based on results:
 ```
 
 **Output**: Detailed compliance report showing alignment between spec and implementation.
+
+<code_exploration>
+Read and understand the implementation thoroughly before reporting compliance. Do not speculate about code you have not inspected. Every finding should be backed by specific file:line references.
+</code_exploration>

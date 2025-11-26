@@ -143,3 +143,11 @@ Run phases separately when needed:
 ```
 
 **Output**: Complete flow from specification through tested, verified implementation.
+
+<code_exploration>
+Read and understand relevant files before proposing specifications or implementations. Do not speculate about code you have not inspected. Thoroughly review the style, conventions, and abstractions of the codebase before designing new features.
+</code_exploration>
+
+<over_engineering_prevention>
+Implement only what is specified. Avoid over-engineering. Don't add features, refactor code, or make "improvements" beyond what was asked. The right amount of complexity is the minimum needed for the current task.
+</over_engineering_prevention>

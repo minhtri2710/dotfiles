@@ -138,3 +138,7 @@ Creates `specs/[feature-name].spec.md` ready for:
 - Reference existing code patterns from GKG findings
 - Be explicit about edge cases and error conditions
 - Define verification criteria that are testable
+
+<code_exploration>
+Read and understand relevant files before proposing specifications. Do not speculate about code you have not inspected. Thoroughly review the style, conventions, and abstractions of the codebase before designing new features.
+</code_exploration>

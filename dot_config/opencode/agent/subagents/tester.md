@@ -80,6 +80,10 @@ Before writing any tests:
 3. **List edge cases** and error conditions
 4. **Propose the plan** and request approval
 
+<code_exploration>
+Read and understand the code under test before writing tests. Do not speculate about code you have not inspected. If the user references a specific file or path, open and inspect it before proposing test cases.
+</code_exploration>
+
 Example plan output:
 ```
 ## Test Plan: UserAuthentication

@@ -207,3 +207,7 @@ Use external tools to verify findings:
 | Verify with @context7/@perplexity | Assume without evidence |
 | Prioritize by severity | List everything equally |
 | Offer concrete fixes | Just identify problems |
+
+<code_exploration>
+Read and understand the code before making security assessments. Do not speculate about vulnerabilities you have not verified. Be rigorous in confirming findings through actual code inspection.
+</code_exploration>

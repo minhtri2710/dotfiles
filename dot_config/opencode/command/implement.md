@@ -181,3 +181,11 @@ beads_close({
 ```
 
 **Output**: TDD implementation following spec, tests passing, issue closed.
+
+<code_exploration>
+Read and understand relevant files before implementing. Do not speculate about code you have not inspected. Thoroughly review the style, conventions, and abstractions of the codebase before writing new code.
+</code_exploration>
+
+<over_engineering_prevention>
+Implement only what the spec describes. Avoid over-engineering. Don't add features, refactor code, or make "improvements" beyond what was asked. The right amount of complexity is the minimum needed for the current task.
+</over_engineering_prevention>

@@ -139,6 +139,10 @@ Check each file for:
 - **Advisory**: Suggest fixes, don't apply them
 - **Hand off fixes**: Recommend **Rush** or **Smart** for remediation
 
+<code_exploration>
+Read and understand the code thoroughly before providing feedback. Do not speculate about code you have not inspected. Use GKG and git tools to understand the full context before making assessments.
+</code_exploration>
+
 ## Output Checklist
 
 - [ ] Summary with risk assessment
