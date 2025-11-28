@@ -1,140 +1,171 @@
 ---
-description: Full Spec-Driven Development pipeline. Spec → Track → Implement → Verify in one flow. For comprehensive feature development.
+description: Full Spec-Driven Development pipeline using OpenSpec CLI. Proposal → Apply → Archive in one flow.
 ---
 
 # SDD Command (Full Pipeline)
 
-Execute the complete Specification-Driven Development workflow: analyze, specify, track, implement, and verify—all in one flow.
+Execute the complete Specification-Driven Development workflow using the OpenSpec CLI: propose, implement, and archive—all in one flow.
 
 ## Philosophy
 
 **Spec-Driven Development** treats specifications as living contracts:
+
 - Specs drive implementation (not the reverse)
 - Tests validate spec compliance
 - Changes flow through specs first
 
 ## Core Tools
 
-| Tool | Purpose |
-|------|---------|
-| **GKG** | Deep codebase understanding |
-| **Beads** | Issue tracking and progress |
-| **OpenSpec** | Machine-readable specifications |
-| **TDD** | Test-first implementation |
+| Tool         | Purpose                     |
+| ------------ | --------------------------- |
+| **openspec** | Spec management CLI         |
+| **GKG**      | Deep codebase understanding |
+| **Beads**    | Issue tracking and progress |
+| **TDD**      | Test-first implementation   |
 
 ## Complete Workflow
 
 ```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│    SPEC     │────▶│    TRACK    │────▶│  IMPLEMENT  │────▶│   VERIFY    │
-│             │     │             │     │             │     │             │
-│ Analyze &   │     │ Create      │     │ TDD cycle   │     │ Compliance  │
-│ Design      │     │ Beads issue │     │ Red→Green   │     │ check       │
-└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+┌─────────────┐      ┌ ─────────────┐     ┌─────────────┐
+│  PROPOSAL   │────▶│    APPLY    │────▶│   ARCHIVE   │
+│             │     │             │     │             │
+│ openspec    │     │ TDD cycle   │     │ openspec    │
+│ change      │     │ Red→Green   │     │ archive     │
+└─────────────┘     └─────────────┘     └─────────────┘
 ```
 
-### Phase 1: Specification
+### Phase 1: Proposal (Create Change)
 
 **Goal**: Understand deeply, design precisely.
 
 1. **Context Gathering**
+
+   ```bash
+   openspec list                  # Active changes
+   openspec list --specs          # Existing capabilities
    ```
-   gkg_repo_map                    → Project structure
+
+   ```
+   gkg_repo_map                   → Project structure
    gkg_search_codebase_definitions → Related code
-   codesearch                      → External library patterns
    ```
 
-2. **Draft OpenSpec**
-   Create `specs/[feature-name].spec.md`:
-   - **Context**: Files, dependencies, constraints
-   - **Requirements**: Functional + non-functional
-   - **Design**: Interfaces, data flow, errors
-   - **Verification**: Test cases, acceptance criteria
+2. **Create Change Proposal**
 
-3. **User Approval**
-   > "Does this specification accurately capture the requirements?"
+   ```bash
+   # Scaffold change directory
+   mkdir -p openspec/changes/[change-id]/specs/[capability]
+   ```
 
-### Phase 2: Tracking
+   Create files:
+   - `proposal.md` - Why and what changes
+   - `tasks.md` - Implementation checklist
+   - `design.md` - Technical decisions (optional)
+   - `specs/[capability]/spec.md` - Delta specs (ADDED/MODIFIED/REMOVED)
 
-**Goal**: Make work visible and trackable.
+3. **Validate**
 
-```javascript
-beads_create({
-  title: "Implement [Feature Name]",
-  description: "Spec: specs/[feature-name].spec.md\n\n[Key requirements]",
-  type: "feature",
-  priority: 2
-});
-```
+   ```bash
+   openspec validate [change-id] --strict
+   ```
 
-### Phase 3: Implementation
+4. **User Approval**
+   > "Does this proposal accurately capture the requirements?"
+
+### Phase 2: Apply (Implementation)
 
 **Goal**: Build exactly what the spec describes.
 
-1. **Claim Work**
-   ```javascript
-   beads_update({ issue_id: "PROJ-123", status: "in_progress" });
+1. **Break into Beads Issues**
+
+   ```
+   /openspec-beads [change-id]
    ```
 
-2. **TDD Cycle**
-   - **Red**: Write failing tests from spec's Verification section
-   - **Green**: Implement minimal code to pass
-   - **Refactor**: Clean up while tests stay green
+   Creates epic + subtasks from `tasks.md` with dependencies.
 
-3. **Living Spec Rule**
-   If design changes needed → update spec first → get approval → continue
+2. **Implement via Beads**
 
-### Phase 4: Verification
+   ```javascript
+   beads_ready(); // Find unblocked work
+   beads_update({ issue_id: "PROJ-2", status: "in_progress" });
+   // ... TDD cycle ...
+   beads_close({ issue_id: "PROJ-2", reason: "Done" });
+   ```
 
-**Goal**: Confirm implementation matches spec.
+3. **Sync per Section**
+   After completing all issues in a section, update `tasks.md`:
 
-1. Run all tests
-2. Check interface compliance
-3. Verify requirements coverage
-4. Close issue on success
+   ```markdown
+   ## 1. Database
 
-```javascript
-beads_close({
-  issue_id: "PROJ-123",
-  reason: "Implemented per spec. All tests passing."
-});
-```
+   - [x] 1.1 Task name ← section complete, sync now
+   - [x] 1.2 Task name
+   ```
+
+4. **Living Spec Rule**
+   If design changes needed → update spec first → get approval → create new Beads issues if scope changed → continue
+
+### Phase 3: Archive (Verification & Completion)
+
+**Goal**: Confirm implementation matches spec and archive the change.
+
+1. **Close Epic**
+
+   ```javascript
+   beads_close({
+     issue_id: "PROJ-1",
+     reason: "All tasks complete. Ready to archive.",
+   });
+   ```
+
+2. **Verify**
+
+   ```bash
+   openspec validate [change-id] --strict
+   ```
+
+3. **Archive**
+
+   ```bash
+   openspec archive [change-id] --yes
+   ```
+
+   This moves `changes/[change-id]/` → `changes/archive/YYYY-MM-DD-[change-id]/` and updates main specs.
 
 ## Output
 
 ```markdown
 ## SDD Complete
 
-### Specification
-- File: specs/user-search.spec.md
-- Requirements: 6 functional, 3 non-functional
+### Proposal
 
-### Tracking
-- Issue: PROJ-123 (closed)
-- Duration: 2h 15m
+- Change: add-user-search
+- Capabilities: user-search, auth
 
 ### Implementation
+
 - Files: 3 created, 2 modified
 - Tests: 12 passing
+- Tasks: 8/8 complete
 
-### Verification
-- Interface: ✅ Compliant
-- Requirements: ✅ 6/6 covered
-- Test Coverage: ✅ 100%
+### Archive
+
+- Location: openspec/changes/archive/2024-01-15-add-user-search/
+- Specs updated: ✅
 
 **Status**: ✅ COMPLETE
 ```
 
-## Individual Commands
+## OpenSpec CLI Reference
 
-Run phases separately when needed:
-
-| Command | Phase | Use When |
-|---------|-------|----------|
-| `/spec` | Specification only | Need approval before tracking |
-| `/track` | Create issue from spec | Spec exists, need to track |
-| `/implement` | TDD from spec + issue | Issue ready, start coding |
-| `/verify-spec` | Compliance check | Verify after implementation |
+| Command                              | Purpose                  |
+| ------------------------------------ | ------------------------ |
+| `openspec list`                      | List active changes      |
+| `openspec list --specs`              | List specifications      |
+| `openspec show [item]`               | View change or spec      |
+| `openspec validate [item] --strict`  | Validate                 |
+| `openspec archive [change-id] --yes` | Archive after deployment |
 
 ## Example
 
@@ -142,7 +173,7 @@ Run phases separately when needed:
 /sdd Implement UserSearch API with filtering and pagination
 ```
 
-**Output**: Complete flow from specification through tested, verified implementation.
+**Output**: Complete flow from proposal through tested, archived implementation.
 
 <code_exploration>
 Read and understand relevant files before proposing specifications or implementations. Do not speculate about code you have not inspected. Thoroughly review the style, conventions, and abstractions of the codebase before designing new features.

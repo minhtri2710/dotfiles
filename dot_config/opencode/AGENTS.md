@@ -53,6 +53,30 @@ Read and understand relevant files before proposing code edits. Do not speculate
 - **Specialize** - Read/Edit/Write over bash equivalents
 - **Delegate** - Task tool for exploration
 
+## Subagent Delegation
+
+Use the Task tool with `subagent_type` to delegate work. Match task to subagent:
+
+| Subagent                     | When to Use                                                  |
+| ---------------------------- | ------------------------------------------------------------ |
+| `subagents/search`           | Finding definitions, tracing references, codebase navigation |
+| `subagents/rush`             | Quick fixes, simple bugs, UI tweaks, single-file changes     |
+| `subagents/smart`            | Complex features, multi-file changes, architectural work     |
+| `subagents/oracle`           | Hard debugging, architecture decisions, design validation    |
+| `subagents/tester`           | Writing test suites, TDD, comprehensive test coverage        |
+| `subagents/review`           | Code review, analyzing commits, identifying risks            |
+| `subagents/security-auditor` | Security scans, vulnerability checks, dependency audits      |
+| `subagents/librarian`        | External research, GitHub search, library internals          |
+| `subagents/skill-detector`   | Detect and trigger available skills based on user prompt     |
+
+**Delegation rules**:
+
+1. Before starting work, check if a subagent matches the task
+2. Use `search` for codebase exploration instead of grep/glob directly
+3. Use `rush` for quick tasks, escalate to `smart` for complexity
+4. Consult `oracle` when stuck or facing hard problems
+5. Invoke `skill-detector` proactively on every task to check for skill matches
+
 ## Work Tracking
 
 Use Beads (`bd`) for issue tracking. Run `bd quickstart` for setup.

@@ -1,11 +1,10 @@
 ---
-description: Continue work in fresh thread with focused context. Cleaner than compaction. Supports agent relay and parallel exploration.
-model: google/gemini-2.5-flash
+description: Continue work in fresh thread with focused context. Cleaner than compaction. Supports parallel exploration.
 ---
 
 # Handoff Command
 
-Transfer work between threads or agents. Fresh context beats accumulated noise.
+Transfer work between threads. Fresh context beats accumulated noise.
 
 ## Philosophy
 
@@ -15,7 +14,6 @@ Compaction keeps everything in one thread, leading to:
 - Noise from failed attempts
 - Mixed concerns
 - Bloated context
-- Hard to share
 
 **Handoff creates a clean slate** while preserving what matters.
 
@@ -23,8 +21,7 @@ Compaction keeps everything in one thread, leading to:
 
 | Mode | Purpose | When to Use |
 |------|---------|-------------|
-| `new` | Fresh thread with relevant context | Phase transitions, clean starts |
-| `message` | Same thread, different agent | Need help within conversation |
+| `new` | Fresh thread with context | Phase transitions, clean starts |
 | `fork` | Parallel independent threads | Try multiple approaches |
 | `compact` | Compress current thread | Last resort, must stay in thread |
 
@@ -33,43 +30,16 @@ Compaction keeps everything in one thread, leading to:
 ### Phase Transitions
 
 ```javascript
-// Planning → Implementation
+// Planning → Implementation (fresh thread)
 session({
   mode: "new",
-  agent: "build",
-  text: "Implement the plan we created for user authentication"
+  text: "Implement the auth feature. Context: [summary of plan]"
 });
 
-// Implementation → Testing
+// Implementation → Testing (fresh thread)
 session({
   mode: "new",
-  agent: "tester",
-  text: "Write comprehensive tests for the auth feature"
-});
-
-// Testing → Review
-session({
-  mode: "new", 
-  agent: "review",
-  text: "Review the auth implementation and tests"
-});
-```
-
-### Agent Collaboration
-
-```javascript
-// Get architectural guidance
-session({
-  mode: "message",
-  agent: "oracle",
-  text: "Should we use microservices here? Analyze the trade-offs."
-});
-
-// Quick code review
-session({
-  mode: "message",
-  agent: "review", 
-  text: "Review the code I just generated above."
+  text: "Write tests for auth. Files: src/auth/*.ts"
 });
 ```
 
@@ -79,16 +49,44 @@ session({
 // Try two approaches simultaneously
 session({
   mode: "fork",
-  agent: "build",
-  text: "Implement using Redux"
+  text: "Implement using Redux. Context: [requirements]"
 });
 
 session({
   mode: "fork",
-  agent: "build",
-  text: "Implement using Context API"
+  text: "Implement using Context API. Context: [requirements]"
 });
 // Compare results, pick the best
+```
+
+### Delegate to Subagents (Same Thread)
+
+Use `task()` for subagent work within current thread:
+
+```javascript
+// Deep reasoning
+task({
+  subagent_type: "subagents/oracle",
+  prompt: "Should we use microservices here? Analyze trade-offs."
+});
+
+// Code review
+task({
+  subagent_type: "subagents/review",
+  prompt: "Review the auth implementation in src/auth/"
+});
+
+// Research external patterns
+task({
+  subagent_type: "subagents/librarian",
+  prompt: "Find React auth patterns in popular libraries"
+});
+
+// Quick fixes
+task({
+  subagent_type: "subagents/rush",
+  prompt: "Fix the typo in src/utils.ts line 42"
+});
 ```
 
 ### Manual Compression (Last Resort)
@@ -110,33 +108,36 @@ Provide clear guidance for new threads:
 | "Apply this fix to all similar cases" | Pattern propagation |
 | "Write tests for what we just built" | Test coverage |
 | "Research option 2 further" | Deeper investigation |
-| "Check the rest of the codebase for this pattern" | Codebase-wide search |
 
-## When to Handoff
+## When to Handoff vs Delegate
 
 | Situation | Action |
 |-----------|--------|
-| Completed one phase | Handoff to next phase |
-| Fixed one issue | Handoff to propagate fix |
-| Too many failed attempts | Fresh start |
-| Need specific expertise | Hand to specialized agent |
-| Want to share part of work | Isolate in own thread |
+| Completed one phase, need fresh context | `session({ mode: "new" })` |
+| Need specific expertise, same thread | `task({ subagent_type: "..." })` |
+| Want to try multiple approaches | `session({ mode: "fork" })` |
+| Too many failed attempts | `session({ mode: "new" })` |
+| Quick task, no context pollution | `task({ subagent_type: "subagents/rush" })` |
 
-## Agent Relay Patterns
+## Subagent Reference
 
-```
-Research → Plan → Build → Review → Fix
-
-Librarian ──▶ Oracle ──▶ Smart ──▶ Review ──▶ Rush
-(research)   (design)   (impl)    (review)   (fixes)
-```
+| Subagent | Use For |
+|----------|---------|
+| `subagents/oracle` | Architecture, complex debugging, design |
+| `subagents/review` | Code review, risk analysis |
+| `subagents/tester` | Write comprehensive tests |
+| `subagents/smart` | Complex features, full autonomy |
+| `subagents/rush` | Quick fixes, simple tasks |
+| `subagents/search` | Codebase navigation, find definitions |
+| `subagents/librarian` | External research, GitHub patterns |
+| `subagents/security-auditor` | Security scanning, vulnerability audit |
 
 ## Best Practices
 
 1. **One task per thread**: Keep focus tight
 2. **Handoff between phases**: Don't mix planning with implementation
 3. **Fresh start when stuck**: Debug in clean threads
-4. **Use the right agent**: Match agent to task type
+4. **Use subagents for expertise**: Delegate specialized work via `task()`
 5. **Explicit direction**: Tell new thread exactly what to do
 
 <code_exploration>
