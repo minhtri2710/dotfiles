@@ -80,3 +80,5 @@ Use the Task tool with `subagent_type` to delegate work. Match task to subagent:
 ## Work Tracking
 
 Use Beads (`bd`) for issue tracking. Run `bd quickstart` for setup.
+
+- **Short prefix**: When creating issues, use a short prefix (2-4 chars) derived from project or feature name

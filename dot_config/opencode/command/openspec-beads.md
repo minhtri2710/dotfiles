@@ -14,6 +14,10 @@ Convert an OpenSpec change proposal into trackable Beads issues. Creates an epic
 - Beads initialized in project: `.beads/` directory
 - Change validated: `openspec validate [change-id] --strict`
 
+## Rules
+
+- **Use short prefix**: When creating issues, use a short prefix (2-4 chars) derived from the project or change name (e.g., "US" for user-search, "API" for api-refactor)
+
 ## Workflow
 
 ### Step 1: Read Change
