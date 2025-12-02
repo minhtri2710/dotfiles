@@ -25,6 +25,7 @@ config.window_background_gradient = {
 config.window_decorations = "RESIZE"
 config.window_close_confirmation = "NeverPrompt"
 config.default_workspace = "main"
+config.enable_kitty_keyboard = true
 
 -- Tab bar
 config.use_fancy_tab_bar = false
@@ -150,5 +151,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	table.insert(config.keys, { key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") })
 	table.insert(config.keys, { key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") })
 end
+
+config.debug_key_events = true
 
 return config
