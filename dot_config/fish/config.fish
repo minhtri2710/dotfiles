@@ -10,10 +10,6 @@ end
 set -gx COLORTERM truecolor
 
 # aliases
-alias grep rg
-alias sed sd
-alias man tldr
-alias fgrep "rg -F"
 alias cls clear
 alias g git
 alias mux tmuxinator
