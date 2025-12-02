@@ -108,31 +108,6 @@ return {
     end,
   },
   {
-    "tadmccorkle/markdown.nvim",
-    ft = "markdown",
-    keys = {
-      {
-        "<M-l><M-o>",
-        mode = { "n", "i" },
-        "<Cmd>MDListItemBelow<CR>",
-        desc = "Add list item below",
-      },
-      {
-        "<M-L><M-O>",
-        mode = { "n", "i" },
-        "<Cmd>MDListItemAbove<CR>",
-        desc = "Add list item above",
-      },
-      {
-        "<M-c>",
-        mode = { "n", "x" },
-        "<Cmd>MDTaskToggle<CR>",
-        desc = "Toggle task checkbox",
-      },
-    },
-    opts = {},
-  },
-  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
@@ -200,6 +175,10 @@ return {
         enable = false,
       },
     },
+  },
+  {
+    "yousefhadder/markdown-plus.nvim",
+    ft = "markdown",
   },
   {
     "folke/snacks.nvim",

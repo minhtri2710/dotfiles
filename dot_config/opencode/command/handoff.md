@@ -1,145 +1,94 @@
 ---
-description: Continue work in fresh thread with focused context. Cleaner than compaction. Supports parallel exploration.
+description: Capture state for session continuity
+agent: build
+subtask: false
 ---
 
-# Handoff Command
+# Handoff Session
 
-Transfer work between threads. Fresh context beats accumulated noise.
+Capture current state for bead: $ARGUMENTS
 
-## Philosophy
+## When to Use
 
-**Small threads, big clarity.**
+- Approaching context limit
+- End of work session
+- Before complex/risky operation
+- Switching to different task
 
-Compaction keeps everything in one thread, leading to:
-- Noise from failed attempts
-- Mixed concerns
-- Bloated context
+## Step 1: Capture Git State
 
-**Handoff creates a clean slate** while preserving what matters.
+!`git status --short`
+!`git log --oneline -5`
+!`git diff --stat`
 
-## Session Modes
+## Step 2: Identify In-Progress Work
 
-| Mode | Purpose | When to Use |
-|------|---------|-------------|
-| `new` | Fresh thread with context | Phase transitions, clean starts |
-| `fork` | Parallel independent threads | Try multiple approaches |
-| `compact` | Compress current thread | Last resort, must stay in thread |
+- What was being worked on?
+- What's the current state?
+- What's blocking (if anything)?
 
-## Handoff Patterns
+## Step 3: Create Handoff
 
-### Phase Transitions
+Save to `.beads/artifacts/$ARGUMENTS/handoffs/[date]_handoff.md`:
 
-```javascript
-// Planning → Implementation (fresh thread)
-session({
-  mode: "new",
-  text: "Implement the auth feature. Context: [summary of plan]"
-});
+```markdown
+---
+date: [ISO timestamp]
+bead: $ARGUMENTS
+branch: [branch]
+commit: [HEAD sha]
+---
 
-// Implementation → Testing (fresh thread)
-session({
-  mode: "new",
-  text: "Write tests for auth. Files: src/auth/*.ts"
-});
+# Handoff: $ARGUMENTS
+
+## Current State
+[What's done, what's in progress]
+
+## Last Action
+[What was just completed]
+
+## Next Steps
+1. [Immediate next action]
+2. [Following action]
+3. [After that]
+
+## Blockers
+- [Any blockers or questions]
+
+## Context
+- [Key files being modified]
+- [Important decisions made]
+- [Things to remember]
+
+## Commands to Resume
+```bash
+git checkout [branch]
+cd [directory]
+npm test -- [specific test if relevant]
 ```
 
-### Parallel Exploration
-
-```javascript
-// Try two approaches simultaneously
-session({
-  mode: "fork",
-  text: "Implement using Redux. Context: [requirements]"
-});
-
-session({
-  mode: "fork",
-  text: "Implement using Context API. Context: [requirements]"
-});
-// Compare results, pick the best
+## Uncommitted Changes
+[List or "none"]
 ```
 
-### Delegate to Subagents (Same Thread)
+## Step 4: Confirm
 
-Use `task()` for subagent work within current thread:
+```markdown
+## Handoff Created
 
-```javascript
-// Deep reasoning
-task({
-  subagent_type: "subagents/oracle",
-  prompt: "Should we use microservices here? Analyze trade-offs."
-});
+Saved: `.beads/artifacts/$ARGUMENTS/handoffs/[file]`
 
-// Code review
-task({
-  subagent_type: "subagents/review",
-  prompt: "Review the auth implementation in src/auth/"
-});
-
-// Research external patterns
-task({
-  subagent_type: "subagents/librarian",
-  prompt: "Find React auth patterns in popular libraries"
-});
-
-// Quick fixes
-task({
-  subagent_type: "subagents/rush",
-  prompt: "Fix the typo in src/utils.ts line 42"
-});
+To resume later:
+```
+/resume $ARGUMENTS
+```
 ```
 
-### Manual Compression (Last Resort)
+## Optional: Sync
 
-```javascript
-session({
-  mode: "compact",
-  text: "Continuing implementation..."
-});
+If stopping work:
+
+```bash
+bd sync
+git push
 ```
-
-## Direction Examples
-
-Provide clear guidance for new threads:
-
-| Direction | New Thread Focus |
-|-----------|------------------|
-| "Execute phase one of the plan" | Scoped implementation |
-| "Apply this fix to all similar cases" | Pattern propagation |
-| "Write tests for what we just built" | Test coverage |
-| "Research option 2 further" | Deeper investigation |
-
-## When to Handoff vs Delegate
-
-| Situation | Action |
-|-----------|--------|
-| Completed one phase, need fresh context | `session({ mode: "new" })` |
-| Need specific expertise, same thread | `task({ subagent_type: "..." })` |
-| Want to try multiple approaches | `session({ mode: "fork" })` |
-| Too many failed attempts | `session({ mode: "new" })` |
-| Quick task, no context pollution | `task({ subagent_type: "subagents/rush" })` |
-
-## Subagent Reference
-
-| Subagent | Use For |
-|----------|---------|
-| `subagents/oracle` | Architecture, complex debugging, design |
-| `subagents/review` | Code review, risk analysis |
-| `subagents/tester` | Write comprehensive tests |
-| `subagents/smart` | Complex features, full autonomy |
-| `subagents/rush` | Quick fixes, simple tasks |
-| `subagents/search` | Codebase navigation, find definitions |
-| `subagents/librarian` | External research, GitHub patterns |
-| `subagents/security-auditor` | Security scanning, vulnerability audit |
-
-## Best Practices
-
-1. **One task per thread**: Keep focus tight
-2. **Handoff between phases**: Don't mix planning with implementation
-3. **Fresh start when stuck**: Debug in clean threads
-4. **Use subagents for expertise**: Delegate specialized work via `task()`
-5. **Explicit direction**: Tell new thread exactly what to do
-
-<code_exploration>
-When handing off, provide sufficient context about files that were inspected. Do not speculate about code you have not read. New threads should verify context before acting.
-</code_exploration>
