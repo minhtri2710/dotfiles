@@ -1,57 +1,53 @@
 {
-    // ═══════════════════════════════════════════════════════════════════════════
-    // DYNAMIC CONTEXT PRUNING (DCP)
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Automatically prunes conversation context to stay within limits.
-    // Docs: https://opencode.ai/docs/plugins/dcp
-    // ═══════════════════════════════════════════════════════════════════════════
-    // Enable or disable the Dynamic Context Pruning plugin
-    "enabled": true,
-    // Enable debug logging to ~/.config/opencode/logs/dcp/
-    // Outputs include:
-    // - daily/YYYY-MM-DD.log (plugin activity, decisions, errors)
-    // - ai-context/*.json (messages sent to AI after pruning)
-    "debug": false,
-    // Optional: Specify a model to use for analysis instead of the session model
-    // Format: "provider/model" (same as agent model config in opencode.jsonc)
-    // "model": "anthropic/claude-haiku-4-5",
-    // Show toast notifications when model selection fails and falls back
-    "showModelErrorToasts": true,
-    // ─────────────────────────────────────────────────────────────────────────────
-    // PRUNING STRATEGIES
-    // ─────────────────────────────────────────────────────────────────────────────
-    // Available strategies:
-    // - "deduplication": Remove redundant tool outputs
-    // - "ai-analysis": Use AI to summarize and prune
-    "strategies": {
-        // Strategies to run when session goes idle (automatic)
-        "onIdle": [
-            "deduplication",
-            "ai-analysis"
-        ],
-        // Strategies to run when AI calls the context_pruning tool
-        // Empty array = tool not exposed to AI
-        "onTool": [
-            "deduplication"
-        ]
-    },
-    // ─────────────────────────────────────────────────────────────────────────────
-    // DISPLAY OPTIONS
-    // ─────────────────────────────────────────────────────────────────────────────
-    // Pruning summary display mode:
-    // "off": No UI summary (silent pruning)
-    // "minimal": Show tokens saved and count (e.g., "Saved ~2.5K tokens (6 tools pruned)")
-    // "detailed": Show full breakdown by tool type and pruning method (default)
-    "pruning_summary": "detailed",
-    // ─────────────────────────────────────────────────────────────────────────────
-    // PROTECTED TOOLS
-    // ─────────────────────────────────────────────────────────────────────────────
-    // List of tools that should never be pruned from context
-    // These are stateful or intentional operations that matter for continuity
-    "protectedTools": [
-        "task", // Each subagent invocation is intentional
-        "todowrite", // Stateful: each call matters
-        "todoread", // Stateful: each call matters
-        "context_pruning" // The pruning tool itself
-    ]
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DYNAMIC CONTEXT PRUNING (DCP)
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Automatically prunes conversation context to stay within limits.
+  // Docs: https://opencode.ai/docs/plugins/dcp
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Enable or disable the Dynamic Context Pruning plugin
+  "enabled": true,
+  // Enable debug logging to ~/.config/opencode/logs/dcp/
+  // Outputs include:
+  // - daily/YYYY-MM-DD.log (plugin activity, decisions, errors)
+  // - ai-context/*.json (messages sent to AI after pruning)
+  "debug": false,
+  // Optional: Specify a model to use for analysis instead of the session model
+  // Format: "provider/model" (same as agent model config in opencode.jsonc)
+  "model": "zai-coding-plan/glm-4.6",
+  // Show toast notifications when model selection fails and falls back
+  "showModelErrorToasts": true,
+  // ─────────────────────────────────────────────────────────────────────────────
+  // PRUNING STRATEGIES
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Available strategies:
+  // - "deduplication": Remove redundant tool outputs
+  // - "ai-analysis": Use AI to summarize and prune
+  "strategies": {
+    // Strategies to run when session goes idle (automatic)
+    "onIdle": ["deduplication", "ai-analysis"],
+    // Strategies to run when AI calls the context_pruning tool
+    // Empty array = tool not exposed to AI
+    "onTool": ["deduplication"],
+  },
+  // ─────────────────────────────────────────────────────────────────────────────
+  // DISPLAY OPTIONS
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Pruning summary display mode:
+  // "off": No UI summary (silent pruning)
+  // "minimal": Show tokens saved and count (e.g., "Saved ~2.5K tokens (6 tools pruned)")
+  // "detailed": Show full breakdown by tool type and pruning method (default)
+  "pruning_summary": "detailed",
+  // ─────────────────────────────────────────────────────────────────────────────
+  // PROTECTED TOOLS
+  // ─────────────────────────────────────────────────────────────────────────────
+  // List of tools that should never be pruned from context
+  // These are stateful or intentional operations that matter for continuity
+  "protectedTools": [
+    "task", // Each subagent invocation is intentional
+    "todowrite", // Stateful: each call matters
+    "todoread", // Stateful: each call matters
+    "context_pruning", // The pruning tool itself
+  ],
 }
+
