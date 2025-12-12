@@ -1,23 +1,23 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": [
-    "AGENTS.md",
-    "CLAUDE.md",
-    "ARCHITECTURE.md",
-    "docs/guidelines.md",
-    ".cursor/rules/*.md"
-  ],
+  "instructions": ["AGENTS.md"],
+  "model": "zai-coding-plan/glm-4.7",
+  "small_model": "github-copilot/oswe-vscode-prime",
+  "theme": "aura",
+  "tui": {
+    "scroll_acceleration": {
+      "enabled": true
+    },
+    "scroll_speed": 3
+  },
+
   "keybinds": {
-    "command_list": "ctrl+shift+p",
+    "command_list": "ctrl+p,super+shift+p",
     "messages_half_page_down": "alt+f",
-    "messages_half_page_up": "alt+b"
+    "messages_half_page_up": "alt+b",
+    "session_parent": "<leader>p"
   },
   "mcp": {
-    "beads": {
-      "command": ["beads-mcp"],
-      "enabled": true,
-      "type": "local"
-    },
     "chrome-devtools": {
       "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
       "enabled": false,
@@ -26,386 +26,75 @@
     "gkg": {
       "type": "remote",
       "url": "http://127.0.0.1:27495/mcp/sse"
-    },
-    "zai-mcp-server": {
-      "command": ["npx", "-y", "@z_ai/mcp-server"],
-      "environment": {
-        "Z_AI_API_KEY": "{env:Z_AI_API_KEY}",
-        "Z_AI_MODE": "ZAI"
-      },
-      "type": "local"
     }
   },
-  "model": "zai-coding-plan/glm-4.6",
-  "small_model": "github-copilot/oswe-vscode-prime",
-  "permission": {
-    "bash": "ask",
-    "edit": "ask",
-    "webfetch": "allow"
-  },
-  "theme": "aura",
-  "tui": {
-    "scroll_acceleration": {
-      "enabled": true
-    },
-    "scroll_speed": 3
-  },
-  "plugin": ["opencode-gemini-auth", "@tarquinen/opencode-dcp"],
-  "agent": {
-    // ═══════════════════════════════════════════════════════════════════════
-    // READ-ONLY AGENTS (Safe, cannot modify files)
-    // ═══════════════════════════════════════════════════════════════════════
-    // PLAN: Strategic planning mode
-    "plan": {
-      "mode": "primary",
-      "temperature": 0.1,
-      "tools": {
-        "write": false,
-        "edit": false,
-        "bash": false
-      }
-    },
-    // EXPLORER: Fast file discovery
-    "explorer": {
-      "description": "Fast codebase exploration and file discovery",
-      "mode": "subagent",
-      "model": "zai-coding-plan/glm-4.6",
-      "temperature": 0.2,
-      "maxSteps": 10,
-      "tools": {
-        "write": false,
-        "edit": false
-      }
-    },
-    // ANALYZER: Deep code understanding
-    "analyzer": {
-      "description": "Deep implementation analysis and pattern understanding",
-      "mode": "subagent",
-      "model": "zai-coding-plan/glm-4.6",
-      "temperature": 0.2,
-      "maxSteps": 15,
-      "tools": {
-        "write": false,
-        "edit": false
-      }
-    },
-    // RESEARCHER: External documentation
-    "researcher": {
-      "description": "Fetch and analyze external documentation",
-      "mode": "subagent",
-      "model": "zai-coding-plan/glm-4.6",
-      "temperature": 0.2,
-      "maxSteps": 10,
-      "tools": {
-        "write": false,
-        "edit": false
-      }
-    },
-    // REVIEWER: Code review
-    "reviewer": {
-      "description": "Code review with bug-first priority",
-      "mode": "subagent",
-      "model": "zai-coding-plan/glm-4.6",
-      "temperature": 0.2,
-      "maxSteps": 10,
-      "tools": {
-        "write": false,
-        "edit": false
-      }
-    },
-    // ═══════════════════════════════════════════════════════════════════════
-    // WRITE AGENTS (Can modify files)
-    // ═══════════════════════════════════════════════════════════════════════
-    // SMART: Multi-file orchestrator (from original)
-    "smart": {
-      "description": "Orchestrator for complex multi-file tasks",
-      "mode": "primary",
-      "temperature": 0.3,
-      "maxSteps": 100
-    },
-    // IMPLEMENTER: Focused code writing
-    "implementer": {
-      "description": "Focused single-file code implementation",
-      "mode": "subagent",
-      "model": "proxypal/gemini-claude-opus-4-5-thinking",
-      "temperature": 0.1,
-      "maxSteps": 20
-    },
-    // DEBUGGER: Root cause analysis
-    "debugger": {
-      "description": "Systematic debugging and root cause analysis",
-      "mode": "subagent",
-      "model": "google/gemini-3-pro-preview",
-      "temperature": 0.3,
-      "maxSteps": 25
-    },
-    // TESTER: Write and run tests
-    "tester": {
-      "description": "Write tests in TDD or verification mode",
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-5",
-      "temperature": 0.2,
-      "maxSteps": 20
-    },
-    // DOCUMENTER: Documentation writing
-    "documenter": {
-      "description": "Write and update documentation",
-      "mode": "subagent",
-      "model": "zai-coding-plan/glm-4.6",
-      "temperature": 0.2,
-      "maxSteps": 15
-    },
-    // REFACTOR: Safe code restructuring
-    "refactor": {
-      "description": "Safe code refactoring preserving behavior",
-      "mode": "subagent",
-      "model": "proxypal/gemini-claude-sonnet-4-5-thinking",
-      "temperature": 0.1,
-      "maxSteps": 20
-    }
-  },
+  "plugin": [
+    "@tarquinen/opencode-dcp@latest",
+    "@howaboua/pickle-thinker",
+    "oh-my-opencode",
+    "opencode-antigravity-auth",
+    "opencode-openai-codex-auth"
+  ],
   "provider": {
-    "proxypal": {
+    "google": {
       "models": {
-        "copilot-claude-haiku-4.5": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Copilot Claude Haiku 4 5"
+        "gemini-3-pro-high": {
+          "name": "Gemini 3 Pro High (Antigravity)",
+          "limit": { "context": 1048576, "output": 65535 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
         },
-        "copilot-claude-opus-4.1": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Copilot Claude Opus 4 1"
+        "gemini-3-pro-low": {
+          "name": "Gemini 3 Pro Low (Antigravity)",
+          "limit": { "context": 1048576, "output": 65535 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
         },
-        "copilot-claude-opus-4.5": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Copilot Claude Opus 4 5"
+        "gemini-3-flash": {
+          "name": "Gemini 3 Flash (Antigravity)",
+          "limit": { "context": 1048576, "output": 65536 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
         },
-        "copilot-claude-sonnet-4": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Copilot Claude Sonnet 4"
+        "claude-sonnet-4-5": {
+          "name": "Claude Sonnet 4.5 (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
         },
-        "copilot-claude-sonnet-4.5": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Copilot Claude Sonnet 4 5"
+        "claude-sonnet-4-5-thinking": {
+          "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
         },
-        "copilot-gemini-2.5-pro": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Copilot Gemini 2 5 Pro"
-        },
-        "copilot-gemini-3-pro": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Copilot Gemini 3 Pro"
-        },
-        "copilot-gpt-4": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 4"
-        },
-        "copilot-gpt-4-turbo": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 4 Turbo"
-        },
-        "copilot-gpt-4.1": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 4 1"
-        },
-        "copilot-gpt-4o": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 4o"
-        },
-        "copilot-gpt-5": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 5"
-        },
-        "copilot-gpt-5-codex": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 5 Codex"
-        },
-        "copilot-gpt-5-mini": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 5 Mini"
-        },
-        "copilot-gpt-5.1": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 5 1"
-        },
-        "copilot-gpt-5.1-codex": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 5 1 Codex"
-        },
-        "copilot-gpt-5.1-codex-mini": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Gpt 5 1 Codex Mini"
-        },
-        "copilot-grok-code-fast-1": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Grok Code Fast 1"
-        },
-        "copilot-o1": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot O1"
-        },
-        "copilot-o1-mini": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot O1 Mini"
-        },
-        "copilot-raptor-mini": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Copilot Raptor Mini"
-        },
-        "gemini-2.5-computer-use-preview-10-2025": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Gemini 2 5 Computer Use Preview 10 2025"
-        },
-        "gemini-2.5-flash": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Gemini 2 5 Flash"
-        },
-        "gemini-2.5-flash-image": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Gemini 2 5 Flash Image"
-        },
-        "gemini-2.5-flash-lite": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Gemini 2 5 Flash Lite"
-        },
-        "gemini-3-pro-image-preview": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Gemini 3 Pro Image Preview"
-        },
-        "gemini-3-pro-preview": {
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "name": "Gemini 3 Pro Preview"
-        },
-        "gemini-claude-opus-4-5-thinking": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Gemini Claude Opus 4 5 Thinking",
-          "options": {
-            "thinking": {
-              "budgetTokens": 32000,
-              "type": "enabled"
-            }
-          },
-          "reasoning": true
-        },
-        "gemini-claude-sonnet-4-5": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Gemini Claude Sonnet 4 5"
-        },
-        "gemini-claude-sonnet-4-5-thinking": {
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "name": "Gemini Claude Sonnet 4 5 Thinking",
-          "options": {
-            "thinking": {
-              "budgetTokens": 32000,
-              "type": "enabled"
-            }
-          },
-          "reasoning": true
+        "claude-opus-4-5-thinking": {
+          "name": "Claude Opus 4.5 Thinking (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
         },
         "gpt-oss-120b-medium": {
-          "limit": {
-            "context": 128000,
-            "output": 16384
-          },
-          "name": "Gpt Oss 120b Medium"
+          "name": "GPT-OSS 120B Medium (Antigravity)",
+          "limit": { "context": 131072, "output": 32768 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
         }
-      },
-      "name": "ProxyPal (Local Proxy)",
-      "npm": "@ai-sdk/anthropic",
-      "options": {
-        "apiKey": "proxypal-local",
-        "baseURL": "http://127.0.0.1:8317/v1"
       }
     }
   }
 }
-

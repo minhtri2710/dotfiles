@@ -1,147 +1,99 @@
 ---
-description: Verify gates, commit, and close bead
-agent: build
+description: Coach review, quality gates, and close bead
 subtask: false
 ---
 
-# Finish Task
+# /finish - Review & Complete
 
-Complete bead: $ARGUMENTS
+Coach gate → Close → Cleanup → Commit.
 
-## Guardrails
+## Input & Flags
 
-- **All gates must pass** - No exceptions
-- **Verify before closing** - Don't trust memory, run checks
-- **Conventional commits** - Follow commit message format
-- **Sync before done** - Session not complete until pushed
+`$ARGUMENTS` - Bead ID
 
-## Prerequisites
+| Flag | Effect |
+|------|--------|
+| `--no-commit` | Skip auto-commit |
+| `--docs-only` | Review documentation only |
 
-Verify implementation is complete:
+---
 
-```bash
-cat .beads/artifacts/$ARGUMENTS/plan.md 2>/dev/null || echo "No plan found"
-```
+## Phase 1: Coach Gate
 
-Check all phases are marked complete in plan.md.
-
-**If phases remain incomplete, STOP and return to /implement.**
-
-## Steps
-
-Track these as TODOs and complete one by one:
-
-### Step 1: Final Verification
-
-Run all quality gates:
+**Read ALL artifacts first:** spec.md, plan.md, research.md before finishing.
 
 ```bash
-npm run build
-npm test
-npm run lint
+/coach $ARGUMENTS
 ```
 
-**ALL MUST PASS. If any fail, STOP and fix first.**
+Coach validates: build, tests, lint, requirements compliance with `file:line` evidence.
 
-### Step 2: Self-Review
+**If NOT APPROVED:** Address gaps, re-run `/finish`.
 
-Quick review checklist:
-- [ ] Any `console.log` left?
-- [ ] Any `any` type casts?
-- [ ] Any TODO comments left behind?
-- [ ] Any commented-out code?
+## Phase 2: Graph Health
 
 ```bash
-rg "console\.log|TODO|FIXME|any\s*\)" --type ts
+bv --robot-insights | jq '.Cycles'
 ```
 
-### Step 3: Review Changes
+Must have: no cycles, no orphans.
+
+## Phase 3: Close Bead
+
+**Hierarchy rule:** Parent cannot close until ALL children closed.
 
 ```bash
-git diff --stat
-git diff --name-only
+OPEN_CHILDREN=$(bd list --parent $ARGUMENTS --status open,in_progress,blocked --json)
+if [ -n "$OPEN_CHILDREN" ]; then
+  echo "Cannot close epic: child beads still open"
+  exit 1
+fi
+bd close $ARGUMENTS --reason "Coach approved: all requirements verified"
 ```
 
-Verify changes match plan:
-- [ ] Only expected files modified
-- [ ] No unrelated changes included
+## Phase 4: Cleanup
 
-### Step 4: Stage Changes
+**Keep:** `spec.md` | **Delete:** `research.md`, `plan.md`, `handoffs/`
 
 ```bash
-git add -A
-git status
+rm -f .beads/artifacts/{bead_id}/research.md .beads/artifacts/{bead_id}/plan.md
+rm -rf .beads/artifacts/{bead_id}/handoffs/
 ```
 
-Review staged files before committing.
-
-### Step 5: Create Commit
-
-Use conventional commit format:
+## Phase 5: Commit & Push
 
 ```bash
-git commit -m "feat($ARGUMENTS): [summary]
-
-- [change 1]
-- [change 2]
-
-Closes: $ARGUMENTS"
+/commit  # unless --no-commit
+git push origin HEAD  # Push to remote after commit
 ```
 
-Types:
-- `feat` - New feature
-- `fix` - Bug fix
-- `refactor` - Code change (no behavior change)
-- `test` - Tests only
-- `docs` - Documentation
-- `chore` - Maintenance
+**Constraints:**
+- `/commit` only commits locally. `/finish` owns the push step.
+- **NEVER commit artifacts** - `.beads/artifacts/` must be in .gitignore
 
-### Step 6: Close Bead
+## Phase 6: Check Parent
 
 ```bash
-bd close $ARGUMENTS --reason "Completed: [summary]"
+bd show {parent_epic_id}
+bd ready --parent {parent_epic_id}
 ```
 
-### Step 7: Sync (MANDATORY)
+| Status | Suggest |
+|--------|---------|
+| More ready tasks | `/build {next_task_id}` |
+| All done | `/finish {parent_epic_id}` |
+| Some blocked | Report blockers |
 
-```bash
-bd sync
-git push
-```
+---
 
-**Session is NOT complete until `git push` succeeds.**
+## 3-Strike Rule
 
-### Step 8: Summary
+After 3 consecutive NOT_APPROVED: `bd update $ARGUMENTS --status blocked` → escalate with failure reasons.
 
-```markdown
-## Completed: $ARGUMENTS
+## Quick Reference
 
-### Commit
-`[sha]` - [message]
-
-### Changes
-- `file.ts` - [summary]
-
-### Verification
-- Build: ✓
-- Tests: ✓
-- Lint: ✓
-- Pushed: ✓
-
-### Bead Status
-Closed ✓
-```
-
-## Error Handling
-
-If gates fail at this stage:
-1. Do NOT force close the bead
-2. Return to /implement to fix
-3. Re-run /finish when fixed
-
-## Reference
-
-- `cat .beads/artifacts/$ARGUMENTS/plan.md` - Check phases complete
-- `cat .beads/artifacts/$ARGUMENTS/spec.md` - Verify requirements met
-- `git log --oneline -5` - Recent commits
-- `bd show $ARGUMENTS` - Bead details
+| Outcome | Action |
+|---------|--------|
+| All pass | Close → commit |
+| Fail | Fix → retry |
+| 3 failures | Block → escalate |

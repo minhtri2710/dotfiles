@@ -1,94 +1,109 @@
 ---
 description: Capture state for session continuity
-agent: build
 subtask: false
 ---
 
-# Handoff Session
+# /handoff - Session Continuity
 
-Capture current state for bead: $ARGUMENTS
+Capture current state for context compaction or session end.
+
+**Input:** `$ARGUMENTS` - Bead ID  
+**Output:** `.beads/artifacts/{bead_id}/handoffs/{YYYY-MM-DD}_handoff.md`
+
+---
 
 ## When to Use
 
-- Approaching context limit
-- End of work session
-- Before complex/risky operation
-- Switching to different task
+| Trigger | Trigger |
+|---------|---------|
+| Context ~60% full | Before risky operation |
+| End of work session | Switching tasks |
+| Long-running implementation | Periodic checkpoint |
 
-## Step 1: Capture Git State
+---
 
-!`git status --short`
-!`git log --oneline -5`
-!`git diff --stat`
+## Phase 1: Gather State
 
-## Step 2: Identify In-Progress Work
+```bash
+git rev-parse HEAD && git branch --show-current && git status --porcelain
+bd show $ARGUMENTS
+```
 
-- What was being worked on?
-- What's the current state?
-- What's blocking (if anything)?
+For child beads: include parent bead ID and parent's plan.md phase.
 
-## Step 3: Create Handoff
+---
 
-Save to `.beads/artifacts/$ARGUMENTS/handoffs/[date]_handoff.md`:
+## Phase 2: Write Handoff
+
+`.beads/artifacts/{bead_id}/handoffs/{YYYY-MM-DD}_handoff.md`:
 
 ```markdown
 ---
-date: [ISO timestamp]
-bead: $ARGUMENTS
-branch: [branch]
-commit: [HEAD sha]
+date: {ISO timestamp}
+bead: {bead_id}
+parent: {parent_id or null}
+repository: {repo name}
+git_commit: {SHA}
+branch: {branch}
+plan_phase: {current phase from plan.md}
+status: {open|in_progress|blocked}
 ---
 
-# Handoff: $ARGUMENTS
+# Handoff: {bead_id}
 
-## Current State
-[What's done, what's in progress]
+## Current Task
+{What was being worked on}
 
-## Last Action
-[What was just completed]
+## Critical References
+| File | Line | Why |
+|------|------|-----|
+| {file} | {line} | {reason needed on resume} |
 
-## Next Steps
-1. [Immediate next action]
-2. [Following action]
-3. [After that]
+## Parent Context
+<!-- If child bead -->
+- Parent: {parent_id}
+- Plan phase: {phase N of M}
+- Siblings: {other child beads and their status}
+
+## Recent Changes
+- {file}: {what changed}
+
+## Learnings
+1. **{Gotcha/Fence/Edge}**: {description with file:line}
+
+## Verification Status
+| Check | Status | Notes |
+|-------|--------|-------|
+| Build | ✅/❌ | {details} |
+| Tests | ✅/❌ | {details} |
+| Lint | ✅/❌ | {details} |
+
+## Action Items
+1. **Immediate**: {next step}
+2. **Then**: {following step}
 
 ## Blockers
-- [Any blockers or questions]
+- [ ] {unresolved question/decision}
 
-## Context
-- [Key files being modified]
-- [Important decisions made]
-- [Things to remember]
-
-## Commands to Resume
-```bash
-git checkout [branch]
-cd [directory]
-npm test -- [specific test if relevant]
+---
+Resume: `/rehydrate {bead_id}`
 ```
 
-## Uncommitted Changes
-[List or "none"]
-```
+---
 
-## Step 4: Confirm
-
-```markdown
-## Handoff Created
-
-Saved: `.beads/artifacts/$ARGUMENTS/handoffs/[file]`
-
-To resume later:
-```
-/resume $ARGUMENTS
-```
-```
-
-## Optional: Sync
-
-If stopping work:
+## Phase 3: Sync
 
 ```bash
-bd sync
-git push
+bd sync --pull
 ```
+
+---
+
+## Rules
+
+| Rule | Rationale |
+|------|-----------|
+| Ground all claims with `file:line` | Verifiable on resume |
+| Include verification status | Know what passed/failed |
+| Track parent context for child beads | Understand hierarchy |
+| Use frontmatter for structured data | Machine-readable |

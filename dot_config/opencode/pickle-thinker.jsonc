@@ -1,0 +1,27 @@
+{
+  // Ultrathink config for pickle-thinker
+  // mode: "lite" keeps the original behavior (prefix user prompts only).
+  // mode: "tool" adds an extra user turn after each tool result to force deeper analysis.
+  // Note: tool mode increases turns/tokens and may impact subscription limits.
+  "enabled": true,
+  // "lite" | "tool"
+  "mode": "tool",
+  // Change thinking keyword if you like
+  "prefix": "Ultrathink: ",
+  // Enable debug logging to console/file
+  "debug": false,
+  // Detect and fix tools that are mistakenly placed within thinking blocks
+  "interceptToolsInThinking": true,
+  // Models to enhance (substring match against "providerID/modelID")
+  "targetModels": [
+    "glm-4.6",
+    "zai/glm-4.6",
+    "zai-coding-plan/glm-4.6",
+    "big-pickle",
+    "opencode/big-pickle",
+    "glm-4.7",
+    "zai-coding-plan/glm-4.7",
+    "opencode/glm-4.7-free",
+  ],
+}
+

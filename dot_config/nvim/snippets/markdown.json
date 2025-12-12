@@ -1,0 +1,7 @@
+{
+  "Insert todo list": {
+    "prefix": "todo",
+    "body": "- [ ] ${1:text}",
+    "description": "Add todo"
+  }
+}

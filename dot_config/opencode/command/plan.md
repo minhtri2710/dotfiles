@@ -1,145 +1,212 @@
 ---
-description: Create implementation plan from research
-agent: plan
+description: Design options and implementation planning with interactive review
 subtask: false
 ---
 
-# Create Implementation Plan
+# /plan - Interactive Planning
 
-Design the approach for bead: $ARGUMENTS
+Options → Choose → Detail → Walk Through → Child Beads.
 
-## Guardrails
+## Input & Flags
 
-- **No code during this phase** - Only create plan documents
-- **Favor minimal implementation** - Add complexity only when required
-- **Keep changes tightly scoped** - One concern per phase
-- **Verify before proceeding** - Check all required context exists
+`$ARGUMENTS` - Bead ID (must have spec.md, should have research.md)
 
-## Prerequisites
+| Flag | Effect |
+|------|--------|
+| `--quick` | Single option, minimal discussion |
+| `--confirm-only` | Present plan, yes/no only |
 
-Load research first:
+---
+
+## Principles
+
+| Principle | Meaning |
+|-----------|---------|
+| **ETC** | Easy To Change later |
+| **Tracer Bullets** | Working end-to-end first |
+| **Orthogonality** | Independent components |
+| **Design it Twice** | 2+ approaches before committing |
+| **Deep Modules** | Simple interfaces, complex internals |
+| **Chesterton's Fence** | Explain WHY before changing |
+
+---
+
+## Phase 0: Validate
 
 ```bash
-cat .beads/artifacts/$ARGUMENTS/research.md 2>/dev/null || echo "No research - run /research first"
+# Child bead check
+bd show $ARGUMENTS --json | jq -e '.parent_id' && echo "STOP: Plan at EPIC level, not child bead"
 ```
 
-**If no research exists, STOP and run /research first.**
+**BLOCK if child bead** → direct to `/plan {parent_id}` or `/build {bead_id}`.
 
-## Steps
+**Read research COMPLETELY** before planning. Don't skim.
 
-Track these as TODOs and complete one by one:
+---
 
-### Step 1: Review Context
+## Phase 1: Gather Context
 
-Before planning, verify you understand:
-- [ ] What files need changes? (from research.md)
-- [ ] What patterns to follow? (from codebase)
-- [ ] What risks exist? (from research.md)
+```bash
+skill("beads")
+bd show $ARGUMENTS
+cat .beads/artifacts/{bead_id}/spec.md
+cat .beads/artifacts/{bead_id}/research.md
+```
 
-### Step 2: Design Approach
+**BLOCK if**: No spec.md → run `/create` first.
 
-Consider these in order:
-1. **Smallest possible change** - What's the minimum diff?
-2. **Existing patterns** - What similar code exists to match?
-3. **Testing strategy** - How will we verify?
-4. **Rollback plan** - How do we undo if wrong?
+```typescript
+background_task(agent="explore", prompt=`Analyze key files from research.md. Return: patterns, interfaces (file:line)`)
+background_task(agent="explore", prompt=`Find similar features to model after (file:line)`)
+background_task(agent="librarian", prompt=`Best practices for {technology}: docs, pitfalls`)
+```
 
-### Step 3: Break Into Phases
+---
 
-Each phase MUST:
-- Be independently verifiable (can test after this phase alone)
-- Have clear success criteria (pass/fail, no ambiguity)
-- Take < 30 minutes (if longer, split it)
+## Phase 2: Design Options
 
-### Step 4: Write Plan
+**GATE: WAIT for user to choose before proceeding.**
 
-Save to `.beads/artifacts/$ARGUMENTS/plan.md`:
+```
+## Design Options for {title}
+
+### Option A: {name}
+**Approach**: {description}
+**Pros**: {list} | **Cons**: {list}
+**Effort**: S/M/L | **Risk**: L/M/H
+
+### Option B: {name}
+...
+
+### Recommendation
+Option {X} because {reasoning}.
+
+Which approach?
+```
+
+---
+
+## Phase 3: Risk Assessment
+
+| Level | Criteria | Plan Detail |
+|-------|----------|-------------|
+| Low | 1-2 files, understood | Brief, minimal phases |
+| Medium | 3-5 files, some unknowns | Detailed, clear phases |
+| High | 6+ files, critical, unknowns | Comprehensive, coach checkpoints |
+
+---
+
+## Phase 4: Write plan.md
+
+`.beads/artifacts/{bead_id}/plan.md`:
 
 ```markdown
----
-date: [timestamp]
-bead: $ARGUMENTS
-approach: [chosen approach]
-estimated_effort: [time]
----
+# Plan: {title}
+**Bead**: {bead_id} | **Date**: {date} | **Risk**: L/M/H
 
-# Plan: [title]
+## Chosen Approach
+**Option**: {chosen} | **Rationale**: {why}
 
-## Overview
-[What we're building - 1-2 sentences]
+## Phases
 
-## Approach
-[High-level strategy]
+### Phase 1: {name}
+**Goal**: {accomplishes}
+**Files**: `path/file.ts` - {change}
+**Changes**: 1. {specific}
+**Success**: [ ] {criterion}
+**Verify**: [ ] lsp_diagnostics clean
 
-## NOT Doing
-- [Explicit out-of-scope item]
+### Phase 2: {name}
+**Depends on**: Phase 1
+...
 
----
+## Testing
+- Unit: {tests}
+- Integration: {tests}
+- Manual: [ ] {check}
 
-## Phase 1: [name]
+## Rollback
+1. {step}
 
-### Changes
-- [ ] `path/file.ts` - [change description]
-
-### Verification
-- [ ] Build passes
-- [ ] Tests pass
-- [ ] [Specific check for this phase]
-
----
-
-## Phase 2: [name]
-
-### Changes
-- [ ] `path/file.ts` - [change description]
-
-### Verification
-- [ ] Build passes
-- [ ] Tests pass
+## Out of Scope
+- {item} → new bead
+```
 
 ---
 
-## Testing Strategy
+## Phase 5: Walk Through
 
-### New Tests
-- [ ] `file.test.ts` - [what it tests]
-
-### Coverage
-- [ ] Happy path
-- [ ] Edge cases
-- [ ] Error handling
+**High-risk phases**: Present individually, wait for approval.
+**Low-risk phases**: Group, ask for concerns.
 
 ---
 
-## Commands
+## Phase 6: Create Child Beads
+
+**GATE: ONLY after user explicitly approves.**
+
+For 2+ phases:
 
 ```bash
-npm run build
-npm test
-npm run lint
+bd create "[Phase 1] {name}" --type task --parent {bead_id} --description "$(cat <<'EOF'
+## Context
+{1-2 sentences}
+
+## Key Changes
+- `file.ts` - {what}
+
+## Patterns
+- See `similar_file:line`
+
+## Success
+- [ ] {criterion}
+
+## References
+- Plan: .beads/artifacts/{bead_id}/plan.md
+EOF
+)"
+
+bd dep add {phase2_id} {phase1_id}
 ```
+
+Rich descriptions enable standalone execution. Bad: "Implement phase 1". Good: "Add UserProfile with avatar upload. Files: src/components/UserProfile.tsx. Handle: validation, progress, errors."
+
+---
+
+## Phase 7: Finalize
+
+```
+## Plan Approved
+**Plan**: .beads/artifacts/{bead_id}/plan.md
+
+| ID | Phase | Description | Blocked By |
+|----|-------|-------------|------------|
+| {id_1} | 1 | {desc} | - |
+| {id_2} | 2 | {desc} | {id_1} |
+
+**Next**: /build {id_1}
 ```
 
-### Step 5: Validate Plan
+---
 
-Before presenting:
-- [ ] Every phase has verification steps
-- [ ] No phase exceeds 30 minutes
-- [ ] Testing strategy covers requirements from spec
-- [ ] Out-of-scope section explicitly lists what we're NOT doing
+## Epistemic Hygiene
 
-### Step 6: Get Approval
+| Say | Not |
+|-----|-----|
+| "I verified in `file:line`" | "I believe..." |
+| "Research shows X at `file:line`" | "It seems like..." |
 
-Present plan and ask:
+---
 
-> Plan ready for review. Approve this approach?
+## Rules
 
-**WAIT for human approval before /implement.**
-
-## Reference
-
-- `cat .beads/artifacts/$ARGUMENTS/spec.md` - Original requirements
-- `cat .beads/artifacts/$ARGUMENTS/research.md` - Research findings
-- `bd show $ARGUMENTS` - Bead details
-- `codesearch` - API patterns and library examples
-- `websearch` - Best practices and documentation
+| Rule | Rationale |
+|------|-----------|
+| Read research completely | Don't skim before planning |
+| Spec must exist first | Plan needs requirements |
+| Present options interactively | User chooses |
+| Child beads ONLY after approval | Prevents waste |
+| Rich child descriptions | Must enable standalone execution |
+| WAIT for acknowledgment | Alignment |
+| Push back with evidence | Don't be a yes-machine |
+| Explain WHY before changing | Chesterton's Fence |

@@ -1,12 +1,12 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5",
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.2",
   "schemes" : [
     {
       "if" : {
         "device" : {
-          "productName" : "Apple Internal Keyboard \/ Trackpad",
-          "productID" : "0x278",
           "category" : "trackpad",
+          "productID" : "0x278",
+          "productName" : "Apple Internal Keyboard \/ Trackpad",
           "vendorID" : "0x5ac"
         }
       },
@@ -19,9 +19,9 @@
     {
       "if" : {
         "device" : {
-          "productName" : "USB Receiver",
-          "productID" : "0xc52f",
           "category" : "mouse",
+          "productID" : "0xc52f",
+          "productName" : "USB Receiver",
           "vendorID" : "0x46d"
         }
       },
@@ -37,10 +37,10 @@
     {
       "if" : {
         "device" : {
+          "category" : "mouse",
+          "productID" : "0xb037",
           "productName" : "MX Anywhere 3S",
           "serialNumber" : "86B07B6D",
-          "productID" : "0xb037",
-          "category" : "mouse",
           "vendorID" : "0x46d"
         }
       },
@@ -53,10 +53,26 @@
     {
       "if" : {
         "device" : {
-          "productName" : "BT5.2 Mouse",
-          "productID" : "0xaa22",
           "category" : "mouse",
+          "productID" : "0xaa22",
+          "productName" : "BT5.2 Mouse",
           "vendorID" : "0x1235"
+        }
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x27da",
+          "productName" : "Karabiner DriverKit VirtualHIDPointing 1.8.0",
+          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
+          "vendorID" : "0x16c0"
         }
       },
       "scrolling" : {

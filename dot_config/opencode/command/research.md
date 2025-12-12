@@ -1,160 +1,215 @@
 ---
-description: Deep codebase research before planning
-agent: build
+description: Deep codebase exploration with interactive review
 subtask: true
 ---
 
-# Research Codebase
+# /research - Interactive Exploration
 
-Deep exploration for bead: $ARGUMENTS
+Explore → Synthesize → Present → Iterate → Finalize.
 
-## Guardrails
+**Mode**: Interactive (user invoked) or Autonomous (subtask from `/start`).
 
-- **No code changes** - Read-only exploration
-- **Ground findings in evidence** - Cite file:line for every claim
-- **Focus on the task** - Don't explore unrelated areas
-- **Summarize, don't paste** - Condense findings into insights
+## Input & Flags
 
-## Prerequisites
+`$ARGUMENTS` - Bead ID (must have spec.md)
 
-Load the spec first:
+| Flag | Effect |
+|------|--------|
+| `--quick` | Internal scan only, skip external |
+| `--precision` | Enable LSP/AST deep tracing |
 
-```bash
-cat .beads/artifacts/$ARGUMENTS/spec.md 2>/dev/null || echo "No spec found - run /create first"
+---
+
+## Phase 0: Validate
+
+1. **Block child beads** - If ID contains `.`, stop:
+   ```
+   STOP: Cannot research child bead. Research at epic level.
+   Parent: {parent_id} → /research {parent_id}
+   ```
+
+2. **Check spec.md exists** - `cat .beads/artifacts/{bead_id}/spec.md`
+   - BLOCK if missing → `/create` first
+
+---
+
+## Phase 1: Understand
+
+Read before spawning agents:
+1. `bd show {bead_id}`
+2. `.beads/artifacts/{bead_id}/spec.md`
+3. `.beads/artifacts/{bead_id}/exploration-context.md` (if exists from `/start`)
+
+**If exploration-context.md exists**: Skip locate/librarian in Phase 2 (already done).
+
+---
+
+## Phase 2: Parallel Exploration
+
+### Sequence: Locate → Patterns → Analyze → External
+
+**2a. Locate** (skip if exploration-context.md exists):
+```typescript
+background_task(agent="explore", prompt="Find files related to {component A}")
+background_task(agent="explore", prompt="Find files related to {component B}")
+```
+**WAIT** for results.
+
+**2b. Patterns**:
+```typescript
+background_task(agent="explore", prompt="Find similar implementations, patterns, conventions")
+// --precision flag:
+background_task(agent="explore", prompt="Trace call graph from {entry_point}")
+```
+**WAIT** for results.
+
+**2c. Analyze**:
+```typescript
+background_task(agent="explore", prompt="Analyze how {component} works, data flow")
+```
+**WAIT** for results.
+
+**2d. External** (skip if `--quick` or exploration-context.md has docs):
+```typescript
+background_task(agent="librarian", prompt="Best practices for {technology}")
 ```
 
-**If no spec exists, STOP and run /create first.**
+---
 
-## Steps
+## Chesterton's Fence
 
-Track these as TODOs and complete one by one:
+> Before changing code, explain WHY it exists. If you can't explain it, research deeper.
 
-### Step 1: Understand Requirements
+Document: `auth.ts:145` - Retry loop exists because OAuth tokens expire mid-request.
 
-From spec.md, identify:
-- [ ] What needs to change?
-- [ ] What are the success criteria?
-- [ ] What's out of scope?
+---
 
-### Step 2: Codebase Intelligence (GKG)
+## Phase 3: Synthesize
 
-Use Knowledge Graph for precise exploration:
+Organize findings: **Architecture** | **Patterns** | **Dependencies** | **Risks** | **Chesterton's Fence**
 
-```
-# Get structure overview
-gkg_repo_map: relative_paths=["src/relevant-dir"], depth=2
+---
 
-# Find definitions
-gkg_search_codebase_definitions: search_terms=["ComponentName", "functionName"]
+## Phase 4: Write research.md
 
-# Find all usages of key symbols
-gkg_get_references: definition_name="existingFunction", file_path="src/file.ts"
-```
-
-### Step 3: Parallel Deep Exploration
-
-Spawn parallel explorers for areas GKG identified:
-
-```
-@explorer: Analyze [component from GKG results]
-@explorer: Find similar implementations in the codebase
-@analyzer: Deep dive into [complex file from GKG]
-```
-
-Wait for all to complete.
-
-### Step 4: Analyze Patterns
-
-For each key file found:
-
-```
-@analyzer: Analyze [file] for patterns, dependencies, and integration points
-```
-
-Questions to answer:
-- [ ] What patterns does existing code follow?
-- [ ] What dependencies are involved?
-- [ ] What could break with changes?
-
-### Step 5: External Knowledge (Exa)
-
-If task involves libraries, APIs, or unfamiliar patterns:
-
-```
-# For API/library usage
-codesearch: query="[library] [specific feature] examples", tokensNum=5000
-
-# For best practices or troubleshooting
-websearch: query="[technology] [pattern] best practices 2024"
-```
-
-Document external findings in research artifact.
-
-### Step 6: Identify Risks
-
-- [ ] Breaking changes to existing code?
-- [ ] Missing test coverage?
-- [ ] Complex dependencies?
-
-### Step 7: Write Research Artifact
-
-Save to `.beads/artifacts/$ARGUMENTS/research.md`:
+`.beads/artifacts/{bead_id}/research.md`:
 
 ```markdown
 ---
-date: [timestamp]
-bead: $ARGUMENTS
+date: {ISO timestamp}
+git_commit: {HEAD}
+branch: {current branch}
+bead: {bead_id}
 ---
 
-# Research: [topic]
-
 ## Summary
-- [Key finding 1]
-- [Key finding 2]
-- [Key finding 3]
+- Finding 1
+- Finding 2
 
-## Code References
+## Architecture
+- `path/to/file.ts:123` - {purpose}
 
-| File | Lines | Purpose |
-|------|-------|---------|
-| `path/file.ts` | 45-78 | [what it does] |
+## Patterns
+- `file.ts:67` - Pattern for {X}
 
-## Patterns to Follow
-- [Pattern from file:line]
-- [Convention to match]
-
-## External References
-- [Library docs URL]
-- [Best practice article]
+## Dependencies
+| Dependency | Type | Impact |
+|------------|------|--------|
+| {dep} | Hard/Soft | {impact} |
 
 ## Risks
-- [Potential issue and mitigation]
-- [Edge case to handle]
+| Risk | Likelihood | Impact | Mitigation |
+|------|------------|--------|------------|
+| {risk} | H/M/L | H/M/L | {strategy} |
 
-## Architecture Notes
-- [Design constraint]
-- [Integration point]
+## Chesterton's Fence
+- `file.ts:123` - {why it exists}
 
-## Open Questions
-- [Anything unclear that needs human input]
+## Implementation Options
+### Option A: {name}
+- **Files**: {list with file:line}
+- **Effort**: S/M/L
+- **Pros/Cons**: {tradeoffs}
+
+## Dependency Map
+| Task | Depends On | Blocking |
+|------|------------|----------|
+| {task1} | - | {task2} |
+
+## Test Strategy
+| Component | Type | Priority |
+|-----------|------|----------|
+| {comp} | Unit/Integration | MUST/SHOULD |
+
+## Suggested Sequence
+1. {highest risk} - validates assumptions
+2. {next} - depends on #1
 ```
 
-### Step 8: Validate & Present
+---
 
-Before presenting:
-- [ ] Every finding has file:line evidence
-- [ ] Risks have proposed mitigations
-- [ ] Open questions are explicit (not hidden assumptions)
+## Phase 5: Present & Discuss
 
-Present findings and ask:
+**If subtask**: Skip → return summary and exit.
 
-> Research complete. Review findings above. Any questions before planning?
+**If interactive**:
 
-**WAIT for human review before /plan.**
+```
+## Research Findings: {bead_id}
 
-## Reference
+**How it works**: {summary with file:line}
+**Key discovery**: {most important finding}
+**Potential approach**: Based on this, I think we should {X}
 
-- `cat .beads/artifacts/$ARGUMENTS/spec.md` - Original requirements
-- `bd show $ARGUMENTS` - Bead details
-- GKG tools for codebase intelligence
-- `codesearch`/`websearch` for external knowledge
+Does this match your understanding?
+```
+
+**GATE: WAIT for user response.**
+
+| User Says | Action |
+|-----------|--------|
+| "Dig deeper on X" | Spawn new agent → update research.md → re-present |
+| "That's wrong" | Investigate correction → revise → re-present |
+| "Looks good" | Proceed to Phase 6 |
+
+Push back with evidence if user's assumptions conflict with code.
+
+---
+
+## Phase 6: Finalize
+
+**If subtask**:
+```
+Research complete for {bead_id}. Artifact: .beads/artifacts/{bead_id}/research.md
+```
+
+**If interactive**:
+```
+## Research Approved
+**Artifact**: .beads/artifacts/{bead_id}/research.md
+**Next**: /plan {bead_id}
+```
+
+---
+
+## Epistemic Hygiene
+
+| Say | Not |
+|-----|-----|
+| "I verified in `file.ts:123`" | "I believe..." |
+| "I found 3 instances in..." | "There are probably..." |
+| "I couldn't find evidence of..." | "There is no..." |
+
+**Every claim MUST have `file:line` reference.**
+
+---
+
+## Rules
+
+| Rule | Rationale |
+|------|-----------|
+| Block child beads | Research at epic level |
+| Spec must exist | Research needs scope |
+| Check exploration-context.md | Avoid redundant work |
+| Every finding needs `file:line` | Verifiable |
+| Push back with evidence | Don't blindly agree |

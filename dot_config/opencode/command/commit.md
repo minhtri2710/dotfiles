@@ -1,81 +1,65 @@
 ---
 description: Create conventional commit with bead reference
-agent: build
 subtask: false
 ---
 
-# Commit Changes
+# /commit - Conventional Commit
 
-Create a conventional commit for current changes.
+Stage → Verify → Commit. **NEVER pushes** — use `/finish` for push.
 
-## Step 1: Check Status
+**Input:** `$ARGUMENTS` (optional) - Custom commit message override
 
-!`git status --short`
+---
 
-## Step 2: Verify Clean
-
-```bash
-npm run build
-npm test
-npm run lint
-```
-
-## Step 3: Stage
+## Phase 1: Pre-Commit Verification
 
 ```bash
-git add -A
+typecheck && npm run lint && npm test
 ```
 
-## Step 4: Commit
+**If any gate fails:** Fix first, then retry.
 
-### Format
+---
+
+## Phase 2: Stage & Review
+
+```bash
+git add -A && git status
 ```
-<type>(<scope>): <subject>
 
-<body>
+Verify: no secrets, no build artifacts, no unintended files.
 
-Closes: <bead-id>
-```
+---
 
-### Types
-| Type | Use For |
-|------|---------|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `refactor` | Code restructure |
-| `test` | Test changes |
-| `docs` | Documentation |
-| `chore` | Maintenance |
-| `perf` | Performance |
+## Phase 3: Commit
 
-### Example
+**Format:** `<type>(<scope>): <subject>` + body + `Closes: <bead-id>`
 
+| Type | Use | Type | Use |
+|------|-----|------|-----|
+| `feat` | New feature | `test` | Test changes |
+| `fix` | Bug fix | `docs` | Documentation |
+| `refactor` | Restructure | `chore` | Maintenance |
+| `perf` | Performance | `style` | Formatting |
+
+**Rules:** Imperative mood, no period, max 50 chars, lowercase start. Body explains WHY.
+
+**Example:**
 ```bash
 git commit -m "feat(auth): add password reset flow
 
-- Add reset password endpoint
-- Add email template
-- Add rate limiting
+Users can reset via email. Token expires in 24h.
 
-Closes: bd-abc123"
+Closes: oc-abc123"
 ```
 
-## Arguments
+---
 
-If `$ARGUMENTS` provided, use as commit message:
+## Rules
 
-```bash
-git commit -m "$ARGUMENTS"
-```
-
-## Output
-
-```markdown
-## Committed
-
-`[sha]` - [message]
-
-Files: [count]
-Insertions: +[n]
-Deletions: -[n]
-```
+| Rule | Rationale |
+|------|-----------|
+| NEVER push | `/finish` handles push |
+| NEVER skip verification | Broken commits waste time |
+| ALWAYS include bead ID | Traceability |
+| NEVER commit secrets | Security |

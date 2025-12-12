@@ -1,60 +1,98 @@
 ---
-description: Setup workspace and load context for a bead
-agent: build
+description: Triage task → setup workspace → load context → route to next command
 subtask: false
 ---
 
-# Start Working on Bead
+# /start - Triage & Setup
 
-Load context and setup workspace for bead: $ARGUMENTS
+Get developer from "I want to work" → "ready for next step" with full context.
 
-## Step 1: Load Bead
+## Input
 
+- `$1` - Bead ID (optional)
+- `$ARGUMENTS` - Flags: `--worktree`, `--branch`
+
+---
+
+## Phase 1: Resolve Bead
+
+**No bead ID provided:**
 ```bash
-bd show $ARGUMENTS --json
+bd ready --json --limit 10
+# fallback if empty:
+bd list --status open --json
 ```
 
-## Step 2: Check Status
+Present options → user picks number, enters ID, or types "new".
 
+**Bead ID provided:**
 ```bash
-git status --short
-git branch --show-current
+bd show $1 --json
 ```
 
-## Step 3: Load Artifacts
+---
 
-Check for existing work:
+## Phase 2: Setup Isolation
 
-```bash
-ls -la .beads/artifacts/$ARGUMENTS/ 2>/dev/null || echo "No artifacts yet"
+1. Check git status:
+   ```bash
+   git status --porcelain
+   ```
+   If dirty → ask: stash, commit, or continue
+
+2. Ensure artifacts gitignored:
+   ```bash
+   grep -q ".beads/artifacts" .gitignore 2>/dev/null || echo ".beads/artifacts/" >> .gitignore
+   ```
+
+3. Create isolation (default: branch):
+   - `--worktree` → `git worktree add ../$BEAD_ID -b $BEAD_ID`
+   - `--branch` or default → `git checkout -b $BEAD_ID`
+
+---
+
+## Phase 3: Load Context
+
+1. Read existing artifacts:
+   ```bash
+   ls .beads/artifacts/$BEAD_ID/ 2>/dev/null
+   ```
+   Read: spec.md, research.md, plan.md (if exist)
+
+2. Fire parallel exploration (if spec exists):
+   ```
+   background_task(agent="explore", prompt="Find files related to [component from spec]...")
+   background_task(agent="librarian", prompt="Look up [library from spec] docs...")
+   ```
+
+3. Collect results → write `.beads/artifacts/$BEAD_ID/exploration-context.md`
+
+---
+
+## Phase 4: Briefing & Route
+
+```
+Bead: $BEAD_ID - [title]
+Type: [type] | Priority: [P0-3]
+
+Artifacts: spec ✓/✗ | research ✓/✗ | plan ✓/✗
+
+Exploration: [key files found] [external docs found]
 ```
 
-Read if they exist:
-- `spec.md` - Original specification
-- `research.md` - Previous research
-- `plan.md` - Approved plan
-- `handoffs/*.md` - Session handoffs
+**Route by artifact state:**
 
-## Step 4: Mark In Progress
+| State | Next Command |
+|-------|--------------|
+| No spec.md | `/create` |
+| No research.md | `/research $BEAD_ID` |
+| No plan.md | `/plan $BEAD_ID` |
+| Has plan.md | `/build $BEAD_ID` |
 
-```bash
-bd update $ARGUMENTS --status in_progress
-```
+---
 
-## Step 5: Summarize Context
+## Constraints
 
-```markdown
-## Ready: $ARGUMENTS
-
-### Status
-- Branch: [current branch]
-- Bead status: in_progress
-
-### Loaded Artifacts
-- spec.md: [summary or "not found"]
-- research.md: [summary or "not found"]
-- plan.md: [summary or "not found"]
-
-### Next Step
-[Recommend: /research, /plan, or /implement based on what exists]
-```
+- Never proceed with dirty git without acknowledgment
+- Always validate bead exists before continuing
+- Guide to correct next command based on artifact state

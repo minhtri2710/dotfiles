@@ -1,100 +1,123 @@
 ---
-description: Create a new task with specification
-agent: build
+description: Interview user → create bead with spec artifact
 subtask: false
 ---
 
-# Create New Task
+# /create - Structured Task Intake
 
-Interview to understand the task, then create a bead and specification.
+Interview → Classify → Create Bead → Write Spec.
 
-## Guardrails
+## Input
 
-- **No code during this phase** - Only create specification documents
-- **Identify ambiguity first** - Ask clarifying questions before writing spec
-- **Keep scope tight** - Better to under-scope than over-scope
-- **Explicit is better than implicit** - Document assumptions
+`$ARGUMENTS` - Initial task description (can be vague)
 
-## Steps
+---
 
-Track these as TODOs and complete one by one:
+## Phase 1: Problem Interview
 
-### Step 1: Interview
+**⚠️ GATE: Must have clear answers before proceeding.**
 
-Ask these questions (one at a time):
+Ask ONE question at a time (max 3-5 total):
 
-1. **What** do you want to build/fix/change?
-2. **Why** is this needed? What problem does it solve?
-3. **How** will we know it's done? (acceptance criteria)
+| # | Question | Purpose |
+|---|----------|---------|
+| 1 | What specific problem are you solving? | WHY, not WHAT |
+| 2 | Who is affected and how? | User impact |
+| 3 | How will we know when it's done? | Observable success |
+| 4 | What's explicitly OUT of scope? | Boundaries |
+| 5 | Any technical/timeline constraints? | Limitations |
 
-### Step 2: Clarify Ambiguity
+**Rules:** Wait for response. Probe vague answers ("What do you mean by 'better'?"). Summarize before proceeding. **Minimum: Clear answers to 1-3.**
 
-If answers are vague or ambiguous:
-- Ask follow-up questions
-- Propose specific solutions
-- Get explicit confirmation
+---
 
-**If you cannot identify a clear scope, STOP and ask for clarification.**
+## Phase 2: Classify
 
-### Step 3: Create Bead
+| Type | Criteria | Priority |
+|------|----------|----------|
+| `bug` | Something broken | P0-P1 |
+| `feature` | New capability | P1-P2 |
+| `task` | Refactor, chore | P2-P3 |
+| `epic` | Multiple subtasks | P1-P2 |
+
+**Title:** Generate specific, action-oriented (e.g., "Fix null pointer in UserService.getProfile when user has no avatar"). **GATE: Confirm title with user.**
+
+---
+
+## Phase 3: Find Dependencies (Parallel)
+
+```typescript
+background_task(agent="developer", prompt=`List open beads. Find related to: {task_description}. Return: parent epics, blockers.`)
+background_task(agent="explore", prompt=`Search semantic memory for: {task_description}. Return: prior decisions, patterns.`)
+background_output(task_id="...")
+```
+
+Ask: "Is this related to existing work? Does it depend on or block anything?"
+
+---
+
+## Phase 4: Create Bead
 
 ```bash
-bd create "$ARGUMENTS" -t task -p 2 --json | jq -r '.id'
+bd create --from-template {template} "{title}" --priority {priority}
+bd update {bead_id} --path deep
+mkdir -p .beads/artifacts/{bead_id}
 ```
 
-Use type:
-- `bug` - Something broken
-- `feature` - New capability
-- `task` - General work
-- `epic` - Large multi-part work
-- `chore` - Maintenance
+---
 
-### Step 4: Write Specification
+## Phase 5: Write Spec
 
-Create `.beads/artifacts/<bead-id>/spec.md`:
+Write to `.beads/artifacts/{bead_id}/spec.md`:
 
 ```markdown
----
-date: [timestamp]
-bead: [id]
-type: [type]
-priority: [0-3]
----
+# Spec: {title}
 
-# [Title]
+**Bead**: {bead_id} | **Type**: {type} | **Created**: {date}
 
 ## Problem Statement
-[What problem are we solving? Why does it matter?]
+{Why this change is needed}
 
 ## Requirements
-- [ ] Requirement 1
-- [ ] Requirement 2
+### MUST (Critical)
+- [ ] {requirement}
+
+### SHOULD (Important)
+- [ ] {requirement}
+
+## Scope
+**In:** {items}
+**Out:** {items with reasons}
 
 ## Success Criteria
-- [How we know it's done - measurable]
+- [ ] {testable criterion}
 
-## Out of Scope
-- [What we're explicitly NOT doing]
-
-## Assumptions
-- [What we're assuming to be true]
+## Open Questions
+- {question}
 ```
 
-### Step 5: Validate & Confirm
+**GATE: Present spec. WAIT for user approval.**
 
-Before presenting:
-- [ ] All requirements are testable
-- [ ] Success criteria are measurable
-- [ ] Scope is realistic for one work unit
+---
 
-Present the spec and ask:
+## Phase 6: Report & Route
 
-> Does this correctly capture what you want? Ready to proceed?
+```
+## Task Created
+**Bead**: {bead_id} | **Title**: {title} | **Type**: {type}
+**Spec**: .beads/artifacts/{bead_id}/spec.md
 
-**WAIT for human approval before continuing.**
+**Next**: Simple (1-2 files) → `/build` | Complex (3+) → `/research` → `/plan`
+```
 
-## Reference
+---
 
-- `bd list` - See existing beads
-- `bd show <id>` - View bead details
-- `ls .beads/artifacts/` - Check existing artifacts
+## Rules
+
+| Rule | Rationale |
+|------|-----------|
+| Interview first | Clear requirements prevent rework |
+| Generate + confirm title | Ensure shared understanding |
+| Write spec before work | Reference point for completion |
+| Default to action | After confirm, create immediately |
+| Artifacts are LOCAL-ONLY | `.beads/artifacts/` in .gitignore, never commit |

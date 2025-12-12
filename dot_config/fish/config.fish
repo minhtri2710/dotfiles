@@ -34,6 +34,7 @@ set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH ~/.nix-profile/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
+set -gx PATH /opt/local/bin $PATH
 
 set fzf_preview_dir_cmd lla
 
@@ -78,7 +79,7 @@ set -gx OPENCODE_DISABLE_PRUNE 1 # Disable potentially buggy pruning
 set -gx OPENCODE_EXPERIMENTAL 1 # Enable experimental features
 
 #Private
-# source ~/.config/fish/private.fish
+source ~/.config/fish/private.fish
 
 #ProxyPal
 # source ~/.config/fish/proxypal.fish
@@ -86,5 +87,8 @@ set -gx OPENCODE_EXPERIMENTAL 1 # Enable experimental features
 #NVM
 set -gx nvm_default_version latest
 
-# Antigravity
+#Antigravity
 fish_add_path /Users/beowulf/.antigravity/antigravity/bin
+
+#direnv
+direnv hook fish | source

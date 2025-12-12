@@ -47,6 +47,7 @@ pnpm-lock.yaml
 .env.test.local
 .env.production.local
 .env*.local
+.envrc
 
 # Vercel
 .vercel
@@ -109,8 +110,6 @@ temp/
 .claude
 .gemini
 .opencode
-opencode.json
-.beads
 
 # Git (if needed for nested repos)
 .git

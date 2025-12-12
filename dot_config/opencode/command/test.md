@@ -1,60 +1,75 @@
 ---
 description: Run or write tests
-agent: tester
 subtask: true
 ---
 
-# Test
+# /test - Test Execution & Creation
 
-Run or write tests.
+## Input & Flags
 
-## Usage
+| Flag | Mode | Action |
+|------|------|--------|
+| (none) | Run | Execute all tests |
+| `[file]` | Run | Execute specific test file |
+| `--tdd [feature]` | TDD | Write failing test first, then implement |
+| `--verify` | Verify | Full gates (build + test + lint) |
 
-- `/test` - Run all tests
-- `/test [file]` - Test specific file  
-- `/test --tdd [feature]` - TDD mode
-- `/test --verify [file]` - Write tests for existing code
+---
 
 ## Run Tests
 
 ```bash
-npm test
+npm test                    # All tests
+npm test -- {file}          # Specific file
+npm test -- --coverage      # With coverage
 ```
 
-If `$ARGUMENTS` specified:
+---
+
+## TDD Mode (`--tdd`)
+
+Load `skill("testing-patterns")` first.
+
+**Cycle:** Red → Green → Refactor
+
+1. **Red** - Write failing test (AAA pattern)
+2. **Run** - Confirm failure: `npm test -- {test_file}`
+3. **Green** - Minimal code to pass
+4. **Run** - Confirm passing
+5. **Refactor** - Clean up, keep green
+
+```typescript
+describe('FeatureName', () => {
+  it('should [behavior] when [condition]', () => {
+    // Arrange
+    const input = createTestData();
+    // Act
+    const result = functionUnderTest(input);
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+});
+```
+
+---
+
+## Verify Mode (`--verify`)
 
 ```bash
-npm test -- --grep "$ARGUMENTS"
+npm run build && npm test && npm run lint && typecheck
 ```
 
-## Write Tests (TDD or Verify)
+| Command | Gates | Review | Close | Commit |
+|---------|-------|--------|-------|--------|
+| `/test --verify` | ✅ | ❌ | ❌ | ❌ |
+| `/finish` | ✅ | ✅ | ✅ | ✅ |
 
-```
-@tester: [Mode] for $ARGUMENTS
+---
 
-Context:
-- Files: [relevant files]
-- Behavior: [what to test]
+## Test Priority & Quality
 
-Focus on:
-- Happy path
-- Edge cases  
-- Error handling
-```
-
-## Report
-
-```markdown
-## Test Results
-
-### Run
-```
-✓ [n] passing
-✗ [n] failing
-```
-
-### Coverage
-- Happy path: ✓/✗
-- Edge cases: ✓/✗
-- Errors: ✓/✗
-```
+| Priority | Category | FIRST Criteria |
+|----------|----------|----------------|
+| **Must** | Core logic, public APIs, error handling | **F**ast (<100ms) |
+| **Should** | Integration, edge cases | **I**solated (no deps) |
+| **Skip** | Trivial getters, framework internals | **R**epeatable, **S**elf-validating, **T**imely |
