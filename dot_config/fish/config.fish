@@ -32,8 +32,6 @@ set -gx EDITOR nvim
 set -gx PATH bin $PATH
 set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
-set -gx PATH node_modules/.bin $PATH
-set -gx PATH /nix/var/nix/profiles/default/bin $PATH
 set -gx PATH ~/.nix-profile/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
 
@@ -80,7 +78,13 @@ set -gx OPENCODE_DISABLE_PRUNE 1 # Disable potentially buggy pruning
 set -gx OPENCODE_EXPERIMENTAL 1 # Enable experimental features
 
 #Private
-source ~/.config/fish/private.fish
+# source ~/.config/fish/private.fish
 
 #ProxyPal
-source ~/.config/fish/proxypal.fish
+# source ~/.config/fish/proxypal.fish
+
+#NVM
+set -gx nvm_default_version latest
+
+# Antigravity
+fish_add_path /Users/beowulf/.antigravity/antigravity/bin

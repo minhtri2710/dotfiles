@@ -94,7 +94,8 @@
                         "is_keyboard": true,
                         "product_id": 45943,
                         "vendor_id": 1133
-                    }
+                    },
+                    "manipulate_caps_lock_led": false
                 },
                 {
                     "disable_built_in_keyboard_if_exists": true,

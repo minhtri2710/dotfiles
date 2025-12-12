@@ -223,7 +223,7 @@ customCommands:
     command: 'gh browse "{{.SelectedLocalCommit.Sha}}"'
     context: "commits"
   - key: "z"
-    command: "git cz"
+    command: "git czg"
     description: "commit with commitizen"
     context: "files"
     loadingText: "opening commitizen commit tool"
