@@ -7,113 +7,85 @@
 ehthumbs.db
 Thumbs.db
 
-# Editor and IDE files
-.vscode/
+# Editors and IDEs
 .idea/
+.vscode/
 *.swp
 *.swo
 *~
 
+# Dependencies
+node_modules/
+.pnpm-debug.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+.next/
+.nuxt/
+build/
+dist/
+out/
+.vuepress/dist
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Testing
+.nyc_output/
+coverage/
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Logs
+*.log
+lerna-debug.log*
+logs/
+
+# Cache
+.cache/
+.eslintcache
+.npm
+.parcel-cache/
+.serverless/
+.tern-port
+
+# Environment
+.env
+.env*.local
+.envrc
+
+# Runtime
+*.pid
+*.pid.lock
+*.seed
+pids/
+
 # Development tools
-nvim/lazy-lock.json
-*dprint*
+.dprint*
+.dynamodb/
+.fusebox/
 .php-cs-fixer.cache
 prettier.config.js
 stylelint.config.js
 
-#Output
-/.next/
-/out/
-next-env.d.ts
-.next
-out
-build
-dist
-
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-.pnpm-debug.log*
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env*.local
-.envrc
-
-# Vercel
-.vercel
-.vercel.json
-
-# Testing
-/coverage/
-/.nyc_output
-test-results/
-playwright-report/
-/playwright/.cache/
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Cache directories
-.cache/
-.parcel-cache/
-.next/
-.nuxt/
-.vuepress/dist
-.serverless/
-.fusebox/
-.dynamodb/
-.tern-port
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# TypeScript
-*.tsbuildinfo
-
-# Storybook build outputs
-/.react-router/
-/build/
+# Storybook
 .out
 .storybook-out
 storybook-static
 
-# Temporary folders
-tmp/
+# Temporary
 temp/
+tmp/
 
 # AI and automation tools
 .claude
 .gemini
 .opencode
 
-# Git (if needed for nested repos)
-.git
-
-# React Router
-/.react-router/
-/build/
+# Git (nested repos)
+.git/

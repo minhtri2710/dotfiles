@@ -177,13 +177,6 @@ return {
 			ui = {
 				enable = false,
 			},
-			note_id_func = function(id)
-				if id ~= nil then
-					return id
-				end
-
-				return require("obsidian.builtin").zettel_id
-			end,
 		},
 	},
 	{

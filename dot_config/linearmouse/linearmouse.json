@@ -76,8 +76,17 @@
         }
       },
       "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "distance" : {
+          "vertical" : "auto"
+        },
         "reverse" : {
-          "vertical" : true
+          "vertical" : false
+        },
+        "speed" : {
+          "vertical" : 0
         }
       }
     }

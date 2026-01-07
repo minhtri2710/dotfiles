@@ -35,6 +35,7 @@ set -gx PATH ~/.local/bin $PATH
 set -gx PATH ~/.nix-profile/bin $PATH
 set -gx PATH ~/.cargo/bin $PATH
 set -gx PATH /opt/local/bin $PATH
+set -gx PATH ~/go/bin $PATH
 
 set fzf_preview_dir_cmd lla
 
