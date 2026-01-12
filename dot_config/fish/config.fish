@@ -82,9 +82,6 @@ set -gx OPENCODE_EXPERIMENTAL 1 # Enable experimental features
 #Private
 source ~/.config/fish/private.fish
 
-#ProxyPal
-# source ~/.config/fish/proxypal.fish
-
 #NVM
 set -gx nvm_default_version latest
 

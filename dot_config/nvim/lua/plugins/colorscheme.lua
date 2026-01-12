@@ -22,21 +22,6 @@ return {
 		},
 	},
 	{
-		"craftzdog/solarized-osaka.nvim",
-	},
-	{
-		"scottmckendry/cyberdream.nvim",
-	},
-	{
-		"diegoulloao/neofusion.nvim",
-	},
-	{
-		"olimorris/onedarkpro.nvim",
-	},
-	{
-		"tahayvr/matteblack.nvim",
-	},
-	{
 		"minhtri2710/aura-ultra.nvim",
 		lazy = false,
 		opts = {
