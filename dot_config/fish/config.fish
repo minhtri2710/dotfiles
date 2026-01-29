@@ -1,15 +1,16 @@
-set fish_greeting
-if test -n "$TMUX"
-    set -gx TERM tmux-256color
-else if test "$TERM_PROGRAM" = ghostty
-    set -gx TERM xterm-ghostty
-else
-    set -gx TERM xterm-256color
-end
+# PATH Configuration
+fish_add_path bin
+fish_add_path ~/bin
+fish_add_path ~/.local/bin
+fish_add_path ~/.nix-profile/bin
+fish_add_path ~/.cargo/bin
+fish_add_path /opt/local/bin
+fish_add_path ~/go/bin
 
 set -gx COLORTERM truecolor
 
 # aliases
+alias bd br
 alias cls clear
 alias g git
 alias mux tmuxinator
@@ -25,17 +26,8 @@ alias ll "ls -g"
 alias l1 "ls -g -1 "
 alias lla "ll -a"
 alias rm trash
-alias oc opencode
 
 set -gx EDITOR nvim
-
-set -gx PATH bin $PATH
-set -gx PATH ~/bin $PATH
-set -gx PATH ~/.local/bin $PATH
-set -gx PATH ~/.nix-profile/bin $PATH
-set -gx PATH ~/.cargo/bin $PATH
-set -gx PATH /opt/local/bin $PATH
-set -gx PATH ~/go/bin $PATH
 
 set fzf_preview_dir_cmd lla
 
@@ -90,3 +82,41 @@ fish_add_path /Users/beowulf/.antigravity/antigravity/bin
 
 #direnv
 direnv hook fish | source
+
+function oc
+    set base_name (basename (pwd))
+    set path_hash (echo (pwd) | md5 | cut -c1-4)
+    set session_name "$base_name-$path_hash"
+
+    # Find available port starting from 4096
+    function __oc_find_port
+        set port 4096
+        while test $port -lt 5096
+            if not lsof -i :$port >/dev/null 2>&1
+                echo $port
+                return 0
+            end
+            set port (math $port + 1)
+        end
+        echo 4096
+    end
+
+    set oc_port (__oc_find_port)
+    set -x OPENCODE_PORT $oc_port
+
+    if set -q TMUX
+        # Already inside tmux - just run with port
+        opencode --port $oc_port $argv
+    else
+        # Create tmux session and run opencode
+        set oc_cmd "OPENCODE_PORT=$oc_port opencode --port $oc_port $argv; exec fish"
+        if tmux has-session -t "$session_name" 2>/dev/null
+            tmux new-window -t "$session_name" -c (pwd) "$oc_cmd"
+            tmux attach-session -t "$session_name"
+        else
+            tmux new-session -s "$session_name" -c (pwd) "$oc_cmd"
+        end
+    end
+
+    functions -e __oc_find_port
+end
