@@ -148,7 +148,7 @@ return {
 		keys = {
 			{
 				"<leader>N",
-				":vsplit | ObsidianToday<Return>",
+				":vsplit | Obsidian today<Return>",
 				desc = "Open today's note in Obsidian",
 				mode = "n",
 			},
@@ -182,6 +182,7 @@ return {
 	},
 	{
 		"yousefhadder/markdown-plus.nvim",
+		event = "BufReadPost",
 		ft = "markdown",
 		opts = {},
 	},
