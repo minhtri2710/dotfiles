@@ -9,6 +9,7 @@ fish_add_path ~/.cargo/bin
 fish_add_path /opt/local/bin
 fish_add_path ~/go/bin
 fish_add_path ~/.bun/bin
+fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
 set -gx COLORTERM truecolor
 
@@ -83,47 +84,42 @@ set -gx nvm_default_version latest
 #Antigravity
 fish_add_path /Users/beowulf/.antigravity/antigravity/bin
 
-#direnv
+#Direnv
 direnv hook fish | source
 
-function oc
-    set base_name (basename (pwd))
-    set path_hash (echo (pwd) | md5 | cut -c1-4)
-    set session_name "$base_name-$path_hash"
-
-    # Find available port starting from 4096
-    function __oc_find_port
-        set port 4096
-        while test $port -lt 5096
-            if not lsof -i :$port >/dev/null 2>&1
-                echo $port
-                return 0
-            end
-            set port (math $port + 1)
-        end
-        echo 4096
-    end
-
-    set oc_port (__oc_find_port)
-    set -x OPENCODE_PORT $oc_port
-
-    if set -q TMUX
-        # Already inside tmux - just run with port
-        opencode --port $oc_port $argv
-    else
-        # Create tmux session and run opencode
-        set oc_cmd "OPENCODE_PORT=$oc_port opencode --port $oc_port $argv; exec fish"
-        if tmux has-session -t "$session_name" 2>/dev/null
-            tmux new-window -t "$session_name" -c (pwd) "$oc_cmd"
-            tmux attach-session -t "$session_name"
-        else
-            tmux new-session -s "$session_name" -c (pwd) "$oc_cmd"
-        end
-    end
-
-    functions -e __oc_find_port
-end
-
-# bun
+# Bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# Added by Antigravity
+fish_add_path /Users/beowulf/.antigravity/antigravity/bin
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/beowulf/google-cloud-sdk/path.fish.inc' ]
+    . '/Users/beowulf/google-cloud-sdk/path.fish.inc'
+end
+
+# Mise
+mise activate fish | source
+
+#br
+complete --keep-order --exclusive --command br --arguments "(COMPLETE=fish br -- (commandline --current-process --tokenize --cut-at-cursor) (commandline --current-token))"
+
+# Claude Code
+set -gx ANTHROPIC_BASE_URL http://127.0.0.1:8317
+set -gx ANTHROPIC_AUTH_TOKEN trituthan
+set -gx ANTHROPIC_DEFAULT_OPUS_MODEL 'gpt-5.4(high)'
+set -gx ANTHROPIC_DEFAULT_SONNET_MODEL gpt-5.3-codex
+set -gx ANTHROPIC_DEFAULT_HAIKU_MODEL gpt-5.4-mini
+
+# NemoClaw
+set -gx NEMOCLAW_PROVIDER ollama
+set -gx NEMOCLAW_MODEL qwen3.5:35b-a3b-coding-nvfp4
+
+# NemoClaw PATH setup
+fish_add_path --path --append "/Users/beowulf/.local/bin"
+fish_add_path --path --append /opt/homebrew/bin
+# end NemoClaw PATH setup
+
+# Oh-my-openagent
+set -gx OMO_DISABLE_POSTHOG 1

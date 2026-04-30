@@ -74,3 +74,6 @@ vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 vim.g.markdown_fenced_languages = {
 	"ts=typescript",
 }
+
+-- Change lsp typescript
+vim.g.lazyvim_ts_lsp = "tsgo"

@@ -1,5 +1,5 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.2",
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.3",
   "schemes" : [
     {
       "if" : {
@@ -83,7 +83,7 @@
           "vertical" : "auto"
         },
         "reverse" : {
-          "vertical" : false
+          "vertical" : true
         },
         "speed" : {
           "vertical" : 0
