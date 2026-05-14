@@ -108,8 +108,8 @@ complete --keep-order --exclusive --command br --arguments "(COMPLETE=fish br --
 # Claude Code
 set -gx ANTHROPIC_BASE_URL http://127.0.0.1:8317
 set -gx ANTHROPIC_AUTH_TOKEN trituthan
-set -gx ANTHROPIC_DEFAULT_OPUS_MODEL 'gpt-5.4(high)'
-set -gx ANTHROPIC_DEFAULT_SONNET_MODEL gpt-5.3-codex
+set -gx ANTHROPIC_DEFAULT_OPUS_MODEL 'gpt-5.5(low)'
+set -gx ANTHROPIC_DEFAULT_SONNET_MODEL gpt-5.5
 set -gx ANTHROPIC_DEFAULT_HAIKU_MODEL gpt-5.4-mini
 
 # NemoClaw

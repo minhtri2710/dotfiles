@@ -163,13 +163,10 @@ return {
 				{
 					name = "SecondBrain",
 					path = "~/second-brain",
-					overrides = {
-						notes_subdir = "notes",
-					},
 				},
 			},
 			daily_notes = {
-				folder = "notes/dailies",
+				folder = "dailies",
 			},
 			checkbox = {
 				create_new = true,
