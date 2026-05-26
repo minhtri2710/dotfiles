@@ -10,6 +10,7 @@ fish_add_path /opt/local/bin
 fish_add_path ~/go/bin
 fish_add_path ~/.bun/bin
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
+fish_add_path /Library/Frameworks/Python.framework/Versions/3.13/bin
 
 set -gx COLORTERM truecolor
 
@@ -30,6 +31,8 @@ alias ll "ls -g"
 alias l1 "ls -g -1 "
 alias lla "ll -a"
 alias rm trash
+alias python python3
+alias pip pip3
 
 set -gx EDITOR nvim
 
@@ -91,9 +94,6 @@ direnv hook fish | source
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
-# Added by Antigravity
-fish_add_path /Users/beowulf/.antigravity/antigravity/bin
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/beowulf/google-cloud-sdk/path.fish.inc' ]
     . '/Users/beowulf/google-cloud-sdk/path.fish.inc'
@@ -104,22 +104,3 @@ mise activate fish | source
 
 #br
 complete --keep-order --exclusive --command br --arguments "(COMPLETE=fish br -- (commandline --current-process --tokenize --cut-at-cursor) (commandline --current-token))"
-
-# Claude Code
-set -gx ANTHROPIC_BASE_URL http://127.0.0.1:8317
-set -gx ANTHROPIC_AUTH_TOKEN trituthan
-set -gx ANTHROPIC_DEFAULT_OPUS_MODEL 'gpt-5.5(low)'
-set -gx ANTHROPIC_DEFAULT_SONNET_MODEL gpt-5.5
-set -gx ANTHROPIC_DEFAULT_HAIKU_MODEL gpt-5.4-mini
-
-# NemoClaw
-set -gx NEMOCLAW_PROVIDER ollama
-set -gx NEMOCLAW_MODEL qwen3.5:35b-a3b-coding-nvfp4
-
-# NemoClaw PATH setup
-fish_add_path --path --append "/Users/beowulf/.local/bin"
-fish_add_path --path --append /opt/homebrew/bin
-# end NemoClaw PATH setup
-
-# Oh-my-openagent
-set -gx OMO_DISABLE_POSTHOG 1

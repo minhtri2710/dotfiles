@@ -1,10 +1,9 @@
 [plugin]
 prepend_previewers = [
-  { name = "*.csv", run = 'piper -- bat --color=always "$1"' },
-  { name = "*.tar*", run = 'piper --format=url -- tar tf "$1"' },
-  { name = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
-  { name = "*/", run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"' },
-  # { name = "*", run = 'piper -- hexyl --border=none --terminal-width=$w "$1"' },
+  { url = "*.csv", run = 'piper -- bat --color=always "$1"' },
+  { url = "*.tar*", run = 'piper --format=url -- tar tf "$1"' },
+  { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
+  { url = "*/", run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"' },
   { mime = "application/*zip", run = "ouch" },
   { mime = "application/x-tar", run = "ouch" },
   { mime = "application/x-bzip2", run = "ouch" },
@@ -18,8 +17,8 @@ prepend_previewers = [
   { mime = "application/java-archive", run = "ouch" },
 ]
 prepend_fetchers = [
-  { id = "git", name = "*", run = "git" },
-  { id = "git", name = "*/", run = "git" },
+  { group = "git", url = "*", run = "git" },
+  { group = "git", url = "*/", run = "git" },
 ]
 
 [opener]

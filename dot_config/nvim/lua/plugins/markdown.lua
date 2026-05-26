@@ -155,10 +155,6 @@ return {
 		},
 		opts = {
 			legacy_commands = false,
-			completion = {
-				nvim_cmp = false,
-				blink = true,
-			},
 			workspaces = {
 				{
 					name = "SecondBrain",
