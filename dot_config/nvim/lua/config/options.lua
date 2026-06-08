@@ -31,6 +31,20 @@ vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
 vim.opt.listchars:append({ space = "•" })
 vim.opt.swapfile = false
+-- Explicitly configure and force the OSC 52 module
+vim.g.clipboard = {
+	name = "OSC 52",
+	copy = {
+		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+	},
+	paste = {
+		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+	},
+}
+
+-- Ensure Neovim channels standard yanks into that forced provider
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.shell = "fish"

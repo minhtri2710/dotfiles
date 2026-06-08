@@ -5,23 +5,23 @@ hash = "635b0feb9215772d22020eb0abf0bb34"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "5d5c480"
+rev = "598cdb6"
 hash = "9c7987da2d2a2120dac33abb64132004"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "5d5c480"
+rev = "598cdb6"
 hash = "88e56a64b7ce7c4314427452343fef17"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "5d5c480"
+rev = "598cdb6"
 hash = "e3260d0b1feded8c8e3ae3afa1169e30"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "5d5c480"
-hash = "384464b6df8cb807425c521f8cd790f3"
+rev = "598cdb6"
+hash = "d99cfbc3812e7738505f9e4bedb759cd"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"

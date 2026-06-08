@@ -1,5 +1,5 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.3",
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.11.2",
   "schemes" : [
     {
       "if" : {
@@ -87,6 +87,21 @@
         },
         "speed" : {
           "vertical" : 0
+        }
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x2013",
+          "productName" : "Rapoo 2.4G Wireless Device",
+          "vendorID" : "0x24ae"
+        }
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
         }
       }
     }
