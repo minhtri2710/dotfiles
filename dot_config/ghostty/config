@@ -20,6 +20,8 @@ maximize = true
 window-save-state = always
 auto-update = off
 scrollbar=never
+clipboard-read = allow
+clipboard-write = allow
 
 # Keybindings
 keybind = cmd+s>t=toggle_quick_terminal

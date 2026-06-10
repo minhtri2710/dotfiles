@@ -47,6 +47,7 @@ gui:
   showBottomLine: true
   commandLogSize: 8
   splitDiff: auto
+  showNumstatInFilesView: true
 git:
   pagers:
     - pager: delta --dark --paging=never -s --wrap-max-lines=10

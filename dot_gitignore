@@ -96,6 +96,7 @@ stylelint.config.js
 .factory
 .pi
 !.beads/issues.jsonl
+.impeccable/
 
 # Rust / compiled test artifacts
 migrate_bug_test

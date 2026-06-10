@@ -1,13 +1,8 @@
 set fish_greeting
 
 # PATH Configuration
-fish_add_path bin
-fish_add_path ~/bin
 fish_add_path ~/.local/bin
-fish_add_path ~/.nix-profile/bin
 fish_add_path ~/.cargo/bin
-fish_add_path /opt/local/bin
-fish_add_path ~/go/bin
 fish_add_path ~/.bun/bin
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
 fish_add_path /Library/Frameworks/Python.framework/Versions/3.13/bin

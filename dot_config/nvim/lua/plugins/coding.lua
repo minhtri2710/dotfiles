@@ -5,4 +5,8 @@ return {
 		opts = {},
 		event = "BufEnter",
 	},
+	{
+		"esmuellert/codediff.nvim",
+		cmd = "CodeDiff",
+	},
 }
