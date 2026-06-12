@@ -228,6 +228,25 @@ customCommands:
     context: "files"
     loadingText: "opening commitizen commit tool"
     output: terminal
+  - key: "b"
+    context: "localBranches"
+    prompts:
+      - type: "menu"
+        title: "Select a conventional branch prefix:"
+        options:
+          - name: "Feature (feat/)"
+            value: "feat/"
+          - name: "Bugfix (fix/)"
+            value: "fix/"
+          - name: "Documentation (docs/)"
+            value: "docs/"
+          - name: "Improvement (refactor/)"
+            value: "refactor/"
+          - name: "Chore (chore/)"
+            value: "chore/"
+      - type: "input"
+        title: "Enter branch name (without prefix):"
+    command: "git checkout -b {{index .PromptResponses 0}}{{index .PromptResponses 1}}"
 services: {}
 notARepository: skip
 promptToReturnFromSubprocess: true
