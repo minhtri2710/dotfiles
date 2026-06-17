@@ -99,3 +99,12 @@ mise activate fish | source
 
 #br
 complete --keep-order --exclusive --command br --arguments "(COMPLETE=fish br -- (commandline --current-process --tokenize --cut-at-cursor) (commandline --current-token))"
+
+#Agent Browser
+set -gx AGENT_BROWSER_ENGINE lightpanda
+
+#Pi
+set -gx PI_EXPERIMENTAL 1
+
+# Beo Workflow
+set --export BEO_OBSIDIAN_VAULT "~/second-brain/"
