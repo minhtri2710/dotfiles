@@ -1,0 +1,42 @@
+onboarding = false
+[terminal]
+new_cwd = "follow"
+
+[experimental]
+kitty_graphics = true
+
+pane_history = true
+switch_ascii_input_source_in_prefix = true
+
+[ui]
+show_agent_labels_on_pane_borders = true
+agent_panel_sort = "spaces"
+hide_tab_bar_when_single_tab = true
+
+[keys]
+split_vertical = "prefix+|"
+
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "lazygit"
+description = "run lazygit"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+alt+n"
+type = "popup"
+command = "nvim -c \"Obsidian today\""
+description = "run note"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+y"
+type = "popup"
+command = "yazi"
+description = "run yazi"
+width = "80%"
+height = "80%"
+
