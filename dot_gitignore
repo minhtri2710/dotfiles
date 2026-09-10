@@ -1,119 +1,42 @@
 # System files
 .DS_Store
 
-# Editors and IDEs
-.idea/
-.vscode/
-
 # Dependencies
 node_modules/
-.pnpm-debug.log*
+
+# Package-manager logs
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-vendor/
+lerna-debug.log*
 
-# Build output
+# Generated framework/test output
 .next/
-build/
-dist/
-out/
-
-# Testing
 coverage/
 playwright-report/
-playwright/.cache/
 test-results/
-playwright/.cache/
 
-# Logs
-*.log
-lerna-debug.log*
-logs/
-agent-mail-*.log
-server_error*.log
-server_warnings.txt
-error.log
-ubs-output.txt
-
-# Cache
+# Generated caches
 .cache/
 .eslintcache
 .npm
 .parcel-cache/
-.serverless/
-.tern-port
-.fastembed_cache/
-**/.fastembed_cache/
 __pycache__/
-scripts/__pycache__/
-.codex/
 .codex-tmp/
 .bv/
 
-# Environment
+# Logs
+*.log
+
+# Secret environment overrides
 .env
 .env*.local
-.envrc
-.agent-mail.yaml
-.agent-mail-project-id
-opencode.json
-*.mcp.json
-*.mcp.json.*.bak
-codex.mcp.json
-cursor.mcp.json
-gemini.mcp.json
-cline.mcp.json
-windsurf.mcp.json
-.opencode.json.*.bak
-.windsurf.mcp.json.*.bak
 
 # Runtime
 *.pid
 *.pid.lock
-*.seed
 pids/
-*.sqlite3*
-*.db
 
-# Development tools
-.dprint*
-.php-cs-fixer.cache
-prettier.config.js
-stylelint.config.js
-
-# AI and automation tools
-.claude/
-.gemini
-.antigravitycli
-.opencode
-.agent
-.agents
-.cass
-.beads/*
-.specify
-.factory
-.pi
-!.beads/issues.jsonl
-.impeccable/
-
-# Rust / compiled test artifacts
-migrate_bug_test
-parser_bug_test
-s3fifo_test
-s3fifo_leak_test
-test_glob
-test_panic
-ammonia_bug_test
-test_output.txt
-test_meminfo
-/*.rs
-/ftui-extras-cargo.toml
+# Compiler crash artifacts
 rustc-ice-*.txt
-core.*
-core
-
-# Misc project artifacts
-**/archived_mailbox_states/
-.git/
