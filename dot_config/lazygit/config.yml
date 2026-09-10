@@ -43,14 +43,14 @@ gui:
   showListFooter: true
   showFileTree: true
   showRandomTip: true
-  showCommandLog: true
+  showCommandLog: false
   showBottomLine: true
   commandLogSize: 8
   splitDiff: auto
   showNumstatInFilesView: true
 git:
-  pagers:
-    - pager: delta --dark --paging=never -s --wrap-max-lines=10
+  diffRenderers:
+    - command: hunk pager --mode auto --line-numbers --transparent-bg
       colorArg: always
   commit:
     signOff: false

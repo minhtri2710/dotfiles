@@ -4,7 +4,7 @@
   excludesfile = ~/.gitignore
   editor = nvim
   ignorecase = false
-  pager = delta
+  pager = hunk pager --mode auto --line-numbers --transparent-bg
   autocrlf = input
 [push]
   default = simple
@@ -63,13 +63,8 @@
 [user]
 	email = inpro2710@gmail.com
 	name = Tri.Tran
-[interactive]
-  diffFilter = delta --color-only
 [merge]
   conflictstyle = diff3
-[include]
-  path = ~/.config/delta/themes.gitconfig
-  path = ~/.config/delta/delta.gitconfig
 [credential "https://github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential

@@ -9,12 +9,16 @@ pane_history = true
 switch_ascii_input_source_in_prefix = true
 
 [ui]
-show_agent_labels_on_pane_borders = true
-agent_panel_sort = "spaces"
 hide_tab_bar_when_single_tab = true
+window_title = "{hostname}: {workspace}"
+
+show_agent_labels_on_pane_borders = true
+
+[ui.toast]
+delivery = "herdr"
 
 [keys]
-split_vertical = "prefix+|"
+split_vertical = "prefix+\\"
 
 [[keys.command]]
 key = "prefix+alt+g"
@@ -40,3 +44,6 @@ description = "run yazi"
 width = "80%"
 height = "80%"
 
+[theme]
+name = "tokyo-night"
+auto_switch = false

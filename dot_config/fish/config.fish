@@ -1,5 +1,9 @@
 set fish_greeting
 
+if test -z "$TERM"
+    set -gx TERM xterm-256color
+end
+
 # PATH Configuration
 fish_add_path ~/.local/bin
 fish_add_path ~/.cargo/bin
@@ -68,11 +72,6 @@ atuin init fish | source
 #Rust
 set -gx RUSTUP_TOOLCHAIN nightly
 
-#OpenCode
-set -gx OPENCODE_DISABLE_AUTOCOMPACT 1 # Disable broken compaction
-set -gx OPENCODE_DISABLE_PRUNE 1 # Disable potentially buggy pruning
-set -gx OPENCODE_EXPERIMENTAL 1 # Enable experimental features
-
 #Private
 source ~/.config/fish/private.fish
 
@@ -97,14 +96,22 @@ end
 # Mise
 mise activate fish | source
 
-#br
-complete --keep-order --exclusive --command br --arguments "(COMPLETE=fish br -- (commandline --current-process --tokenize --cut-at-cursor) (commandline --current-token))"
-
-#Agent Browser
-set -gx AGENT_BROWSER_ENGINE lightpanda
-
 #Pi
 set -gx PI_EXPERIMENTAL 1
 
 # Beo Workflow
 set --export BEO_OBSIDIAN_VAULT "~/second-brain/"
+
+#herdr
+herdr completion fish | source
+
+# >>> grok installer >>>
+fish_add_path $HOME/.grok/bin
+# <<< grok installer <<<
+
+# Added by jcode installer
+if not contains "/Users/beowulf/.local/bin" $PATH
+    set -gx PATH "/Users/beowulf/.local/bin" $PATH
+end
+
+set -gx ANTHROPIC_MODEL claude-opus-4-8
