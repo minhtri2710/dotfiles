@@ -24,8 +24,8 @@ gui:
       - "#cc5252"
     defaultFgColor:
       - "#edecee"
-  authorColors: {}
-  branchColors: {}
+    authorColors: {}
+    branchColorPatterns: {}
   scrollHeight: 2
   scrollPastBottom: true
   mouseEvents: false

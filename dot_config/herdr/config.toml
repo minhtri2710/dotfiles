@@ -16,7 +16,6 @@ show_agent_labels_on_pane_borders = true
 
 [ui.toast]
 delivery = "herdr"
-
 [keys]
 split_vertical = "prefix+\\"
 
@@ -45,5 +44,5 @@ width = "80%"
 height = "80%"
 
 [theme]
-name = "tokyo-night"
+name = "terminal"
 auto_switch = false

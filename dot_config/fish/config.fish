@@ -17,7 +17,6 @@ set -gx COLORTERM truecolor
 alias bd br
 alias cls clear
 alias g git
-alias mux tmuxinator
 alias :q exit
 alias lg lazygit
 alias ld lazydocker
@@ -114,4 +113,9 @@ if not contains "/Users/beowulf/.local/bin" $PATH
     set -gx PATH "/Users/beowulf/.local/bin" $PATH
 end
 
-set -gx ANTHROPIC_MODEL claude-opus-4-8
+#claude
+set -gx CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS 1
+set -e ANTHROPIC_MODEL
+
+# Pi
+fish_add_path "$HOME/.local/bin"
