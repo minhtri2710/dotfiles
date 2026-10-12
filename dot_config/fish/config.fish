@@ -97,25 +97,16 @@ mise activate fish | source
 
 #Pi
 set -gx PI_EXPERIMENTAL 1
-
-# Beo Workflow
-set --export BEO_OBSIDIAN_VAULT "~/second-brain/"
+fish_add_path "$HOME/.local/bin"
 
 #herdr
 herdr completion fish | source
-
-# >>> grok installer >>>
-fish_add_path $HOME/.grok/bin
-# <<< grok installer <<<
-
-# Added by jcode installer
-if not contains "/Users/beowulf/.local/bin" $PATH
-    set -gx PATH "/Users/beowulf/.local/bin" $PATH
-end
 
 #claude
 set -gx CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS 1
 set -e ANTHROPIC_MODEL
 
-# Pi
-fish_add_path "$HOME/.local/bin"
+# Herdr
+if set -q HERDR_ENV
+    set -gx PI_FORCE_IMAGE_PROTOCOL kitty
+end
