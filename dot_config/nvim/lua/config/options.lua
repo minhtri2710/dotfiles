@@ -31,17 +31,45 @@ vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
 vim.opt.listchars:append({ space = "•" })
 vim.opt.swapfile = false
-vim.g.clipboard = {
-	name = "OSC 52",
-	copy = {
-		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-	},
-	paste = {
-		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-	},
-}
+-- Clipboard provider:
+--   * Local: native macOS pbcopy/pbpaste (fast, no terminal round-trip).
+--   * Over SSH (editing this machine from another Mac via Rex): OSC 52 copy
+--     only, so yanks land on the client machine's clipboard. Rex never
+--     answers OSC 52 read-back queries (verified), so paste must not query
+--     the terminal; it falls back to the unnamed register instead. Paste
+--     text copied outside Neovim with the terminal's paste (Cmd+V).
+if vim.env.SSH_CONNECTION or vim.env.SSH_TTY then
+	local osc52 = require("vim.ui.clipboard.osc52")
+	local function paste_fallback()
+		if vim.fn.getreg('"') == "" then
+			return {}
+		end
+		return vim.fn.getreg('"', 1, 1)
+	end
+	vim.g.clipboard = {
+		name = "OSC 52 (copy)",
+		copy = {
+			["+"] = osc52.copy("+"),
+			["*"] = osc52.copy("*"),
+		},
+		paste = {
+			["+"] = paste_fallback,
+			["*"] = paste_fallback,
+		},
+	}
+else
+	vim.g.clipboard = {
+		name = "macOS-pbcopy",
+		copy = {
+			["+"] = "pbcopy",
+			["*"] = "pbcopy",
+		},
+		paste = {
+			["+"] = "pbpaste",
+			["*"] = "pbpaste",
+		},
+	}
+end
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.shell = "fish"

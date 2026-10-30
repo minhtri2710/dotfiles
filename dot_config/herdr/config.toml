@@ -1,6 +1,7 @@
 onboarding = false
 [terminal]
 new_cwd = "follow"
+default_shell = "/opt/homebrew/bin/fish"
 
 [experimental]
 kitty_graphics = true
