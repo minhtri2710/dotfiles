@@ -44,7 +44,13 @@ if vim.env.SSH_CONNECTION or vim.env.SSH_TTY then
 		if vim.fn.getreg('"') == "" then
 			return {}
 		end
-		return vim.fn.getreg('"', 1, 1)
+		local regtype = vim.fn.getregtype('"')
+		if regtype:sub(1, 1) == "\022" then
+			-- drop the blockwise width suffix; Nvim infers it from the lines
+			regtype = "\022"
+		end
+		-- [lines, regtype] keeps linewise/blockwise pastes working (:h g.clipboard)
+		return { vim.fn.getreg('"', 1, 1), regtype }
 	end
 	vim.g.clipboard = {
 		name = "OSC 52 (copy)",
