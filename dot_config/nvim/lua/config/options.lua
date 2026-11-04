@@ -31,6 +31,13 @@ vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
 vim.opt.listchars:append({ space = "•" })
 vim.opt.swapfile = false
+-- Clipboard provider:
+--   * Local: native macOS pbcopy/pbpaste (fast, no terminal round-trip).
+--   * Over SSH (editing this machine from another Mac via Rex): OSC 52 copy
+--     only, so yanks land on the client machine's clipboard. Rex never
+--     answers OSC 52 read-back queries (verified), so paste must not query
+--     the terminal; it falls back to the unnamed register instead. Paste
+--     text copied outside Neovim with the terminal's paste (Cmd+V).
 if vim.env.SSH_CONNECTION or vim.env.SSH_TTY then
 	local osc52 = require("vim.ui.clipboard.osc52")
 	local function paste_fallback()
