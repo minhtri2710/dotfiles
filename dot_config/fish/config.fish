@@ -8,8 +8,6 @@ end
 fish_add_path ~/.local/bin
 fish_add_path ~/.cargo/bin
 fish_add_path ~/.bun/bin
-fish_add_path /Applications/Obsidian.app/Contents/MacOS
-fish_add_path /Library/Frameworks/Python.framework/Versions/3.13/bin
 
 set -gx COLORTERM truecolor
 
@@ -29,7 +27,7 @@ alias ll "ls -g"
 alias l1 "ls -g -1 "
 alias lla "ll -a"
 alias rm trash
-alias python python3
+alias python python3.15
 alias pip pip3
 
 set -gx EDITOR nvim
