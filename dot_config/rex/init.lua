@@ -4,6 +4,7 @@ local popup_labels = {
 	notes = "rex-popup-notes",
 	yazi = "rex-popup-yazi",
 	terminal = "rex-popup-terminal",
+	translate = "rex-popup-translate",
 }
 
 local function popup_exists(view, window_id, label)
@@ -66,8 +67,7 @@ local function toggle_popup(ctx, name, command)
 		if process_err then
 			error(process_err, 0)
 		end
-		options.cwd = (process.foreground and process.foreground.cwd)
-			or (process.child and process.child.cwd)
+		options.cwd = (process.foreground and process.foreground.cwd) or (process.child and process.child.cwd)
 	end
 
 	local layer, layer_err = rex.session.new_layer({
@@ -120,6 +120,14 @@ rex.action({
 	end,
 })
 
+rex.action({
+	name = "translate_popup",
+	title = "Toggle Translate Popup",
+	run = function(ctx)
+		return toggle_popup(ctx, "translate", { "trans-tui", "translate", "--source", "clipboard" })
+	end,
+})
+
 rex.mode("resize_pane", { exclusive = true })
 rex.bind("resize_pane/h", "pane.resize", { direction = "left", amount = 1 })
 rex.bind("resize_pane/j", "pane.resize", { direction = "down", amount = 1 })
@@ -163,4 +171,13 @@ rex.bind("ctrl+b>g", "lazygit_popup")
 rex.bind("ctrl+b>shift+n", "notes_popup")
 rex.bind("ctrl+b>y", "yazi_popup")
 rex.bind("ctrl+b>t", "quick_terminal")
+rex.bind("ctrl+b>shift+t", "translate_popup")
 rex.bind("ctrl+b>shift+r", "client.config.reload")
+rex.bind("ctrl+b>[", "pane.copy_mode.enter")
+
+-- >>> leaf >>>
+-- Managed by `leaf rex install`; `leaf rex uninstall` removes it.
+-- plugin: 574a512c29e0d37d
+dofile("/Users/beowulf/.config/rex/plugins/leaf/init.lua").setup({ bin = { "/opt/homebrew/bin/leaf" } })
+-- open: idle classic
+-- <<< leaf <<<
