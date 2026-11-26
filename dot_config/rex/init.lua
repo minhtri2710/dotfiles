@@ -174,10 +174,3 @@ rex.bind("ctrl+b>t", "quick_terminal")
 rex.bind("ctrl+b>shift+t", "translate_popup")
 rex.bind("ctrl+b>shift+r", "client.config.reload")
 rex.bind("ctrl+b>[", "pane.copy_mode.enter")
-
--- >>> leaf >>>
--- Managed by `leaf rex install`; `leaf rex uninstall` removes it.
--- plugin: 574a512c29e0d37d
-dofile("/Users/beowulf/.config/rex/plugins/leaf/init.lua").setup({ bin = { "/opt/homebrew/bin/leaf" } })
--- open: idle classic
--- <<< leaf <<<
